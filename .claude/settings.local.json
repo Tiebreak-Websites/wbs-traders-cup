@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/kristiyan.rusev/Downloads/**)",
+      "Bash(python -c \"from docx import Document; d=Document\\('Traders_Cup_2026_Project_Brief 3.docx'\\); [print\\(p.text\\) for p in d.paragraphs]\")",
+      "Bash(cp \"C:/Users/kristiyan.rusev/Downloads/Traders_Cup_2026_Project_Brief 3.docx\" /tmp/brief.docx)",
+      "Bash(cd /tmp)",
+      "Bash(unzip -o brief.docx -d brief_extract)",
+      "Read(//tmp/brief_extract/**)",
+      "Bash(python3 -c ' *)",
+      "Bash(sed -E 's/^w:t[^>]*>//')"
+    ]
+  }
+}

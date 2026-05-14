@@ -1,4 +1,4 @@
-# Build output
+# Build output / installed deps — universally excluded
 node_modules/
 dist/
 .astro/
@@ -11,14 +11,5 @@ dist/
 Thumbs.db
 
 # Editors
-.vscode/
 .idea/
-
-# Claude Code tool state (user-specific paths in launch.json)
-.claude/
-
-# Local design-handoff artifacts and reference screenshots
-.design-bundle/
-.design-*.png
-.fig-*.png
-.figma-*.png
+.vscode/
