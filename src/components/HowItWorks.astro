@@ -1,0 +1,24 @@
+---
+import copy from '../data/copy.en.json';
+const h = copy.how_it_works;
+---
+
+<section class="cc-how">
+  <div class="cc-wrap">
+    <div class="cc-section-head">
+      <span class="bt-eyebrow bt-eyebrow--left">{h.eyebrow}</span>
+      <h2 class="cc-section-title">{h.title}</h2>
+    </div>
+
+    <div class="cc-how__grid">
+      {h.steps.map((step, i) => (
+        <div class="cc-how__card">
+          <div class="cc-how__num">{step.n}</div>
+          <h3 class="cc-how__t">{step.t}</h3>
+          <p class="cc-how__d">{step.d}</p>
+          {i < h.steps.length - 1 && <div class="cc-how__connector" aria-hidden="true"></div>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

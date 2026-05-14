@@ -1,0 +1,72 @@
+---
+import copy from '../data/copy.en.json';
+const tiers = copy.tiers;
+---
+
+<section class="cc-tiers">
+  <div class="cc-wrap">
+    <div class="cc-tiers__grid">
+      {tiers.map((t) => (
+        <article class="bt-tier" data-tier={t.key}>
+          <span class="bt-tier-marker" style={`color: ${t.color}`}></span>
+
+          <div class="bt-tier__head">
+            <span class="bt-label" style={`color: ${t.color}`}>Stage&nbsp;{t.num}</span>
+            <span class="bt-chip bt-tier__seats" style={`color: ${t.color}; border-color: rgba(255,117,50,0.3);`}>{t.seats}</span>
+          </div>
+
+          <h3 class="bt-h2 bt-tier__name">{t.name}</h3>
+
+          <p class="bt-body-sm bt-tier__desc">{t.desc}</p>
+
+          <div class="bt-tier__rows">
+            <div class="bt-tier__row">
+              <span class="bt-body-sm bt-tier__row-lbl">Deposit</span>
+              <span class="bt-body-sm bt-num bt-tier__row-val">{t.deposit}</span>
+            </div>
+            <div class="bt-tier__row">
+              <span class="bt-body-sm bt-tier__row-lbl">Reward</span>
+              <span class="bt-body-sm bt-tier__row-award" style={`color: ${t.color}`}>{t.award}</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cc-tiers__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .bt-tier__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .bt-tier__seats { white-space: nowrap; }
+  .bt-tier__name { color: var(--bt-text-hi); margin-bottom: 4px; }
+  .bt-tier__desc { min-height: 38px; }
+  .bt-tier__rows {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .bt-tier__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .bt-tier__row-lbl { color: var(--bt-text-dim); white-space: nowrap; }
+  .bt-tier__row-val { color: var(--bt-text-hi); font-weight: 600; white-space: nowrap; }
+  .bt-tier__row-award { font-weight: 600; text-align: right; }
+
+  @media (max-width: 960px) {
+    .cc-tiers__grid { grid-template-columns: 1fr; }
+  }
+</style>

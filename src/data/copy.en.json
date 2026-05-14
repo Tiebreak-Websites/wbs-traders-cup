@@ -1,0 +1,116 @@
+{
+  "_meta": {
+    "locale": "en",
+    "brand": "BrainTrade",
+    "competition": "Champions Cup",
+    "internal_code": "champions_cup_2026"
+  },
+
+  "site": {
+    "title": "BrainTrade Champions Cup 2026",
+    "description": "A three-stage trading tournament. Deposit qualifies your tier — trading volume sets your rank.",
+    "og_image_path": "/og-champions-cup.jpg"
+  },
+
+  "hero": {
+    "headline": "Trader's Cup",
+    "subhead": "A three-stage trading tournament. Deposit qualifies your tier — trading volume sets your rank.",
+    "countdown_label": "Cup ends in",
+    "target_date": "2026-07-19T23:59:00Z",
+    "cta": "Open Account & Join",
+    "cta_href": "https://thebraintrade.com/register?utm_campaign=champions_cup_2026"
+  },
+
+  "tiers": [
+    {
+      "key": "starters",
+      "num": "I",
+      "name": "Starters",
+      "deposit": "$500 – $4,999",
+      "award": "Premium courses",
+      "color": "var(--bt-tier-1)",
+      "desc": "Group stage. Build your foundation and qualify your tier with first deposit.",
+      "seats": "Open"
+    },
+    {
+      "key": "contenders",
+      "num": "II",
+      "name": "Contenders",
+      "deposit": "$5,000 – $24,999",
+      "award": "1-on-1 coaching · Pro tools",
+      "color": "var(--bt-tier-2)",
+      "desc": "Knockouts. Trading volume decides who breaks through to the final tier.",
+      "seats": "Filling"
+    },
+    {
+      "key": "champions",
+      "num": "III",
+      "name": "Champions",
+      "deposit": "$25,000+",
+      "award": "Capital allocation · Cup trophy",
+      "color": "var(--bt-tier-3)",
+      "desc": "Final stage. Top volume traders compete for the Champions Cup.",
+      "seats": "Elite"
+    }
+  ],
+
+  "leaderboard": {
+    "title": "Live Leaderboard",
+    "live_chip": "Live",
+    "tabs": [
+      { "id": "starters",   "label": "Starters" },
+      { "id": "contenders", "label": "Contenders" },
+      { "id": "champions",  "label": "Champions" }
+    ],
+    "columns": {
+      "rank": "Rank",
+      "trader": "Trader",
+      "region": "Region",
+      "volume": "Volume",
+      "delta": "24h"
+    },
+    "footer_left": "Updated 12 sec ago · refreshes every 30 sec",
+    "footer_right": "View full ranking →",
+    "you_label": "YOU",
+    "loading_state": "Loading leaderboard…",
+    "empty_state": "The leaderboard will appear here once the competition begins.",
+    "error_state": "Couldn't load the leaderboard. Refresh to try again."
+  },
+
+  "how_it_works": {
+    "eyebrow": "How it works",
+    "title": "Three steps to the Cup.",
+    "steps": [
+      {
+        "n": "01",
+        "t": "Deposit to qualify",
+        "d": "Your total deposit places you into a tier: Starters, Contenders, or Champions."
+      },
+      {
+        "n": "02",
+        "t": "Trade to rank",
+        "d": "Inside your tier, your trading volume determines your leaderboard position."
+      },
+      {
+        "n": "03",
+        "t": "Finish at the top",
+        "d": "Top-ranked traders in each tier qualify for prizes: ranks 1–3 get top prizes, and ranks 4–10 get runner-up prizes."
+      }
+    ]
+  },
+
+  "faq": {
+    "eyebrow": "Frequently asked",
+    "title": "Questions, answered.",
+    "items": [
+      { "t": "Is the Cup free to enter?", "d": "Yes — opening a BrainTrade account is free. To qualify for a tier you'll need to make a first deposit; the amount picks your starting tier. You can deposit anytime before the countdown ends." },
+      { "t": "What if I'm new to trading?", "d": "The Starters tier is built exactly for that. You'll get access to BrainTrade Academy courses on day one, and the leaderboard there is full of people in the same boat." },
+      { "t": "Can I move tiers during the Cup?", "d": "You can only move up. Climbing happens automatically when your total deposit passes the next tier's threshold. You never drop back down once qualified." },
+      { "t": "How is trading volume calculated?", "d": "USD-equivalent of every executed trade, summed across spot and derivatives. Self-matching and wash trading are detected and excluded." },
+      { "t": "When are prizes paid out?", "d": "Cash settles to your verified withdrawal method within 14 days of cup close. Coaching slots are scheduled within 30 days. Capital allocations begin the following quarter." },
+      { "t": "Is this gambling?", "d": "No. It's a trading-volume competition using your real account against your own market view. Trading carries risk; the Cup doesn't change that." }
+    ]
+  },
+
+  "compliance": "This is a trading-volume competition with deposit-based tier qualification. Terms, eligibility, and market-specific rules apply. Trading involves risk of loss; past performance is not indicative of future results."
+}

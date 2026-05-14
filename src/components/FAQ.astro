@@ -1,0 +1,51 @@
+---
+import copy from '../data/copy.en.json';
+const f = copy.faq;
+---
+
+<section class="cc-faq">
+  <div class="cc-wrap cc-faq__wrap">
+    <div class="cc-section-head cc-section-head--center">
+      <span class="bt-eyebrow">{f.eyebrow}</span>
+      <h2 class="cc-section-title">{f.title}</h2>
+    </div>
+
+    <div class="cc-faq__list" data-faq-list>
+      {f.items.map((item, i) => (
+        <div class={`cc-faq__item${i === 0 ? ' is-open' : ''}`} data-faq-item>
+          <button class="cc-faq__head" data-faq-toggle aria-expanded={i === 0 ? 'true' : 'false'}>
+            <span class="cc-faq__q">{item.t}</span>
+            <span class="cc-faq__icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <div class="cc-faq__panel">
+            <div class="cc-faq__body">{item.d}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Single-open accordion behaviour (matches the design prototype).
+  const items = document.querySelectorAll('[data-faq-item]');
+  items.forEach((item) => {
+    const btn = item.querySelector('[data-faq-toggle]');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const isOpen = item.classList.contains('is-open');
+      items.forEach((el) => {
+        el.classList.remove('is-open');
+        const b = el.querySelector('[data-faq-toggle]');
+        if (b) b.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>

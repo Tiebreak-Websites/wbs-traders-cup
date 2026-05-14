@@ -1,0 +1,85 @@
+---
+import copy from '../data/copy.en.json';
+const h = copy.hero;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const logoSrc = `${base}/braintrade-logo-light.svg`;
+---
+
+<section class="cc-hero" id="main">
+  <div class="bt-stage-bg" aria-hidden="true"></div>
+  <div class="bt-pitch" aria-hidden="true"></div>
+
+  <div class="cc-hero__inner">
+    <img class="cc-hero__logo" src={logoSrc} alt="BrainTrade" width="180" height="37" />
+
+    <h1 class="cc-headline">{h.headline}</h1>
+
+    <p class="cc-subhead">{h.subhead}</p>
+
+    <div class="cc-countdown" data-countdown data-target={h.target_date}>
+      <div class="cc-countdown__lbl">
+        <span class="bt-dot bt-dot-pulse" aria-hidden="true"></span>
+        <span class="bt-label">{h.countdown_label}</span>
+      </div>
+      <div class="cc-countdown__row" role="timer" aria-live="polite">
+        <div class="bt-cd">
+          <span class="bt-cd-num bt-num" data-d>00</span>
+          <span class="bt-cd-lbl">Days</span>
+        </div>
+        <span class="bt-cd-sep" aria-hidden="true">:</span>
+        <div class="bt-cd">
+          <span class="bt-cd-num bt-num" data-h>00</span>
+          <span class="bt-cd-lbl">Hours</span>
+        </div>
+        <span class="bt-cd-sep" aria-hidden="true">:</span>
+        <div class="bt-cd">
+          <span class="bt-cd-num bt-num" data-m>00</span>
+          <span class="bt-cd-lbl">Minutes</span>
+        </div>
+        <span class="bt-cd-sep" aria-hidden="true">:</span>
+        <div class="bt-cd">
+          <span class="bt-cd-num bt-num" data-s>00</span>
+          <span class="bt-cd-lbl">Seconds</span>
+        </div>
+      </div>
+    </div>
+
+    <a href={h.cta_href} class="bt-btn bt-btn-primary cc-hero__cta">
+      {h.cta} →
+    </a>
+  </div>
+</section>
+
+<style>
+  .cc-hero__logo { display: block; height: auto; }
+  .cc-hero__cta { margin-top: 4px; }
+
+  .cc-countdown {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .cc-countdown__lbl {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+  .cc-countdown__row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .cc-countdown__row { gap: 4px; flex-wrap: wrap; justify-content: center; }
+    .bt-cd { min-width: 64px; padding: 8px 10px 6px; }
+    .bt-cd-num { font-size: 30px !important; }
+    .bt-cd-sep { font-size: 24px; padding: 0 2px; }
+  }
+</style>
+
+<script>
+  import '../scripts/countdown.js';
+</script>

@@ -1,0 +1,55 @@
+{
+  "brand": "braintrade",
+  "competition": "champions_cup_2026",
+  "currency": "USD",
+  "updated_at": "2026-06-15T09:30:00Z",
+  "next_update_at": "2026-06-15T09:45:00Z",
+  "current_user": {
+    "tier_key": "champions",
+    "rank": 5
+  },
+  "tiers": [
+    {
+      "tier_key": "champions",
+      "name": "Champions",
+      "qualifying_count": 47,
+      "entries": [
+        { "rank": 1, "name": "Y***i K.", "trader_id": 1007, "region": "MEA",  "volume_usd": 245000, "delta_pct":  4.2 },
+        { "rank": 2, "name": "A***d M.", "trader_id": 1014, "region": "MEA",  "volume_usd": 218500, "delta_pct":  2.1 },
+        { "rank": 3, "name": "S***n T.", "trader_id": 1021, "region": "APAC", "volume_usd": 196300, "delta_pct":  1.4 },
+        { "rank": 4, "name": "K***a R.", "trader_id": 1028, "region": "EU",   "volume_usd": 182900, "delta_pct":  0.8 },
+        { "rank": 5, "name": "M***i H.", "trader_id": 1035, "region": "APAC", "volume_usd": 171450, "delta_pct": -0.3 },
+        { "rank": 6, "name": "O***n J.", "trader_id": 1042, "region": "EU",   "volume_usd": 159300, "delta_pct":  0.9 },
+        { "rank": 7, "name": "F***h W.", "trader_id": 1049, "region": "AMS",  "volume_usd": 146820, "delta_pct":  1.7 }
+      ]
+    },
+    {
+      "tier_key": "contenders",
+      "name": "Contenders",
+      "qualifying_count": 184,
+      "entries": [
+        { "rank": 1, "name": "L***a B.", "trader_id": 1007, "region": "EU",   "volume_usd":  22480, "delta_pct":  3.1 },
+        { "rank": 2, "name": "P***l C.", "trader_id": 1014, "region": "AMS",  "volume_usd":  19840, "delta_pct":  1.8 },
+        { "rank": 3, "name": "R***s O.", "trader_id": 1021, "region": "MEA",  "volume_usd":  17220, "delta_pct":  0.6 },
+        { "rank": 4, "name": "G***v K.", "trader_id": 1028, "region": "APAC", "volume_usd":  16110, "delta_pct": -1.2 },
+        { "rank": 5, "name": "N***a D.", "trader_id": 1035, "region": "EU",   "volume_usd":  14990, "delta_pct":  0.4 },
+        { "rank": 6, "name": "H***m S.", "trader_id": 1042, "region": "MEA",  "volume_usd":  13740, "delta_pct":  2.0 },
+        { "rank": 7, "name": "T***o F.", "trader_id": 1049, "region": "APAC", "volume_usd":  12580, "delta_pct":  0.1 }
+      ]
+    },
+    {
+      "tier_key": "starters",
+      "name": "Starters",
+      "qualifying_count": 612,
+      "entries": [
+        { "rank": 1, "name": "E***y V.", "trader_id": 1007, "region": "AMS",  "volume_usd":   4380, "delta_pct":  5.6 },
+        { "rank": 2, "name": "J***s L.", "trader_id": 1014, "region": "EU",   "volume_usd":   3920, "delta_pct":  2.7 },
+        { "rank": 3, "name": "Z***i Q.", "trader_id": 1021, "region": "APAC", "volume_usd":   3510, "delta_pct":  1.5 },
+        { "rank": 4, "name": "B***k N.", "trader_id": 1028, "region": "MEA",  "volume_usd":   2980, "delta_pct":  0.9 },
+        { "rank": 5, "name": "M***s P.", "trader_id": 1035, "region": "EU",   "volume_usd":   2640, "delta_pct": -0.4 },
+        { "rank": 6, "name": "A***h G.", "trader_id": 1042, "region": "AMS",  "volume_usd":   2350, "delta_pct":  1.1 },
+        { "rank": 7, "name": "I***l R.", "trader_id": 1049, "region": "MEA",  "volume_usd":   2090, "delta_pct":  0.6 }
+      ]
+    }
+  ]
+}

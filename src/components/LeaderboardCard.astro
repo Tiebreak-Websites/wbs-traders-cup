@@ -1,0 +1,123 @@
+---
+import copy from '../data/copy.en.json';
+const s = copy.leaderboard;
+---
+
+<section class="cc-leaderboard" id="leaderboard">
+  <div class="cc-wrap">
+    <div class="bt-card lb-card">
+      <header class="lb-card__head">
+        <div class="lb-card__title-row">
+          <h3 class="bt-h3 lb-card__title">{s.title}</h3>
+          <span class="bt-chip bt-chip-live">
+            <span class="bt-dot bt-dot-pulse" aria-hidden="true"></span>
+            {s.live_chip}
+          </span>
+        </div>
+        <div role="tablist" class="bt-tabs" aria-label="Tier filter">
+          {s.tabs.map((t, i) => (
+            <button
+              role="tab"
+              class="bt-tab"
+              data-lb-tier={t.id}
+              aria-selected={i === 2 ? 'true' : 'false'}
+            >
+              <span>{t.label}</span>
+            </button>
+          ))}
+        </div>
+      </header>
+
+      <div class="lb-card__cols">
+        <span>{s.columns.rank}</span>
+        <span>{s.columns.trader}</span>
+        <span>{s.columns.region}</span>
+        <span style="text-align:right">{s.columns.volume}</span>
+        <span style="text-align:right">{s.columns.delta}</span>
+      </div>
+
+      <div class="lb-card__rows" data-lb-body>
+        <div class="lb-card__loading">{s.loading_state}</div>
+      </div>
+
+      <footer class="lb-card__foot">
+        <span data-lb-foot-left>{s.footer_left}</span>
+        <span class="lb-card__foot-link">{s.footer_right}</span>
+      </footer>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lb-card { padding: 20px; }
+
+  .lb-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .lb-card__title-row { display: flex; align-items: center; gap: 12px; }
+  .lb-card__title { color: var(--bt-text-hi); }
+
+  .lb-card__cols {
+    display: grid;
+    grid-template-columns: 56px 1fr 130px 140px 110px;
+    gap: 16px;
+    padding: 10px 18px;
+    color: var(--bt-text-dim);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .lb-card__rows { display: block; }
+
+  .lb-card__loading,
+  .lb-card__empty,
+  .lb-card__error {
+    padding: 44px 24px;
+    text-align: center;
+    color: var(--bt-text-mid);
+    font-size: 14px;
+  }
+  .lb-card__error { color: var(--bt-down); }
+
+  .lb-card__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding: 0 6px;
+    color: var(--bt-text-dim);
+    font-size: 11px;
+  }
+  .lb-card__foot-link { color: var(--bt-text-mid); cursor: pointer; }
+
+  .lb-trader { color: var(--bt-text-hi); font-weight: 600; font-size: 14px; }
+  .lb-trader-id { font-size: 11px; color: var(--bt-text-dim); letter-spacing: 0.04em; }
+  .lb-trader-stack { display: flex; flex-direction: column; gap: 2px; }
+  .lb-you {
+    margin-left: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--bt-orange);
+  }
+  .lb-vol { text-align: right; color: var(--bt-text-hi); font-weight: 700; font-size: 15px; }
+  .lb-delta { text-align: right; font-weight: 600; font-size: 13px; }
+  .lb-delta--up   { color: var(--bt-up); }
+  .lb-delta--down { color: var(--bt-down); }
+  .lb-region { background: rgba(255,255,255,0.025); }
+
+  @media (max-width: 960px) {
+    .lb-card__cols { display: none; }
+  }
+</style>
+
+<script>
+  import '../scripts/leaderboard.js';
+</script>

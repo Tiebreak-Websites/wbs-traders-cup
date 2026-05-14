@@ -1,0 +1,36 @@
+---
+// ChampionsCupPage — 1:1 implementation of the Claude Design handoff bundle
+// (BrainTrade Champions Cup.html). Order matches cc-page.jsx:
+//   CCHero → CCTiers → CCLeaderboardSection → CCHowItWorks → CCFAQ → compliance footer.
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroPanel       from '../components/HeroPanel.astro';
+import TierStageCards  from '../components/TierStageCards.astro';
+import LeaderboardCard from '../components/LeaderboardCard.astro';
+import HowItWorks      from '../components/HowItWorks.astro';
+import FAQ             from '../components/FAQ.astro';
+import copy from '../data/copy.en.json';
+---
+
+<BaseLayout>
+  <div class="bt cc-page">
+    <HeroPanel />
+    <TierStageCards />
+    <LeaderboardCard />
+    <HowItWorks />
+    <FAQ />
+    <div class="cc-foot">
+      <p class="cc-compliance">{copy.compliance}</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .cc-compliance {
+    font-size: 10.5px;
+    color: var(--bt-text-dim);
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+    max-width: 920px;
+  }
+</style>
