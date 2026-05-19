@@ -1,24 +1,86 @@
 ---
-import copy from '../data/copy.en.json';
+import enCopy from '../data/copy.en.json';
+const { copy = enCopy } = Astro.props;
 const h = copy.how_it_works;
+const f = copy.formula;
 ---
 
-<section class="cc-how">
+<section class="cc-how" id="how">
   <div class="cc-wrap">
-    <div class="cc-section-head">
-      <span class="bt-eyebrow bt-eyebrow--left">{h.eyebrow}</span>
+    <div class="cc-section-head cc-section-head--center reveal">
+      <span class="bt-eyebrow">{h.eyebrow}</span>
       <h2 class="cc-section-title">{h.title}</h2>
     </div>
 
-    <div class="cc-how__grid">
+    <ol class="cc-how__grid">
       {h.steps.map((step, i) => (
-        <div class="cc-how__card">
-          <div class="cc-how__num">{step.n}</div>
-          <h3 class="cc-how__t">{step.t}</h3>
-          <p class="cc-how__d">{step.d}</p>
-          {i < h.steps.length - 1 && <div class="cc-how__connector" aria-hidden="true"></div>}
-        </div>
+        <li class="cc-how__card reveal" style={`--reveal-delay: ${i * 90}ms;`}>
+          <div class="cc-how__top">
+            <span class="cc-how__badge">{step.n}</span>
+            <span class="cc-how__connector" aria-hidden="true"></span>
+          </div>
+
+          <div class="cc-how__stat-row">
+            <span class="cc-how__stat">{step.stat}</span>
+            <span class="cc-how__stat-lbl">{step.stat_label}</span>
+          </div>
+
+          <div class="cc-how__body">
+            <h3 class="cc-how__t">{step.t}</h3>
+            <p class="cc-how__d">{step.d}</p>
+          </div>
+        </li>
       ))}
-    </div>
+    </ol>
   </div>
+
+  {f && (
+    <div class="cc-wrap cc-formula">
+      <div class="cc-formula__head reveal">
+        <span class="bt-eyebrow">{f.eyebrow}</span>
+        <h3 class="cc-formula__title">{f.title}</h3>
+      </div>
+
+      <div class="cc-formula__rewards">
+        {f.rewards.map((r, i) => (
+          <div class="cc-reward reveal" style={`--reveal-delay: ${i * 100}ms;`}>
+            <div class="cc-reward__line">
+              <span class="cc-reward__head">
+                <span class="cc-reward__stat">{r.stat}</span>
+                <span class="cc-reward__unit">{r.unit}</span>
+              </span>
+              <span class="cc-reward__per">{r.per}</span>
+            </div>
+            <p class="cc-reward__desc">{r.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="cc-formula__example reveal">
+        <div class="cc-formula__example-head">
+          <span class="bt-label">{f.example_label}</span>
+          <span class="cc-formula__example-caption">{f.example_caption}</span>
+        </div>
+
+        <div class="cc-formula__example-row">
+          {f.example_inputs.map((input, i) => (
+            <>
+              {i > 0 && <span class="cc-formula__op">+</span>}
+              <div class="cc-formula__chip">
+                <div class="cc-formula__chip-value bt-num">{input.value}</div>
+                <div class="cc-formula__chip-label">{input.label}</div>
+              </div>
+            </>
+          ))}
+          <span class="cc-formula__op cc-formula__op--equals">=</span>
+          <div class="cc-formula__result">
+            <div class="cc-formula__result-value bt-num">{f.example_value}</div>
+            <div class="cc-formula__result-unit">{f.example_unit}</div>
+          </div>
+        </div>
+
+        <div class="cc-formula__breakdown">{f.example_breakdown}</div>
+      </div>
+    </div>
+  )}
 </section>

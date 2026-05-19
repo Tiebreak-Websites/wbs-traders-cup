@@ -1,24 +1,34 @@
 ---
 import '../styles/global.css';
-import copy from '../data/copy.en.json';
+import enCopy from '../data/copy.en.json';
 
 interface Props {
   title?: string;
   description?: string;
+  copy?: any;
+  locale?: 'en' | 'ar';
 }
 
-const { title = copy.site.title, description = copy.site.description } = Astro.props;
+const {
+  copy = enCopy,
+  locale = (copy?._meta?.locale === 'ar' ? 'ar' : 'en'),
+  title = copy.site.title,
+  description = copy.site.description,
+} = Astro.props;
+
+const dir = locale === 'ar' ? 'rtl' : 'ltr';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const ogPath = `${base}${copy.site.og_image_path}`;
 const faviconPath = `${base}/favicon.svg`;
+const skipLabel = locale === 'ar' ? 'انتقل إلى المحتوى' : 'Skip to content';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale} dir={dir}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#05062E" />
+    <meta name="theme-color" content="#0050F9" />
     <title>{title}</title>
     <meta name="description" content={description} />
 
@@ -27,7 +37,7 @@ const faviconPath = `${base}/favicon.svg`;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogPath} />
-    <meta property="og:site_name" content="BrainTrade" />
+    <meta property="og:site_name" content="200Invest" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -35,20 +45,72 @@ const faviconPath = `${base}/favicon.svg`;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogPath} />
 
-    <!-- Fonts -->
+    <!-- Fonts: Inter for Latin + IBM Plex Sans Arabic for Arabic -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Favicon (replace with brand asset at handoff) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href={faviconPath} />
   </head>
   <body>
-    <a href="#main" class="skip-link">Skip to content</a>
+    <a href="#main" class="skip-link">{skipLabel}</a>
     <slot />
+
+    <!-- Scroll-position reveal — adds .is-visible to .reveal elements when they
+         enter the viewport. Triggers on load, scroll, and resize. -->
+    <script is:inline>
+      (function () {
+        var revealSelector = '.reveal:not(.is-visible)';
+        var ticking = false;
+
+        function check() {
+          ticking = false;
+          var winH = window.innerHeight || document.documentElement.clientHeight;
+          // Trigger when element's top is within ~92% of the viewport — gives a
+          // small "pre-load" margin so animations start just before the element
+          // fully enters view.
+          var triggerY = winH * 0.92;
+          document.querySelectorAll(revealSelector).forEach(function (el) {
+            var rect = el.getBoundingClientRect();
+            if (rect.top < triggerY && rect.bottom > 0) {
+              el.classList.add('is-visible');
+            }
+          });
+        }
+
+        function schedule() {
+          if (ticking) return;
+          ticking = true;
+          // setTimeout instead of rAF — some embedded browsers don't tick rAF.
+          setTimeout(check, 32);
+        }
+
+        window.addEventListener('scroll', schedule, { passive: true });
+        window.addEventListener('resize', schedule);
+        document.addEventListener('cc:reveal:rescan', check);
+
+        // Initial check — runs as soon as the DOM is parsed.
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', check);
+        } else {
+          check();
+        }
+        // Belt-and-suspenders: run a few more checks just after load in case
+        // images/fonts shift the layout and put elements over the trigger line.
+        setTimeout(check, 100);
+        setTimeout(check, 400);
+
+        // Safety net: if for any reason scroll/raf don't fire (some embedded
+        // browsers), make sure elements currently in the viewport are revealed.
+        // Below-the-fold elements STAY hidden until user scrolls to them — we
+        // do NOT force them visible (that would defeat the scroll-trigger UX).
+        setTimeout(check, 2500);
+      })();
+    </script>
 
     <style is:global>
       .skip-link {
@@ -62,6 +124,7 @@ const faviconPath = `${base}/favicon.svg`;
         font-weight: 600;
         z-index: 100;
         transition: top 0.2s ease;
+        text-decoration: none;
       }
       .skip-link:focus { top: 1rem; }
     </style>

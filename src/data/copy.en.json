@@ -1,101 +1,173 @@
 {
   "_meta": {
     "locale": "en",
-    "brand": "BrainTrade",
-    "competition": "Champions Cup",
-    "internal_code": "champions_cup_2026"
+    "brand": "200Invest",
+    "competition": "Traders Championship 2026",
+    "internal_code": "traders_championship_2026",
+    "market": "MENA"
   },
 
   "site": {
-    "title": "BrainTrade Champions Cup 2026",
-    "description": "A three-stage trading tournament. Deposit qualifies your tier — trading volume sets your rank.",
-    "og_image_path": "/og-champions-cup.jpg"
+    "title": "200Invest Traders Championship 2026 — Compete for $26,000",
+    "description": "Sharia-friendly, skill-based trading competition for the MENA market. Deposit $200 to qualify. World Cup window: 1 June → 19 July 2026.",
+    "og_image_path": "/og-traders-championship.jpg"
+  },
+
+  "mechanic": {
+    "ftd_min_usd": 200,
+    "points_per_200_deposit": 50,
+    "points_per_closed_trade": 5,
+    "final_week_multiplier": 2,
+    "final_week_start": "2026-07-13",
+    "final_week_end": "2026-07-19",
+    "deposit_points_soft_cap_usd": 10000,
+    "deposit_points_soft_cap_pts": 2500,
+    "campaign_start": "2026-06-01",
+    "campaign_end": "2026-07-19T23:59:00+04:00",
+    "winners_announced": "2026-07-20",
+    "currency": "USD",
+    "timezone_label": "GST"
   },
 
   "hero": {
-    "headline": "Trader's Cup",
-    "subhead": "A three-stage trading tournament. Deposit qualifies your tier — trading volume sets your rank.",
-    "countdown_label": "Cup ends in",
-    "target_date": "2026-07-19T23:59:00Z",
-    "cta": "Open Account & Join",
-    "cta_href": "https://thebraintrade.com/register?utm_campaign=champions_cup_2026"
+    "eyebrow": "Traders Championship · 2026",
+    "headline_pre": "The MENA Trading Championship",
+    "headline_emphasis": "2026",
+    "subhead": "Deposit $200. Compete for a $26,000 prize pool based on skill, strategy, and consistency. Built on Islamic accounts with a transparent leaderboard.",
+    "countdown_label": "Until end",
+    "target_date": "2026-07-19T23:59:00+04:00",
+    "cta": "Enter the Championship",
+    "cta_href": "https://200invest.com/register?utm_campaign=traders_championship_2026&utm_source=landing",
+    "secondary_cta": "View rules & scoring",
+    "secondary_cta_href": "#how",
+    "trophy_label_top": "200",
+    "trophy_label_mid": "CHAMPION",
+    "trophy_label_bot": "2026"
   },
 
-  "tiers": [
-    {
-      "key": "starters",
-      "num": "I",
-      "name": "Starters",
-      "deposit": "$500 – $4,999",
-      "award": "Premium courses",
-      "color": "var(--bt-tier-1)",
-      "desc": "Group stage. Build your foundation and qualify your tier with first deposit.",
-      "seats": "Open"
-    },
-    {
-      "key": "contenders",
-      "num": "II",
-      "name": "Contenders",
-      "deposit": "$5,000 – $24,999",
-      "award": "1-on-1 coaching · Pro tools",
-      "color": "var(--bt-tier-2)",
-      "desc": "Knockouts. Trading volume decides who breaks through to the final tier.",
-      "seats": "Filling"
-    },
-    {
-      "key": "champions",
-      "num": "III",
-      "name": "Champions",
-      "deposit": "$25,000+",
-      "award": "Capital allocation · Cup trophy",
-      "color": "var(--bt-tier-3)",
-      "desc": "Final stage. Top volume traders compete for the Champions Cup.",
-      "seats": "Elite"
-    }
-  ],
+  "prizes": {
+    "eyebrow": "Prize pool",
+    "title": "Three funded trading accounts.",
+    "subtitle": "Islamic (swap-free) terms. Winners decided by the final Champion Points leaderboard.",
+    "champion_label": "Champion",
+    "items": [
+      {
+        "place": "1st",
+        "amount": "$26,000",
+        "label": "The 2026 Champion",
+        "color": "var(--bt-trophy-deep)"
+      },
+      {
+        "place": "2nd",
+        "amount": "$14,000",
+        "label": "Funded account",
+        "color": "var(--bt-silver-deep)"
+      },
+      {
+        "place": "3rd",
+        "amount": "$7,000",
+        "label": "Funded account",
+        "color": "var(--bt-bronze-deep)"
+      }
+    ]
+  },
 
   "leaderboard": {
-    "title": "Live Leaderboard",
+    "title": "Live Champion Points",
     "live_chip": "Live",
-    "tabs": [
-      { "id": "starters",   "label": "Starters" },
-      { "id": "contenders", "label": "Contenders" },
-      { "id": "champions",  "label": "Champions" }
-    ],
+    "header_eyebrow": "Live standings",
+    "card_title": "Top traders",
+    "card_legend": "Sorted by Champion Points · Updates every 30 sec",
     "columns": {
       "rank": "Rank",
       "trader": "Trader",
-      "region": "Region",
-      "volume": "Volume",
-      "delta": "24h"
+      "country": "Country",
+      "deposits": "Deposits",
+      "trades": "Trades",
+      "points": "Points"
     },
     "footer_left": "Updated 12 sec ago · refreshes every 30 sec",
-    "footer_right": "View full ranking →",
+    "footer_right": "Names masked for privacy",
     "you_label": "YOU",
     "loading_state": "Loading leaderboard…",
-    "empty_state": "The leaderboard will appear here once the competition begins.",
-    "error_state": "Couldn't load the leaderboard. Refresh to try again."
+    "empty_state": "The leaderboard will appear here once the championship begins.",
+    "error_state": "Couldn't load the leaderboard. Refresh to try again.",
+    "joined_label": "Joined"
   },
 
   "how_it_works": {
     "eyebrow": "How it works",
-    "title": "Three steps to the Cup.",
+    "title": "No draw. No luck. Just results.",
     "steps": [
       {
         "n": "01",
+        "stat": "$200",
+        "stat_label": "FTD",
         "t": "Deposit to qualify",
-        "d": "Your total deposit places you into a tier: Starters, Contenders, or Champions."
+        "d": "A first-time deposit of $200 or more opens your spot in the Championship. One qualification per KYC-verified account."
       },
       {
         "n": "02",
-        "t": "Trade to rank",
-        "d": "Inside your tier, your trading volume determines your leaderboard position."
+        "stat": "+50",
+        "stat_label": "pts / $200",
+        "t": "Climb with every deposit",
+        "d": "Every $200 you fund your account with adds 50 Champion Points. A bigger deposit, a bigger head start on the leaderboard."
       },
       {
         "n": "03",
-        "t": "Finish at the top",
-        "d": "Top-ranked traders in each tier qualify for prizes: ranks 1–3 get top prizes, and ranks 4–10 get runner-up prizes."
+        "stat": "+5",
+        "stat_label": "pts / trade",
+        "t": "Trade your way up",
+        "d": "Each closed trade during the championship window adds 5 points. One metric. No lot multipliers, no parallel scoring."
+      },
+      {
+        "n": "04",
+        "stat": "2×",
+        "stat_label": "final week",
+        "t": "Sprint the closing week",
+        "d": "Between 13 → 19 July 2026, every point you earn counts double. The closing stretch decides the podium."
       }
+    ]
+  },
+
+  "formula": {
+    "eyebrow": "The Points Formula",
+    "title": "Two ways to climb the leaderboard.",
+    "rewards": [
+      {
+        "stat": "+50",
+        "unit": "pts",
+        "per": "per $200 deposited",
+        "desc": "Bigger deposit, bigger head start."
+      },
+      {
+        "stat": "+5",
+        "unit": "pts",
+        "per": "per closed trade",
+        "desc": "Every closed trade adds points."
+      }
+    ],
+    "example_label": "Worked example",
+    "example_caption": "Plug in real numbers, see the points.",
+    "example_inputs": [
+      { "value": "$1,000", "label": "deposited" },
+      { "value": "10",     "label": "trades closed" }
+    ],
+    "example_breakdown": "(1,000 ÷ 200) × 50 = 250 · 10 × 5 = 50",
+    "example_value": "300",
+    "example_unit": "Champion Points"
+  },
+
+  "eligibility": {
+    "eyebrow": "Eligibility & conduct",
+    "title": "Open, transparent, and rule-clean.",
+    "items": [
+      "Open to all KYC-verified 200Invest clients in eligible MENA jurisdictions.",
+      "Islamic (swap-free) accounts fully eligible — no exclusions.",
+      "Trading must use the client's own funds and follow standard risk-management rules.",
+      "Wash trading, hedging-only patterns, and other artificial-volume tactics → disqualification.",
+      "One account per client. Multi-account abuse → disqualification.",
+      "Standings lock at 23:59 GST on 19 July 2026. Winners announced 20 July 2026."
     ]
   },
 
@@ -103,14 +175,49 @@
     "eyebrow": "Frequently asked",
     "title": "Questions, answered.",
     "items": [
-      { "t": "Is the Cup free to enter?", "d": "Yes — opening a BrainTrade account is free. To qualify for a tier you'll need to make a first deposit; the amount picks your starting tier. You can deposit anytime before the countdown ends." },
-      { "t": "What if I'm new to trading?", "d": "The Starters tier is built exactly for that. You'll get access to BrainTrade Academy courses on day one, and the leaderboard there is full of people in the same boat." },
-      { "t": "Can I move tiers during the Cup?", "d": "You can only move up. Climbing happens automatically when your total deposit passes the next tier's threshold. You never drop back down once qualified." },
-      { "t": "How is trading volume calculated?", "d": "USD-equivalent of every executed trade, summed across spot and derivatives. Self-matching and wash trading are detected and excluded." },
-      { "t": "When are prizes paid out?", "d": "Cash settles to your verified withdrawal method within 14 days of cup close. Coaching slots are scheduled within 30 days. Capital allocations begin the following quarter." },
-      { "t": "Is this gambling?", "d": "No. It's a trading-volume competition using your real account against your own market view. Trading carries risk; the Cup doesn't change that." }
+      {
+        "t": "Is the Championship Sharia-compliant?",
+        "d": "Yes. The mechanic is structured to satisfy mainstream contemporary Islamic finance scholarship: your deposit funds your own trading account and stays fully yours, Islamic (swap-free) accounts are fully eligible, and winners are decided by a transparent skill leaderboard — not by chance. Final sign-off is routed to 200Invest's Sharia advisory board before launch."
+      },
+      {
+        "t": "Is this gambling or a lottery?",
+        "d": "No. There is no draw and no random selection. The $200 deposit is not a lottery fee — it funds your own account and remains yours to trade. The top three traders at the final standings are the top three on the Champion Points leaderboard. Results, not chance."
+      },
+      {
+        "t": "How are Champion Points calculated?",
+        "d": "Two inputs. Every $200 deposited during the window adds 50 points. Every closed trade adds 5 points. The formula is exactly: (Deposits ÷ $200) × 50 + (Closed Trades × 5). During the final week (13–19 July), all points earned count 2×."
+      },
+      {
+        "t": "What counts as an Islamic account?",
+        "d": "A swap-free account: no overnight interest (riba) on positions. 200Invest's Islamic account product is fully eligible for the Championship and competes on the same leaderboard as all other accounts."
+      },
+      {
+        "t": "Is there a cap on deposits?",
+        "d": "Deposit points are soft-capped at $10,000 deposited (= 2,500 points). Beyond that, the leaderboard is decided by trading activity. This protects responsible-trading principles and keeps the competition fair."
+      },
+      {
+        "t": "What about the risk of loss?",
+        "d": "Trading carries risk of loss. The Championship rewards skill and consistency over the campaign window — your deposit funds your own account and is exposed to normal market risk like any trading. Trade within your means and use the risk-management tools on the platform."
+      },
+      {
+        "t": "When and how are winners announced?",
+        "d": "Final standings lock at 23:59 GST on 19 July 2026 (World Cup Final day). Winners are announced 20 July 2026 on the 200Invest website, by email, and across our social channels. Funded trading accounts are credited on Islamic terms."
+      }
     ]
   },
 
-  "compliance": "This is a trading-volume competition with deposit-based tier qualification. Terms, eligibility, and market-specific rules apply. Trading involves risk of loss; past performance is not indicative of future results."
+  "sticky_cta": {
+    "title": "Deposit $200. Enter the Championship.",
+    "subtitle": "Skill-based · Islamic accounts eligible · Compete for $26,000",
+    "cta": "Start now",
+    "cta_href": "https://200invest.com/register?utm_campaign=traders_championship_2026&utm_source=sticky_bar"
+  },
+
+  "controls": {
+    "language_label": "Language",
+    "switch_to_en": "EN",
+    "switch_to_ar": "AR"
+  },
+
+  "compliance": "The 200Invest Traders Championship 2026 is a skill-based trading competition. Your deposit funds your own trading account and remains fully yours. Winners are determined by a transparent Champion Points leaderboard, not by chance. Islamic (swap-free) accounts fully eligible. KYC, eligibility, and market-specific rules apply. Trading carries risk of loss. Terms & Conditions apply. © 2026 200Invest."
 }

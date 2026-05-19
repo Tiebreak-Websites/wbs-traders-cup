@@ -1,9 +1,9 @@
 {
-  "name": "braintrade-champions-cup",
+  "name": "200invest-traders-championship",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "BrainTrade Champions Cup — Trader's Cup 2026 landing page (sub-page of thebraintrade.com)",
+  "description": "200Invest Traders Championship 2026 — Sharia-friendly skill-based trading competition (sub-page of 200invest.com) for the MENA market",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

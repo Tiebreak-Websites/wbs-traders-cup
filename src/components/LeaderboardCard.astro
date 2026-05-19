@@ -1,39 +1,37 @@
 ---
-import copy from '../data/copy.en.json';
+import enCopy from '../data/copy.en.json';
+const { copy = enCopy } = Astro.props;
 const s = copy.leaderboard;
 ---
 
 <section class="cc-leaderboard" id="leaderboard">
   <div class="cc-wrap">
-    <div class="bt-card lb-card">
+    <div class="cc-section-head cc-section-head--center reveal">
+      <span class="bt-eyebrow">{s.header_eyebrow}</span>
+      <h2 class="cc-section-title">{s.title}</h2>
+    </div>
+
+    <div class="bt-card lb-card reveal" style="--reveal-delay: 120ms;" data-joined-label={s.joined_label} data-you-label={s.you_label} data-loading-text={s.loading_state} data-empty-text={s.empty_state} data-error-text={s.error_state}>
       <header class="lb-card__head">
         <div class="lb-card__title-row">
-          <h3 class="bt-h3 lb-card__title">{s.title}</h3>
+          <h3 class="bt-h3 lb-card__title">{s.card_title}</h3>
           <span class="bt-chip bt-chip-live">
             <span class="bt-dot bt-dot-pulse" aria-hidden="true"></span>
             {s.live_chip}
           </span>
         </div>
-        <div role="tablist" class="bt-tabs" aria-label="Tier filter">
-          {s.tabs.map((t, i) => (
-            <button
-              role="tab"
-              class="bt-tab"
-              data-lb-tier={t.id}
-              aria-selected={i === 2 ? 'true' : 'false'}
-            >
-              <span>{t.label}</span>
-            </button>
-          ))}
+        <div class="lb-card__legend">
+          <span>{s.card_legend}</span>
         </div>
       </header>
 
       <div class="lb-card__cols">
         <span>{s.columns.rank}</span>
         <span>{s.columns.trader}</span>
-        <span>{s.columns.region}</span>
-        <span style="text-align:right">{s.columns.volume}</span>
-        <span style="text-align:right">{s.columns.delta}</span>
+        <span class="lb-col--center">{s.columns.country}</span>
+        <span class="lb-col--end">{s.columns.deposits}</span>
+        <span class="lb-col--end">{s.columns.trades}</span>
+        <span class="lb-col--end">{s.columns.points}</span>
       </div>
 
       <div class="lb-card__rows" data-lb-body>
@@ -42,13 +40,14 @@ const s = copy.leaderboard;
 
       <footer class="lb-card__foot">
         <span data-lb-foot-left>{s.footer_left}</span>
-        <span class="lb-card__foot-link">{s.footer_right}</span>
+        <span>{s.footer_right}</span>
       </footer>
     </div>
   </div>
 </section>
 
-<style>
+<style is:global>
+  /* Global so dynamically-rendered rows from leaderboard.js pick these up */
   .lb-card { padding: 20px; }
 
   .lb-card__head {
@@ -61,18 +60,26 @@ const s = copy.leaderboard;
   }
   .lb-card__title-row { display: flex; align-items: center; gap: 12px; }
   .lb-card__title { color: var(--bt-text-hi); }
+  .lb-card__legend {
+    font-size: 12px;
+    color: var(--bt-text-dim);
+    letter-spacing: 0.02em;
+  }
 
   .lb-card__cols {
     display: grid;
-    grid-template-columns: 56px 1fr 130px 140px 110px;
-    gap: 16px;
-    padding: 10px 18px;
+    grid-template-columns: var(--lb-cols);
+    gap: var(--lb-gap);
+    padding: 10px var(--lb-pad-x);
+    padding-left: calc(var(--lb-pad-x) + 3px);
     color: var(--bt-text-dim);
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.12em;
   }
+  .lb-col--end { justify-self: end; }
+  .lb-col--center { justify-self: center; }
 
   .lb-card__rows { display: block; }
 
@@ -90,12 +97,14 @@ const s = copy.leaderboard;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 12px;
-    padding: 0 6px;
+    margin-top: 14px;
+    padding: 14px 6px 2px;
+    border-top: 1px solid var(--bt-bg-line);
     color: var(--bt-text-dim);
     font-size: 11px;
+    flex-wrap: wrap;
+    gap: 8px;
   }
-  .lb-card__foot-link { color: var(--bt-text-mid); cursor: pointer; }
 
   .lb-trader { color: var(--bt-text-hi); font-weight: 600; font-size: 14px; }
   .lb-trader-id { font-size: 11px; color: var(--bt-text-dim); letter-spacing: 0.04em; }
@@ -105,13 +114,39 @@ const s = copy.leaderboard;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.14em;
-    color: var(--bt-orange);
+    color: var(--bt-accent);
   }
-  .lb-vol { text-align: right; color: var(--bt-text-hi); font-weight: 700; font-size: 15px; }
-  .lb-delta { text-align: right; font-weight: 600; font-size: 13px; }
-  .lb-delta--up   { color: var(--bt-up); }
-  .lb-delta--down { color: var(--bt-down); }
-  .lb-region { background: rgba(255,255,255,0.025); }
+  .lb-country {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    gap: 8px;
+    padding: 4px 10px 4px 6px;
+    border-radius: var(--bt-r-pill);
+    background: var(--bt-bg-2);
+    border: 1px solid var(--bt-bg-line);
+    color: var(--bt-text-mid);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+  .lb-country__flag {
+    display: block;
+    width: 20px;
+    height: 14px;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(15, 22, 38, 0.08);
+    object-fit: cover;
+  }
+  .lb-country__code {
+    color: var(--bt-text);
+    letter-spacing: 0.04em;
+  }
+  .lb-deposit { justify-self: end; color: var(--bt-text); font-weight: 500; font-size: 13px; }
+  .lb-trades  { justify-self: end; color: var(--bt-text); font-weight: 500; font-size: 13px; }
+  .lb-points  { justify-self: end; color: var(--bt-text-hi); font-weight: 700; font-size: 16px; }
 
   @media (max-width: 960px) {
     .lb-card__cols { display: none; }
