@@ -1,85 +1,223 @@
 ---
-import copy from '../data/copy.en.json';
+import enCopy from '../data/copy.en.json';
+const { copy = enCopy } = Astro.props;
 const h = copy.hero;
+const isAr = copy._meta?.locale === 'ar';
+const labels = {
+  days:    isAr ? 'أيام'   : 'Days',
+  hours:   isAr ? 'ساعات'  : 'Hours',
+  minutes: isAr ? 'دقائق'  : 'Minutes',
+  seconds: isAr ? 'ثوانٍ'   : 'Seconds',
+  arrow:   isAr ? '←' : '→',
+};
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const logoSrc = `${base}/braintrade-logo-light.svg`;
+const logoSrc = `${base}/200invest-logo.svg`;
 ---
 
 <section class="cc-hero" id="main">
-  <div class="bt-stage-bg" aria-hidden="true"></div>
-  <div class="bt-pitch" aria-hidden="true"></div>
+  <!-- Full-width chart backdrop, sits behind everything in the hero -->
+  <img class="cc-hero__bg"
+       src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/hero-bg.png`}
+       alt=""
+       aria-hidden="true"
+       loading="eager"
+       decoding="async" />
 
-  <div class="cc-hero__inner">
-    <img class="cc-hero__logo" src={logoSrc} alt="BrainTrade" width="180" height="37" />
+  <!-- Brand logo (always visible inside the hero, top-left) -->
+  <img class="cc-hero-logo"
+       src={logoSrc}
+       alt="200Invest"
+       width="120"
+       height="20" />
 
-    <h1 class="cc-headline">{h.headline}</h1>
+  <div class="cc-hero__grid">
+    <!-- LEFT: copy + countdown + CTA -->
+    <div class="cc-hero__copy">
+      <span class="bt-eyebrow bt-eyebrow--left reveal">{h.eyebrow}</span>
 
-    <p class="cc-subhead">{h.subhead}</p>
+      <h1 class="cc-headline reveal" style="--reveal-delay: 80ms;">
+        {h.headline_pre} <span class="cc-headline__accent">{h.headline_emphasis}</span>
+      </h1>
 
-    <div class="cc-countdown" data-countdown data-target={h.target_date}>
-      <div class="cc-countdown__lbl">
-        <span class="bt-dot bt-dot-pulse" aria-hidden="true"></span>
-        <span class="bt-label">{h.countdown_label}</span>
+      <p class="cc-subhead reveal" style="--reveal-delay: 160ms;">{h.subhead}</p>
+
+      <div class="cc-countdown reveal" style="--reveal-delay: 240ms;" data-countdown data-target={h.target_date}>
+        <div class="cc-countdown__lbl">
+          <span class="bt-dot bt-dot-pulse" aria-hidden="true"></span>
+          <span class="bt-label">{h.countdown_label}</span>
+        </div>
+        <div class="cc-countdown__row" role="timer" aria-live="polite">
+          <div class="bt-cd">
+            <span class="bt-cd-num bt-num" data-d>00</span>
+            <span class="bt-cd-lbl">{labels.days}</span>
+          </div>
+          <span class="bt-cd-sep" aria-hidden="true">:</span>
+          <div class="bt-cd">
+            <span class="bt-cd-num bt-num" data-h>00</span>
+            <span class="bt-cd-lbl">{labels.hours}</span>
+          </div>
+          <span class="bt-cd-sep" aria-hidden="true">:</span>
+          <div class="bt-cd">
+            <span class="bt-cd-num bt-num" data-m>00</span>
+            <span class="bt-cd-lbl">{labels.minutes}</span>
+          </div>
+          <span class="bt-cd-sep" aria-hidden="true">:</span>
+          <div class="bt-cd">
+            <span class="bt-cd-num bt-num" data-s>00</span>
+            <span class="bt-cd-lbl">{labels.seconds}</span>
+          </div>
+        </div>
       </div>
-      <div class="cc-countdown__row" role="timer" aria-live="polite">
-        <div class="bt-cd">
-          <span class="bt-cd-num bt-num" data-d>00</span>
-          <span class="bt-cd-lbl">Days</span>
-        </div>
-        <span class="bt-cd-sep" aria-hidden="true">:</span>
-        <div class="bt-cd">
-          <span class="bt-cd-num bt-num" data-h>00</span>
-          <span class="bt-cd-lbl">Hours</span>
-        </div>
-        <span class="bt-cd-sep" aria-hidden="true">:</span>
-        <div class="bt-cd">
-          <span class="bt-cd-num bt-num" data-m>00</span>
-          <span class="bt-cd-lbl">Minutes</span>
-        </div>
-        <span class="bt-cd-sep" aria-hidden="true">:</span>
-        <div class="bt-cd">
-          <span class="bt-cd-num bt-num" data-s>00</span>
-          <span class="bt-cd-lbl">Seconds</span>
-        </div>
+
+      <div class="cc-hero__cta-row reveal" style="--reveal-delay: 320ms;">
+        <a href={h.cta_href} class="bt-btn bt-btn-primary cc-hero__cta">
+          {h.cta} {labels.arrow}
+        </a>
+        <a href={h.secondary_cta_href} class="cc-hero__rules">
+          {h.secondary_cta} {labels.arrow}
+        </a>
       </div>
     </div>
 
-    <a href={h.cta_href} class="bt-btn bt-btn-primary cc-hero__cta">
-      {h.cta} →
-    </a>
+    <!-- RIGHT: trophy (transparent PNG) sitting on top of the chart backdrop -->
+    <div class="cc-hero__visual reveal" style="--reveal-delay: 120ms;">
+      <div class="cc-hero__trophy-wrap">
+        <div class="cc-hero__halo" aria-hidden="true"></div>
+        <img class="cc-hero__trophy-img"
+             src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/hero-trophy.png`}
+             alt="Championship trophy"
+             width="520"
+             height="660"
+             loading="eager"
+             decoding="async" />
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
-  .cc-hero__logo { display: block; height: auto; }
-  .cc-hero__cta { margin-top: 4px; }
+  /* Two-column hero with trophy */
+  .cc-hero {
+    position: relative;
+    padding: 24px 56px 56px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  /* Full-bleed chart backdrop covering the entire hero — behind every element */
+  .cc-hero__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+    pointer-events: none;
+    user-select: -webkit-none;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 78%, transparent 100%);
+            mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 78%, transparent 100%);
+    opacity: 0.85;
+  }
+  .cc-hero__grid {
+    position: relative;
+    z-index: 1;
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
 
-  .cc-countdown {
+  .cc-hero__copy {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    align-items: center;
+    gap: 22px;
+    align-items: flex-start;
   }
-  .cc-countdown__lbl {
+  html[dir="rtl"] .cc-hero__copy { align-items: flex-end; text-align: right; }
+
+  /* Trophy column — sits on top of the section-wide chart backdrop */
+  .cc-hero__visual {
+    position: relative;
+    min-height: 540px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    white-space: nowrap;
+    justify-content: center;
   }
-  .cc-countdown__row {
+  /* Trophy (transparent PNG) on top of the chart */
+  .cc-hero__trophy-wrap {
+    position: relative;
+    z-index: 1;
+    width: 380px;
+    max-width: 100%;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+  }
+  .cc-hero__trophy-img {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 30px 60px rgba(45, 117, 255, 0.45));
+    animation: trophyFloat 5.2s ease-in-out infinite;
+  }
+  @keyframes trophyFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+  .cc-hero__halo {
+    position: absolute;
+    inset: -10% -15% -20% -15%;
+    background:
+      radial-gradient(closest-side at 50% 50%, rgba(45, 117, 255, 0.55), transparent 70%),
+      radial-gradient(closest-side at 50% 92%, rgba(45, 117, 255, 0.35), transparent 70%);
+    filter: blur(8px);
+    z-index: 0;
+    pointer-events: none;
+    animation: trophyGlow 3.4s ease-in-out infinite;
+  }
+  @keyframes trophyGlow {
+    0%, 100% { opacity: 0.80; transform: scale(1); }
+    50%      { opacity: 1;    transform: scale(1.06); }
   }
 
+  /* CTA row */
+  .cc-hero__cta-row {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .cc-hero__rules {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--bt-text-mid);
+    letter-spacing: 0.005em;
+    text-decoration: none;
+    transition: color .2s ease, transform .2s ease;
+  }
+  .cc-hero__rules:hover { color: var(--bt-accent); transform: translateX(2px); }
+  html[dir="rtl"] .cc-hero__rules:hover { transform: translateX(-2px); }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .cc-hero { padding: 16px 32px 48px; }
+    .cc-hero__grid { grid-template-columns: 1fr; gap: 24px; }
+    .cc-hero__visual { min-height: 420px; order: -1; }
+    .cc-hero__trophy-wrap { width: 280px; }
+  }
   @media (max-width: 640px) {
-    .cc-countdown__row { gap: 4px; flex-wrap: wrap; justify-content: center; }
-    .bt-cd { min-width: 64px; padding: 8px 10px 6px; }
-    .bt-cd-num { font-size: 30px !important; }
-    .bt-cd-sep { font-size: 24px; padding: 0 2px; }
+    .cc-hero { padding: 8px 20px 36px; }
+    .cc-hero__trophy-wrap { width: 220px; }
+    .cc-hero__visual { min-height: 320px; }
   }
 </style>
 
 <script>
   import '../scripts/countdown.js';
+  // prize-count.js no longer needed — the prize amount lives in the prize cards, not the headline.
 </script>

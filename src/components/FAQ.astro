@@ -1,18 +1,20 @@
 ---
-import copy from '../data/copy.en.json';
+import enCopy from '../data/copy.en.json';
+const { copy = enCopy } = Astro.props;
 const f = copy.faq;
+const compliance = copy.compliance;
 ---
 
 <section class="cc-faq">
   <div class="cc-wrap cc-faq__wrap">
-    <div class="cc-section-head cc-section-head--center">
+    <div class="cc-section-head cc-section-head--center reveal">
       <span class="bt-eyebrow">{f.eyebrow}</span>
       <h2 class="cc-section-title">{f.title}</h2>
     </div>
 
     <div class="cc-faq__list" data-faq-list>
       {f.items.map((item, i) => (
-        <div class={`cc-faq__item${i === 0 ? ' is-open' : ''}`} data-faq-item>
+        <div class={`cc-faq__item reveal${i === 0 ? ' is-open' : ''}`} style={`--reveal-delay: ${i * 60}ms;`} data-faq-item>
           <button class="cc-faq__head" data-faq-toggle aria-expanded={i === 0 ? 'true' : 'false'}>
             <span class="cc-faq__q">{item.t}</span>
             <span class="cc-faq__icon" aria-hidden="true">
@@ -26,6 +28,8 @@ const f = copy.faq;
         </div>
       ))}
     </div>
+
+    <p class="cc-faq__compliance reveal">{compliance}</p>
   </div>
 </section>
 

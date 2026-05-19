@@ -1,65 +1,100 @@
-// Leaderboard — matches the design prototype's BTLeaderboard rendering.
-// Reads from public/data/leaderboard-default.json. Polls every 30s (per design
-// footer copy "refreshes every 30 sec"). Renders rows with .bt-lb-row +
-// rank pill, trader name + id, region chip, volume, 24h delta.
+// Champion Points leaderboard — single flat board sorted by points.
+// Reads from public/data/leaderboard-default.json. Polls every 30s.
+// Names are masked server-side ("Ahmed A***i"). Never expose raw PII.
+// If the current_user is outside the top N visible rows, render a
+// divider + their pinned row below so they always see where they stand.
 
-const BASE = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/data`;
+const BASE_URL = import.meta.env.BASE_URL.replace(/\/$/, '');
+const BASE = `${BASE_URL}/data`;
+const FLAGS = `${BASE_URL}/flags`;
 const FEED = 'leaderboard-default.json';
 const POLL_MS = 30 * 1000;
+const TOP_N = 10;
 
+const isAr = document.documentElement.lang === 'ar';
+const locale = isAr ? 'ar-EG' : 'en-US';
 const fmt = {
-  usd: (n) => '$' + Math.round(n).toLocaleString('en-US'),
-  delta: (d) => `${d >= 0 ? '▲' : '▼'} ${Math.abs(d).toFixed(1)}%`,
+  usd: (n) => isAr
+    ? Math.round(n).toLocaleString(locale) + '$'
+    : '$' + Math.round(n).toLocaleString(locale),
+  num: (n) => Math.round(n).toLocaleString(locale),
 };
 
-const state = { tier: 'champions', data: null, timer: null, rows: 5 };
+const state = { data: null, timer: null };
 
 const $ = (s, r = document) => r.querySelector(s);
-const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const card = () => document.querySelector('.lb-card');
+const t = (key, fallback) => (card()?.dataset?.[key]) || fallback;
 
-const tierByKey = (k) => state.data ? state.data.tiers.find((t) => t.tier_key === k) : null;
+function rowHtml(r, isMe, index) {
+  const rankCls = r.rank <= 3 ? `bt-rank bt-rank-${r.rank}` : 'bt-rank';
+  const code = (r.country || '').toLowerCase();
+  const youLabel = t('youLabel', 'YOU');
+  const joinedLabel = t('joinedLabel', 'Joined');
+  // Each row gets its own animation delay (stagger), capped so late rows still feel snappy.
+  const delay = Math.min((index || 0) * 60, 700);
+  return `
+    <div class="bt-lb-row reveal lb-row-anim${isMe ? ' is-you' : ''}" style="--reveal-delay: ${delay}ms;">
+      <span class="${rankCls}">${r.rank}</span>
+      <div class="lb-trader-stack">
+        <span class="lb-trader">${r.name_masked}${isMe ? `<span class="lb-you">${youLabel}</span>` : ''}</span>
+        <span class="lb-trader-id">${joinedLabel} ${r.joined_month || '—'}</span>
+      </div>
+      <span class="lb-country">
+        <img class="lb-country__flag" src="${FLAGS}/${code}.svg" alt="" width="20" height="14" loading="lazy" />
+        <span class="lb-country__code">${r.country}</span>
+      </span>
+      <span class="lb-deposit bt-num">${fmt.usd(r.deposits_usd)}</span>
+      <span class="lb-trades bt-num">${fmt.num(r.trades)}</span>
+      <span class="lb-points bt-num">${fmt.num(r.points)}</span>
+    </div>
+  `;
+}
 
 function renderRows() {
   const body = $('[data-lb-body]');
   if (!body) return;
 
   if (!state.data) {
-    body.innerHTML = `<div class="lb-card__loading">Loading leaderboard…</div>`;
+    body.innerHTML = `<div class="lb-card__loading">${t('loadingText', 'Loading leaderboard…')}</div>`;
     return;
   }
 
-  const tier = tierByKey(state.tier);
-  const rows = tier ? tier.entries.slice(0, state.rows) : [];
+  const rows = (state.data.leaderboard || []).slice(0, TOP_N);
   const me = state.data.current_user || null;
-  const meInThisTier = me && me.tier_key === state.tier;
+  const meInTop = me && rows.some((r) => r.rank === me.rank);
 
   if (!rows.length) {
-    body.innerHTML = `<div class="lb-card__empty">The leaderboard will appear here once the competition begins.</div>`;
+    body.innerHTML = `<div class="lb-card__empty">${t('emptyText', 'The leaderboard will appear here once the championship begins.')}</div>`;
     return;
   }
 
-  body.innerHTML = rows.map((r) => {
-    const isMe = meInThisTier && me.rank === r.rank;
-    const rankCls = r.rank <= 3 ? `bt-rank bt-rank-${r.rank}` : 'bt-rank';
-    const deltaCls = r.delta_pct >= 0 ? 'lb-delta--up' : 'lb-delta--down';
-    return `
-      <div class="bt-lb-row${isMe ? ' is-you' : ''}">
-        <span class="${rankCls}">${r.rank}</span>
-        <div class="lb-trader-stack">
-          <span class="lb-trader">${r.name}${isMe ? '<span class="lb-you">YOU</span>' : ''}</span>
-          <span class="lb-trader-id">Trader #${r.trader_id}</span>
-        </div>
-        <span class="bt-chip lb-region">${r.region}</span>
-        <span class="lb-vol bt-num">${fmt.usd(r.volume_usd)}</span>
-        <span class="lb-delta ${deltaCls} bt-num">${fmt.delta(r.delta_pct)}</span>
-      </div>
-    `;
-  }).join('');
+  const topHtml = rows.map((r, idx) => rowHtml(r, meInTop && me.rank === r.rank, idx)).join('');
+
+  let youHtml = '';
+  if (me && !meInTop) {
+    youHtml = rowHtml({ ...me, name_masked: me.name_masked || 'You' }, true, rows.length);
+  }
+
+  body.innerHTML = topHtml + youHtml;
+
+  // Re-attach reveal observer to the newly inserted rows (and trigger the safety
+  // fallback in case the observer doesn't fire in this environment).
+  document.dispatchEvent(new CustomEvent('cc:reveal:rescan'));
+
+  // Update footer timestamp
+  const foot = $('[data-lb-foot-left]');
+  if (foot && state.data.updated_at) {
+    const t = new Date(state.data.updated_at);
+    const now = Date.now();
+    const seconds = Math.max(0, Math.floor((now - t.getTime()) / 1000));
+    foot.textContent = `Updated ${seconds < 60 ? seconds + ' sec' : Math.floor(seconds / 60) + ' min'} ago · refreshes every 30 sec`;
+  }
 }
 
 function renderError() {
   const body = $('[data-lb-body]');
-  if (body) body.innerHTML = `<div class="lb-card__error">Couldn't load the leaderboard. Refresh to try again.</div>`;
+  if (body) body.innerHTML = `<div class="lb-card__error">${t('errorText', "Couldn't load the leaderboard. Refresh to try again.")}</div>`;
 }
 
 async function load() {
@@ -75,25 +110,8 @@ async function load() {
   }
 }
 
-function bind() {
-  $$('[data-lb-tier]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      state.tier = btn.dataset.lbTier;
-      $$('[data-lb-tier]').forEach((b) => b.setAttribute('aria-selected', b === btn ? 'true' : 'false'));
-      renderRows();
-    });
-    btn.addEventListener('keydown', (e) => {
-      const tabs = $$('[data-lb-tier]');
-      const idx = tabs.indexOf(btn);
-      if (e.key === 'ArrowRight') tabs[(idx + 1) % tabs.length].click();
-      if (e.key === 'ArrowLeft')  tabs[(idx - 1 + tabs.length) % tabs.length].click();
-    });
-  });
-}
-
 function start() {
   if (!$('[data-lb-body]')) return;
-  bind();
   load();
   state.timer = setInterval(load, POLL_MS);
 

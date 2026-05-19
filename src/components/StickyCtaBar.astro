@@ -1,0 +1,33 @@
+---
+import enCopy from '../data/copy.en.json';
+const { copy = enCopy } = Astro.props;
+const s = copy.sticky_cta;
+const isAr = copy._meta?.locale === 'ar';
+const arrow = isAr ? '←' : '→';
+---
+
+<aside class="cc-sticky is-hidden" data-sticky aria-label="Championship call to action">
+  <div class="cc-sticky__inner">
+    <div class="cc-sticky__copy">
+      <div class="cc-sticky__t">{s.title}</div>
+      <div class="cc-sticky__d">{s.subtitle}</div>
+    </div>
+
+    <a href={s.cta_href} class="bt-btn bt-btn-on-blue">
+      {s.cta} {arrow}
+    </a>
+  </div>
+</aside>
+
+<script>
+  // Reveal after user scrolls past hero (300px), hide back at very top.
+  const bar = document.querySelector('[data-sticky]');
+  if (bar) {
+    const onScroll = () => {
+      const past = window.scrollY > 320;
+      bar.classList.toggle('is-hidden', !past);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

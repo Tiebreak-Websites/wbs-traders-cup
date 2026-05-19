@@ -1,36 +1,28 @@
 ---
-// ChampionsCupPage — 1:1 implementation of the Claude Design handoff bundle
-// (BrainTrade Champions Cup.html). Order matches cc-page.jsx:
-//   CCHero → CCTiers → CCLeaderboardSection → CCHowItWorks → CCFAQ → compliance footer.
+// 200Invest Traders Championship 2026 — English route
+// Order: Hero → Prizes → Leaderboard → How it works → FAQ → Footer + sticky CTA
 
-import BaseLayout from '../layouts/BaseLayout.astro';
-import HeroPanel       from '../components/HeroPanel.astro';
-import TierStageCards  from '../components/TierStageCards.astro';
-import LeaderboardCard from '../components/LeaderboardCard.astro';
-import HowItWorks      from '../components/HowItWorks.astro';
-import FAQ             from '../components/FAQ.astro';
+import BaseLayout       from '../layouts/BaseLayout.astro';
+import HeroPanel        from '../components/HeroPanel.astro';
+import PrizeCards       from '../components/PrizeCards.astro';
+import HowItWorks       from '../components/HowItWorks.astro';
+import LeaderboardCard  from '../components/LeaderboardCard.astro';
+import FAQ              from '../components/FAQ.astro';
+import StickyCtaBar     from '../components/StickyCtaBar.astro';
+import ControlsToolbar  from '../components/ControlsToolbar.astro';
 import copy from '../data/copy.en.json';
 ---
 
-<BaseLayout>
+<BaseLayout copy={copy} locale="en">
   <div class="bt cc-page">
-    <HeroPanel />
-    <TierStageCards />
-    <LeaderboardCard />
-    <HowItWorks />
-    <FAQ />
-    <div class="cc-foot">
-      <p class="cc-compliance">{copy.compliance}</p>
-    </div>
+    <ControlsToolbar copy={copy} />
+
+    <HeroPanel        copy={copy} />
+    <PrizeCards       copy={copy} />
+    <LeaderboardCard  copy={copy} />
+    <HowItWorks       copy={copy} />
+    <FAQ              copy={copy} />
+
+    <StickyCtaBar copy={copy} />
   </div>
 </BaseLayout>
-
-<style>
-  .cc-compliance {
-    font-size: 10.5px;
-    color: var(--bt-text-dim);
-    line-height: 1.55;
-    letter-spacing: 0.01em;
-    max-width: 920px;
-  }
-</style>
