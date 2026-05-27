@@ -29,25 +29,12 @@ const laurelSrc = `${base}/laurel-branch.svg`;
             data-place={item.place}
             style={`--reveal-delay: ${revealDelay[i]}ms;`}
           >
-            <span class="bt-prize-marker" style={`color: ${item.color}`}></span>
+            <span class="bt-prize-marker" aria-hidden="true"></span>
 
-            {isFirst && (
-              <>
-                <span class="bt-prize__laurel bt-prize__laurel--left" style={`--laurel-src: url('${laurelSrc}')`} aria-hidden="true"></span>
-                <span class="bt-prize__laurel bt-prize__laurel--right" style={`--laurel-src: url('${laurelSrc}')`} aria-hidden="true"></span>
-              </>
-            )}
-
-            {isFirst && (
-              <div class="bt-prize__crown" aria-hidden="true">
-                <svg viewBox="0 0 32 24" fill="currentColor">
-                  <path d="M2 6 L8 14 L16 4 L24 14 L30 6 L28 20 L4 20 Z" />
-                  <circle cx="2" cy="6" r="2"/>
-                  <circle cx="16" cy="4" r="2"/>
-                  <circle cx="30" cy="6" r="2"/>
-                </svg>
-              </div>
-            )}
+            <div class="bt-prize__rank-row" aria-hidden="true">
+              <span class="bt-prize__rank">{String(i + 1).padStart(2, '0')}</span>
+              <span class="bt-prize__rank-rule"></span>
+            </div>
 
             <div class="bt-prize__head">
               <span class="bt-label bt-prize__place">{item.place}{isAr ? '' : ' place'}</span>

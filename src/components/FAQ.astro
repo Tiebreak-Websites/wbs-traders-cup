@@ -18,10 +18,12 @@ const logoSrc = `${base}/wbs-white.svg`;
       {f.items.map((item, i) => (
         <div class={`cc-faq__item reveal${i === 0 ? ' is-open' : ''}`} style={`--reveal-delay: ${i * 60}ms;`} data-faq-item>
           <button class="cc-faq__head" data-faq-toggle aria-expanded={i === 0 ? 'true' : 'false'}>
+            <span class="cc-faq__index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <span class="cc-faq__q">{item.t}</span>
             <span class="cc-faq__icon" aria-hidden="true">
-              <span></span>
-              <span></span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 6 l4 4 l4 -4" />
+              </svg>
             </span>
           </button>
           <div class="cc-faq__panel">
