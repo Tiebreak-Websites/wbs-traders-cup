@@ -11,8 +11,18 @@ const subheadHtml = h.subhead.replace(
 ---
 
 <section class="cc-hero" id="main">
-  <!-- Soft ambient backdrop behind the whole hero -->
+  <!-- Section background image (candlestick stage). Picture lets the browser
+       pick WebP when available; PNG is the fallback. -->
+  <div class="cc-hero__bg-img" aria-hidden="true">
+    <picture>
+      <source srcset={`${base}/hero-bg.webp`} type="image/webp" />
+      <img src={`${base}/hero-bg.png`} alt="" loading="eager" decoding="async" />
+    </picture>
+  </div>
+  <!-- Soft accent gradients on top of the image (orange spots) -->
   <div class="cc-hero__bg-fx" aria-hidden="true"></div>
+  <!-- Smooth bottom fade — blends the bg image into the page colour -->
+  <div class="cc-hero__bg-fade" aria-hidden="true"></div>
 
   <div class="cc-hero__grid">
     <!-- LEFT: copy column -->
