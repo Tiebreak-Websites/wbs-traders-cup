@@ -2,29 +2,46 @@
 import enCopy from '../data/copy.en.json';
 const { copy = enCopy } = Astro.props;
 const s = copy.sticky_cta;
+const target = copy.hero?.target_date || '';
 ---
 
-<a href={s.cta_href}
-   class="cc-fab is-hidden"
-   data-sticky
-   target="_blank"
-   rel="noopener noreferrer"
-   aria-label={s.cta}>
-  <span class="cc-fab__icon" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M5 12h14M13 6l6 6-6 6"/>
-    </svg>
-  </span>
-  <span class="cc-fab__label">{s.cta}</span>
-</a>
+<aside class="cc-fab-card is-hidden" data-sticky aria-label="Championship call to action">
+  <!-- Countdown row — D : H : M : S -->
+  <div class="cc-fab-card__cd" data-countdown data-target={target} aria-label="Time remaining">
+    <span class="cc-fab-card__cd-lbl">Ends in</span>
+    <div class="cc-fab-card__cd-row" role="timer" aria-live="polite">
+      <span class="cc-fab-card__cd-cell"><span data-d>00</span><i>d</i></span>
+      <span class="cc-fab-card__cd-sep" aria-hidden="true">:</span>
+      <span class="cc-fab-card__cd-cell"><span data-h>00</span><i>h</i></span>
+      <span class="cc-fab-card__cd-sep" aria-hidden="true">:</span>
+      <span class="cc-fab-card__cd-cell"><span data-m>00</span><i>m</i></span>
+      <span class="cc-fab-card__cd-sep" aria-hidden="true">:</span>
+      <span class="cc-fab-card__cd-cell"><span data-s>00</span><i>s</i></span>
+    </div>
+  </div>
+
+  <a href={s.cta_href}
+     class="cc-fab-card__cta"
+     target="_blank"
+     rel="noopener noreferrer">
+    <span class="cc-fab-card__cta-lbl">{s.cta}</span>
+    <span class="cc-fab-card__cta-arrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M13 6l6 6-6 6"/>
+      </svg>
+    </span>
+  </a>
+</aside>
 
 <script>
-  // Reveal after user scrolls past hero (300px), hide back at very top.
-  const fab = document.querySelector('[data-sticky]');
-  if (fab) {
+  import '../scripts/countdown.js';
+
+  // Reveal after user scrolls past hero (320px), hide back at very top.
+  const card = document.querySelector('[data-sticky]');
+  if (card) {
     const onScroll = () => {
       const past = window.scrollY > 320;
-      fab.classList.toggle('is-hidden', !past);
+      card.classList.toggle('is-hidden', !past);
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });

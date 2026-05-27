@@ -27,12 +27,7 @@ const subheadHtml = h.subhead.replace(
   <div class="cc-hero__grid">
     <!-- LEFT: copy column -->
     <div class="cc-hero__copy">
-      <span class="cc-hero__eyebrow reveal" style="--reveal-delay: 40ms;">
-        <span class="cc-hero__eyebrow-dot" aria-hidden="true"></span>
-        {h.eyebrow || 'Traders Championship · 2026'}
-      </span>
-
-      <h1 class="cc-headline reveal" style="--reveal-delay: 80ms;">
+<h1 class="cc-headline reveal" style="--reveal-delay: 80ms;">
         {h.headline_main}
       </h1>
 
@@ -73,7 +68,7 @@ const subheadHtml = h.subhead.replace(
           {h.cta} <span aria-hidden="true">→</span>
         </a>
         <a href={h.secondary_cta_href} class="cc-hero__rules">
-          {h.secondary_cta} <span aria-hidden="true">→</span>
+          {h.secondary_cta}
         </a>
       </div>
     </div>
@@ -87,16 +82,11 @@ const subheadHtml = h.subhead.replace(
           <img class="cc-hero__trophy-img"
                src={`${base}/hero-trophy.png`}
                alt="Championship trophy"
-               width="520"
-               height="588"
+               width="668"
+               height="834"
                loading="eager"
                decoding="async" />
         </picture>
-        <!-- Floating prize amount chip — hints at the prize section below -->
-        <span class="cc-hero__prize-chip reveal" style="--reveal-delay: 480ms;" aria-hidden="true">
-          <span class="cc-hero__prize-chip-lbl">Total prize pool</span>
-          <span class="cc-hero__prize-chip-amt bt-num">$47,000</span>
-        </span>
       </div>
     </div>
   </div>

@@ -634,12 +634,11 @@ html[dir="rtl"] .cc-headline-sub { font-family: var(--bt-font); letter-spacing: 
 .cc-faq__footer {
   margin-top: 72px; /* space between the FAQ list and the logo */
   padding-top: 40px;
-  border-top: 1px solid var(--bt-bg-line);
   text-align: center;
 }
 .cc-faq__logo {
   display: block;
-  height: 26px;
+  height: 33px;
   width: auto;
   margin: 0 auto 22px;
   opacity: 0.92;
@@ -782,7 +781,6 @@ html[lang="ar"] .cc-how__stat-lbl { text-transform: none; letter-spacing: 0; fon
 .cc-formula {
   padding-top: 72px;
   padding-bottom: 44px;
-  border-top: 1px solid var(--bt-bg-line);
   margin-top: 56px;
 }
 /* Remove the divider line under "How it works" on mobile + tablet */
@@ -1412,22 +1410,40 @@ html[dir="rtl"] .cc-how__card::before { transform-origin: center; }
 /* ---- Flip-clock countdown digit tick ---------------------- */
 /* Class added by countdown.js when a digit value changes.
    Quick vertical roll-in, removed after animation completes. */
+/* Smooth digit-tick on the hero countdown — short, no blur, no overshoot.
+   Translate3d + opacity only so the GPU compositor handles every frame. */
+.bt-cd-num {
+  display: inline-block;
+  will-change: transform, opacity;
+}
 .bt-cd-num.is-tick {
-  animation: ccCdFlip .42s cubic-bezier(.2, .9, .25, 1.1);
+  animation: ccCdTick .24s cubic-bezier(.2, .7, .25, 1);
 }
-@keyframes ccCdFlip {
-  0%   { transform: translateY(-100%) scale(.92); opacity: 0; filter: blur(1px); }
-  55%  { transform: translateY(8%) scale(1.04);   opacity: 1; filter: blur(0); }
-  100% { transform: translateY(0)    scale(1);     opacity: 1; }
+@keyframes ccCdTick {
+  from { transform: translate3d(0, -28%, 0); opacity: 0; }
+  to   { transform: translate3d(0,    0, 0); opacity: 1; }
 }
-/* Mini-countdown in the topbar also picks up the tick effect */
+
+/* Mini-countdown in the topbar — slightly tighter variant */
+.cc-mini-cd__cell span {
+  display: inline-block;
+  will-change: transform, opacity;
+}
 .cc-mini-cd__cell span.is-tick {
-  animation: ccCdFlipMini .35s cubic-bezier(.2, .9, .25, 1.1);
+  animation: ccCdTickMini .22s cubic-bezier(.2, .7, .25, 1);
 }
-@keyframes ccCdFlipMini {
-  0%   { transform: translateY(-90%); opacity: 0; }
-  60%  { transform: translateY(6%);   opacity: 1; }
-  100% { transform: translateY(0);    opacity: 1; }
+@keyframes ccCdTickMini {
+  from { transform: translate3d(0, -24%, 0); opacity: 0; }
+  to   { transform: translate3d(0,    0, 0); opacity: 1; }
+}
+
+/* Sticky CTA card timer — same smooth tick on every digit */
+.cc-fab-card__cd-cell span {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+.cc-fab-card__cd-cell span.is-tick {
+  animation: ccCdTickMini .22s cubic-bezier(.2, .7, .25, 1);
 }
 
 /* ---- Magnetic primary CTA --------------------------------- */
@@ -1513,14 +1529,6 @@ html[dir="rtl"] .bt-lb-row.is-updated {
 /* Subtle 6s vertical drift on the hero trophy + a feathered orange rim
    under the cup. The dev-branch redesign had no drift; this brings it back
    gently and integrates the WB&S orange palette into the floor glow. */
-.cc-hero__trophy-img {
-  animation: ccTrophyDrift 6s ease-in-out infinite;
-  will-change: transform;
-}
-@keyframes ccTrophyDrift {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-10px); }
-}
 .cc-hero__trophy-wrap::after {
   content: "";
   position: absolute;
@@ -1704,7 +1712,7 @@ html[dir="rtl"] .bt-lb-row.is-updated {
   overflow: visible !important;
   position: relative;
 }
-.cc-faq__item:last-child { border-bottom: 1px solid var(--bt-bg-line) !important; }
+.cc-faq__item:last-child { border-bottom: 0 !important; }
 .cc-faq__item:hover { background: rgba(255, 134, 28, 0.04) !important; border-color: var(--bt-bg-line) !important; }
 .cc-faq__item.is-open {
   background: rgba(255, 134, 28, 0.06) !important;
@@ -2288,22 +2296,17 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 }
 .cc-countdown__lbl-strip {
   font-family: var(--bt-mono);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.30em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--bt-text-dim);
+  color: var(--bt-text);
   display: inline-flex;
   align-items: center;
   gap: 14px;
 }
 .cc-countdown__lbl-strip::before,
-.cc-countdown__lbl-strip::after {
-  content: "";
-  width: 28px;
-  height: 1px;
-  background: var(--bt-accent-100);
-}
+.cc-countdown__lbl-strip::after { content: none; }
 .cc-countdown.cc-countdown--strip .cc-countdown__row {
   display: flex;
   align-items: stretch;
@@ -2377,7 +2380,7 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 28px 24px 28px !important;
+  padding: 22px 22px 22px !important;
   border-radius: var(--bt-r-xs) !important;
 }
 /* Podium order: 2nd left, 1st center (taller), 3rd right */
@@ -2658,15 +2661,153 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 /* ---- Sticky CTA → floating bottom-right button ------------ */
 .cc-sticky { display: none !important; }   /* legacy bar retired */
 
-.cc-fab {
+/* Sticky compact card — countdown strip + CTA button */
+.cc-fab-card {
   position: fixed;
   right: 24px;
   bottom: 24px;
   z-index: 50;
+  width: 280px;
+  background: linear-gradient(180deg, var(--bt-bg-1) 0%, var(--bt-bg-2) 100%);
+  border: 1px solid var(--bt-bg-line);
+  border-radius: var(--bt-r-sm);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 18px 40px -12px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 134, 28, 0.12);
+  overflow: hidden;
+  transform: translateY(0);
+  transition: transform .35s cubic-bezier(.2, .8, .25, 1), opacity .25s ease;
+  isolation: isolate;
+}
+.cc-fab-card.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+}
+/* Glowing top edge for the card */
+.cc-fab-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--bt-accent), transparent);
+  box-shadow: 0 0 14px rgba(255, 134, 28, 0.55);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Countdown block — label + timer share a single horizontal row */
+.cc-fab-card__cd {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--bt-bg-line);
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+.cc-fab-card__cd-lbl {
+  font-family: var(--bt-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bt-text-mid);
+  flex: none;
+  white-space: nowrap;
+}
+.cc-fab-card__cd-row {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-family: var(--bt-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  width: 100%;
+}
+.cc-fab-card__cd-cell {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  color: var(--bt-text-hi);
+}
+.cc-fab-card__cd-cell span {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--bt-accent);
+  letter-spacing: 0.02em;
+}
+.cc-fab-card__cd-cell i {
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--bt-text-dim);
+  margin-left: 1px;
+}
+.cc-fab-card__cd-sep {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--bt-accent);
+  opacity: 0.45;
+  margin: 0 2px;
+}
+
+/* CTA button */
+.cc-fab-card__cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--bt-accent);
+  color: #FFFFFF;
+  font-family: var(--bt-font);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background .2s ease, gap .25s cubic-bezier(.2, .8, .25, 1);
+}
+.cc-fab-card__cta:hover {
+  background: var(--bt-accent-deep);
+  gap: 18px;
+}
+.cc-fab-card__cta-lbl { flex: 1; }
+.cc-fab-card__cta-arrow {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 16px 22px;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+.cc-fab-card__cta-arrow svg { width: 100%; height: 100%; }
+
+@media (max-width: 640px) {
+  .cc-fab-card { right: 12px; bottom: 12px; width: calc(100% - 24px); max-width: 320px; }
+  .cc-fab-card__cd { padding: 12px 14px 10px; }
+  .cc-fab-card__cd-cell span { font-size: 16px; }
+  .cc-fab-card__cta { padding: 12px 16px; font-size: 12px; }
+}
+
+/* Retired old SVG-ring FAB (kept rules below for legacy class compatibility) */
+.cc-fab-wrap,
+.cc-fab-ring,
+.cc-fab-days { display: none !important; }
+
+.cc-fab {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
   background: var(--bt-accent);
   color: #FFFFFF;
   font-family: var(--bt-font);
@@ -2675,12 +2816,11 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  border-radius: var(--bt-r-xs);
+  border-radius: 50%;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.22) inset,
     0 12px 28px -10px rgba(255, 134, 28, 0.65),
     0 0 0 0 rgba(255, 134, 28, 0.20);
-  transform: translateY(0);
   transition:
     transform .35s cubic-bezier(.2, .8, .25, 1),
     box-shadow .25s ease,
@@ -2704,14 +2844,14 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
 }
 .cc-fab__icon svg { width: 100%; height: 100%; }
 @media (max-width: 640px) {
-  .cc-fab { right: 14px; bottom: 14px; padding: 12px 16px; font-size: 12px; }
-  .cc-fab__label { display: none; }
-  .cc-fab__icon { width: 20px; height: 20px; }
+  .cc-fab-wrap { right: 16px; bottom: 16px; width: 68px; height: 68px; }
+  .cc-fab { width: 50px; height: 50px; }
+  .cc-fab-days { font-size: 9.5px; padding: 2px 6px; bottom: -4px; right: -6px; }
 }
 
 /* The .cc-page used to reserve space for the sticky bar at the bottom. The
@@ -2725,7 +2865,7 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
    ============================================================ */
 
 /* ---- Hero: back to 2-column with visible trophy ----------- */
-.cc-hero { min-height: 0 !important; display: block !important; padding: 24px 0 64px !important; }
+.cc-hero { min-height: 0 !important; display: block !important; padding: 50px 0 35px !important; }
 /* Section bg image (candlestick stage). Sits at the bottom of the stacking
    order; the fade overlay above it blends into the page colour. */
 .cc-hero__bg-img {
@@ -2740,7 +2880,10 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  /* Right-bias the bg so the candlestick stage + circular podium land
+     under the trophy on the right side; the faint W watermark on the
+     left of the source image stays behind the copy column. */
+  object-position: 70% center;
   display: block;
 }
 /* Soft orange accents over the bg image */
@@ -2750,8 +2893,7 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(60% 60% at 80% 20%, rgba(255, 134, 28, 0.10), transparent 60%),
-    radial-gradient(50% 60% at 20% 80%, rgba(255, 134, 28, 0.06), transparent 70%);
+    radial-gradient(60% 60% at 80% 20%, rgba(255, 134, 28, 0.10), transparent 60%);
 }
 /* Bottom blending gradient — fades the bg image into the page colour so
    there's no visible seam where the hero ends. */
@@ -2777,12 +2919,12 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   position: relative;
   z-index: 3;
   display: grid !important;
-  grid-template-columns: 1.15fr 1fr;
+  grid-template-columns: 1fr 1.1fr;
   gap: 48px;
-  align-items: center;
+  align-items: end;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 88px 56px 56px;
+  padding: 0 56px;
 }
 .cc-hero .cc-hero__content { display: none !important; }    /* legacy Phase 4 single-col content retired */
 
@@ -2792,6 +2934,7 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   align-items: flex-start;
   gap: 18px;
   text-align: left;
+  margin-bottom: 60px;
 }
 .cc-hero .cc-headline {
   font-size: clamp(46px, 5.6vw, 80px) !important;
@@ -2820,36 +2963,46 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 /* Eyebrow sits on top of the copy column */
 .cc-hero__eyebrow { align-self: flex-start; }
 
-/* Trophy visual column */
+/* Trophy visual column — anchored to bottom so the cup sits on the bg's
+   circular podium, reading as one integrated scene. */
 .cc-hero__visual {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  min-height: 540px;
+  min-height: 640px;
 }
 .cc-hero__trophy-wrap {
   position: relative;
   width: 100%;
-  max-width: 520px;
+  max-width: none;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
 }
+.cc-hero__trophy-img {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100%;
+  max-height: 680px;
+  display: block;
+}
+/* Drop the orange floor-glow halo — the bg image already has its own
+   floor/stage and the extra glow muddies the integration. */
+.cc-hero__trophy-wrap::after { display: none !important; }
 .cc-hero__trophy-img {
   position: relative;
   z-index: 2;
   width: 100%;
   height: auto;
   display: block;
-  filter: drop-shadow(0 30px 60px rgba(255, 134, 28, 0.35));
-  animation: ccTrophyDrift 6s ease-in-out infinite;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.35));
 }
 /* Rotating orange aura behind the trophy */
 .cc-hero__visual .cc-hero__aura {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 25%;
   width: 130%;
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
@@ -2858,65 +3011,28 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   background: conic-gradient(
     from 0deg,
     rgba(255, 134, 28, 0) 0deg,
-    rgba(255, 134, 28, 0.55) 60deg,
-    rgba(255, 134, 28, 0) 130deg,
-    rgba(255, 158, 71, 0.50) 200deg,
-    rgba(255, 158, 71, 0) 270deg,
-    rgba(255, 134, 28, 0.45) 330deg,
+    rgba(255, 134, 28, 0.45) 50deg,
+    rgba(255, 175, 60, 0.45) 90deg,
+    rgba(255, 175, 60, 0) 140deg,
+    rgba(255, 158, 71, 0.40) 200deg,
+    rgba(255, 175, 60, 0.38) 240deg,
+    rgba(255, 175, 60, 0) 280deg,
+    rgba(255, 134, 28, 0.38) 330deg,
     rgba(255, 134, 28, 0) 360deg
   );
   -webkit-mask: radial-gradient(closest-side, #000 18%, rgba(0, 0, 0, 0.6) 48%, transparent 80%);
           mask: radial-gradient(closest-side, #000 18%, rgba(0, 0, 0, 0.6) 48%, transparent 80%);
   filter: blur(12px);
-  opacity: 0.85;
+  opacity: 0.65;
   pointer-events: none;
-  animation: ccTrophyAuraBg 10s linear infinite;
-}
-
-/* Floating prize-pool chip on the trophy column — the "hint" of what's
-   below the fold. Pulses gently to draw the eye. */
-.cc-hero__prize-chip {
-  position: absolute;
-  bottom: 8%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 12px 22px;
-  background: rgba(30, 40, 45, 0.92);
-  border: 1px solid var(--bt-accent);
-  border-radius: var(--bt-r-xs);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  box-shadow: 0 12px 28px -10px rgba(255, 134, 28, 0.45);
-  animation: ccPrizeChipFloat 4s ease-in-out infinite;
-}
-@keyframes ccPrizeChipFloat {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%      { transform: translateX(-50%) translateY(-4px); }
-}
-.cc-hero__prize-chip-lbl {
-  font-family: var(--bt-mono);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--bt-text-dim);
-}
-.cc-hero__prize-chip-amt {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--bt-accent);
+  animation: ccTrophyAuraBg 30s linear infinite;
 }
 
 @media (max-width: 1024px) {
-  .cc-hero .cc-hero__grid { grid-template-columns: 1fr; gap: 32px; padding: 80px 24px 48px; }
-  .cc-hero__visual { min-height: 380px; order: -1; }
-  .cc-hero__trophy-wrap { max-width: 320px; }
+  .cc-hero .cc-hero__grid { grid-template-columns: 1fr; gap: 24px; padding: 0 24px; align-items: stretch; }
+  .cc-prizes__podium { padding: 16px 0 24px !important; }
+  .cc-hero__visual { min-height: 420px; order: 2; }
+  .cc-hero__trophy-img { max-height: 480px; }
   .cc-hero__copy { align-items: center; text-align: center; }
   .cc-hero .cc-headline,
   .cc-hero .cc-headline-sub,
@@ -2924,16 +3040,16 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   .cc-hero .cc-hero__cta-row { justify-content: center !important; }
 }
 @media (max-width: 640px) {
-  .cc-hero .cc-hero__grid { padding: 72px 18px 36px; }
-  .cc-hero__visual { min-height: 280px; }
-  .cc-hero__trophy-wrap { max-width: 240px; }
+  .cc-hero .cc-hero__grid { padding: 0 18px; }
+  .cc-hero__visual { min-height: 320px; }
+  .cc-hero__trophy-img { max-height: 360px; }
 }
 
 /* ---- Prize cards: drop big numerals + section chrome ------ */
 /* Section heading is removed in DOM. Keep podium varying-height behaviour. */
-.cc-prizes { padding: 8px 0 24px !important; }
+.cc-prizes { padding: 0 0 24px !important; }
 .cc-prizes__podium {
-  padding: 32px 0 24px !important;
+  padding: 8px 0 24px !important;
 }
 .bt-prize__rank-block { display: none !important; }   /* numerals dropped */
 .bt-prize__rank-row,
@@ -2947,24 +3063,24 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--bt-text-dim);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 .bt-prize--first .bt-prize__place-tag { color: var(--bt-accent); }
 
-/* The amount is now the dominant element — much bigger */
+/* The amount is the dominant element — sized for a compact card */
 .bt-prize__amount {
   color: var(--bt-text-hi) !important;
-  font-size: clamp(48px, 5vw, 68px) !important;
+  font-size: clamp(36px, 3.6vw, 50px) !important;
   letter-spacing: -0.035em !important;
   font-weight: 800 !important;
   line-height: 1 !important;
-  margin: 6px 0 12px !important;
+  margin: 4px 0 8px !important;
   text-align: left !important;
 }
 .bt-prize--first .bt-prize__amount {
   color: var(--bt-accent) !important;
-  font-size: clamp(64px, 6.5vw, 92px) !important;
-  text-shadow: 0 8px 28px rgba(255, 134, 28, 0.30) !important;
+  font-size: clamp(44px, 4.6vw, 64px) !important;
+  text-shadow: 0 6px 20px rgba(255, 134, 28, 0.20) !important;
 }
 .bt-prize__label {
   font-size: 13px !important;
@@ -2972,14 +3088,14 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 }
 
 /* Refine podium heights — empty cards looked tall without the numerals */
-.bt-prize--first  { min-height: 360px !important; padding-top: 36px !important; }
-.bt-prize--silver { min-height: 300px !important; padding-top: 28px !important; }
-.bt-prize--bronze { min-height: 270px !important; padding-top: 24px !important; }
+.bt-prize--first  { min-height: 230px !important; padding-top: 22px !important; }
+.bt-prize--silver { min-height: 200px !important; padding-top: 20px !important; }
+.bt-prize--bronze { min-height: 180px !important; padding-top: 18px !important; }
 
 @media (max-width: 960px) {
   .bt-prize--first,
   .bt-prize--silver,
-  .bt-prize--bronze { min-height: 0 !important; padding-top: 24px !important; }
+  .bt-prize--bronze { min-height: 0 !important; padding-top: 18px !important; }
 }
 
 /* ---- Leaderboard: drop podium, color top-3 rows ----------- */
@@ -3017,7 +3133,7 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 .bt-lb-row:has(.bt-rank-1) .lb-trader,
 .bt-lb-row:has(.bt-rank-2) .lb-trader,
 .bt-lb-row:has(.bt-rank-3) .lb-trader { font-size: 15px; }
-.bt-lb-row:has(.bt-rank-1) .lb-points { color: var(--bt-accent); font-size: 18px; }
+.bt-lb-row:has(.bt-rank-1) .lb-points { color: var(--bt-text-hi); font-size: 18px; }
 
 /* ---- How-it-works: stacked playbook rows ------------------ */
 .cc-how__timeline,
@@ -3043,17 +3159,8 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   border-bottom: 1px solid var(--bt-bg-line);
   transition: background .25s ease;
 }
+.cc-how__step:last-child { border-bottom: 0; }
 .cc-how__step:hover { background: rgba(255, 134, 28, 0.04); }
-.cc-how__step::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 2px;
-  background: var(--bt-accent);
-  opacity: 0;
-  transition: opacity .25s ease;
-}
-.cc-how__step:hover::before { opacity: 1; }
 
 .cc-how__step-num {
   font-family: var(--bt-mono);
@@ -3333,3 +3440,539 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 
 /* ---- FAQ: back to single column --------------------------- */
 /* DOM no longer has .cc-faq__grid — leftover styles harmless. */
+
+/* ---- Leaderboard pagination ------------------------------- */
+.lb-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 18px 0 4px;
+  margin-top: 8px;
+  border-top: 1px solid var(--bt-bg-line);
+}
+.lb-pagination__pages {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.lb-page {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--bt-bg-line);
+  border-radius: var(--bt-r-xs);
+  color: var(--bt-text-mid);
+  font-family: var(--bt-mono);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.lb-page:hover:not(:disabled) {
+  background: rgba(255, 134, 28, 0.08);
+  border-color: var(--bt-accent-100);
+  color: var(--bt-text-hi);
+}
+.lb-page.is-active {
+  background: var(--bt-accent);
+  border-color: var(--bt-accent);
+  color: #FFFFFF;
+}
+.lb-page--nav { padding: 0; min-width: 32px; }
+.lb-page:disabled { opacity: 0.35; cursor: not-allowed; }
+.lb-page__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  color: var(--bt-text-dim);
+  font-family: var(--bt-mono);
+  font-size: 13px;
+}
+
+/* ============================================================
+   Prize strip — replaces the podium layout entirely.
+   One bordered container with three hairline-divided segments.
+   1st place gets a subtle orange wash + larger amount.
+   ============================================================ */
+.cc-prizes__podium,
+.cc-prizes__base { display: none !important; }   /* retire podium markup */
+
+.cc-prize-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.3fr;   /* 1st (right) wider */
+  align-items: stretch;
+  background: linear-gradient(180deg, var(--bt-bg-1) 0%, var(--bt-bg-2) 100%);
+  border: 1px solid var(--bt-bg-line);
+  border-radius: var(--bt-r-xs);
+  overflow: hidden;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 4px 14px rgba(0, 0, 0, 0.35),
+    0 24px 60px -20px rgba(0, 0, 0, 0.55);
+  position: relative;
+  /* Item order in DOM is [1st, 2nd, 3rd]; visually we want 3rd | 2nd | 1st */
+}
+/* Top hairline accent across the entire strip */
+.cc-prize-strip::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+.cc-prize-strip__tier {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 26px 28px;
+  position: relative;
+  border-right: 1px solid var(--bt-bg-line);
+  transition: background .35s ease;
+  isolation: isolate;
+}
+.cc-prize-strip__tier:last-child { border-right: 0; }
+.cc-prize-strip__tier:hover { background: rgba(255, 255, 255, 0.02); }
+
+/* Visual order: 3rd → 2nd → 1st */
+.cc-prize-strip__tier--third  { order: 1; }
+.cc-prize-strip__tier--second { order: 2; }
+.cc-prize-strip__tier--first  {
+  order: 3;
+  background:
+    radial-gradient(120% 100% at 100% 0%, rgba(255, 158, 71, 0.16) 0%, transparent 60%),
+    linear-gradient(135deg, rgba(255, 134, 28, 0.12) 0%, rgba(255, 134, 28, 0.04) 100%);
+  border-left: 1px solid var(--bt-accent);
+}
+/* Glowing accent rule along the top of the 1st-place tile */
+.cc-prize-strip__tier--first::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--bt-accent) 40%,
+    #FFD37A 50%,
+    var(--bt-accent) 60%,
+    transparent 100%);
+  box-shadow: 0 0 14px 1px rgba(255, 134, 28, 0.55);
+  z-index: 3;
+}
+/* Slow shine sweep across the 1st-place tile */
+.cc-prize-strip__tier--first::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(255, 215, 122, 0.10) 50%,
+    rgba(255, 255, 255, 0.08) 55%,
+    transparent 70%);
+  background-size: 250% 100%;
+  background-position: 150% 0;
+  pointer-events: none;
+  animation: ccPrizeShine 6.5s ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes ccPrizeShine {
+  0%, 28% { background-position: 150% 0; }
+  72%, 100% { background-position: -50% 0; }
+}
+
+.cc-prize-strip__rank {
+  font-family: var(--bt-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bt-text-dim);
+  position: relative;
+  z-index: 2;
+}
+.cc-prize-strip__tier--first .cc-prize-strip__rank { color: var(--bt-accent); }
+.cc-prize-strip__tier--second .cc-prize-strip__rank { color: #C8C5BD; }
+.cc-prize-strip__tier--third .cc-prize-strip__rank { color: #C68A55; }
+
+.cc-prize-strip__amt {
+  font-size: clamp(34px, 3.6vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, #FFFFFF 0%, #C8CBD0 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+}
+/* 1st place — orange-gold gradient matching the CTA button language */
+.cc-prize-strip__tier--first .cc-prize-strip__amt {
+  font-size: clamp(46px, 4.8vw, 64px);
+  background: linear-gradient(120deg,
+    #E0701A 0%,
+    #FF861C 22%,
+    #FFB868 45%,
+    #FFE3B0 52%,
+    #FFB868 60%,
+    #FF861C 78%,
+    #E0701A 100%);
+  background-size: 200% 100%;
+  background-position: 0% 0;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  filter: drop-shadow(0 6px 22px rgba(255, 134, 28, 0.30));
+  animation: ccPrizeAmtShimmer 7s ease-in-out infinite;
+}
+@keyframes ccPrizeAmtShimmer {
+  0%, 100% { background-position: 0% 0; }
+  50%      { background-position: 100% 0; }
+}
+/* 2nd — cool silver gradient */
+.cc-prize-strip__tier--second .cc-prize-strip__amt {
+  background: linear-gradient(180deg, #F1F2F5 0%, #B5B9C2 60%, #8E94A0 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  filter: drop-shadow(0 4px 14px rgba(200, 207, 220, 0.18));
+}
+/* 3rd — warm bronze gradient */
+.cc-prize-strip__tier--third .cc-prize-strip__amt {
+  background: linear-gradient(180deg, #E8B27A 0%, #C68A55 60%, #8E5A30 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  filter: drop-shadow(0 4px 14px rgba(198, 138, 85, 0.20));
+}
+
+.cc-prize-strip__lbl {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--bt-text-mid);
+  position: relative;
+  z-index: 2;
+}
+.cc-prize-strip__tier--first .cc-prize-strip__lbl { color: var(--bt-text-hi); font-weight: 700; }
+
+@media (max-width: 860px) {
+  .cc-prize-strip {
+    grid-template-columns: 1fr;
+  }
+  .cc-prize-strip__tier {
+    border-right: 0;
+    border-bottom: 1px solid var(--bt-bg-line);
+  }
+  .cc-prize-strip__tier:last-child { border-bottom: 0; }
+  .cc-prize-strip__tier--first { border-left: 0; border-top: 1px solid var(--bt-accent-100); }
+}
+
+/* ============================================================
+   Polish animations — tasteful per-component motion that
+   layers on top of the existing reveal system.
+   ============================================================ */
+
+/* ---- Section eyebrow + title: slide-up + accent underline draw ---- */
+.cc-section-head .bt-eyebrow.reveal,
+.cc-section-head .bt-eyebrow {
+  display: inline-flex;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .55s cubic-bezier(.2, .7, .3, 1), transform .55s cubic-bezier(.2, .7, .3, 1);
+}
+.cc-section-head.reveal.is-visible .bt-eyebrow {
+  opacity: 1;
+  transform: none;
+  transition-delay: 100ms;
+}
+.cc-section-head .cc-section-title {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .65s cubic-bezier(.2, .7, .3, 1), transform .65s cubic-bezier(.2, .7, .3, 1);
+}
+.cc-section-head.reveal.is-visible .cc-section-title {
+  opacity: 1;
+  transform: none;
+  transition-delay: 220ms;
+}
+
+/* ---- Prize strip: tiles slide up + fade in staggered ---- */
+.cc-prize-strip__tier {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s cubic-bezier(.2, .7, .3, 1), transform .7s cubic-bezier(.2, .7, .3, 1);
+}
+.cc-prize-strip__tier.is-visible { opacity: 1; transform: none; }
+/* Reveal order: 3rd → 2nd → 1st (1st last, the climax) */
+.cc-prize-strip__tier--third.is-visible  { transition-delay: 80ms; }
+.cc-prize-strip__tier--second.is-visible { transition-delay: 220ms; }
+.cc-prize-strip__tier--first.is-visible  { transition-delay: 380ms; }
+/* On hover, the 1st tile lifts slightly */
+.cc-prize-strip__tier--first { transition: opacity .7s cubic-bezier(.2,.7,.3,1), transform .35s cubic-bezier(.2,.8,.25,1), background .35s ease; }
+.cc-prize-strip:hover .cc-prize-strip__tier--first { transform: translateY(-3px); }
+.cc-prize-strip:hover .cc-prize-strip__tier--first.is-visible { transform: translateY(-3px); }
+
+/* ---- How-it-works steps: slide in from the LEFT with stagger ---- */
+.cc-how__step.reveal {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity .65s cubic-bezier(.2, .7, .3, 1), transform .65s cubic-bezier(.2, .7, .3, 1);
+}
+.cc-how__step.reveal.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+/* Number gets a subtle counter-slide so it feels anchored */
+.cc-how__step.reveal .cc-how__step-num {
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity .55s ease, transform .65s cubic-bezier(.2, .9, .3, 1.15);
+}
+.cc-how__step.reveal.is-visible .cc-how__step-num {
+  opacity: 1;
+  transform: none;
+  transition-delay: 200ms;
+}
+/* Number gently glows on row hover */
+.cc-how__step:hover .cc-how__step-num {
+  text-shadow: 0 0 14px rgba(255, 134, 28, 0.45);
+  transition: text-shadow .25s ease;
+}
+
+/* ---- FAQ: chevron subtly pulses on hover ---- */
+.cc-faq__head:hover .cc-faq__icon { animation: ccFaqChevronNudge 1.4s ease-in-out infinite; }
+@keyframes ccFaqChevronNudge {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(2px); }
+}
+.cc-faq__item.is-open .cc-faq__head:hover .cc-faq__icon { animation: none; }
+/* Index number subtly slides as you hover */
+.cc-faq__head:hover .cc-faq__index { transform: translateX(2px); transition: transform .25s ease, color .2s ease; }
+
+/* ---- Leaderboard rows: slide in from the left with stagger ---- */
+.bt-lb-row.lb-row-anim {
+  opacity: 0;
+  transform: translateX(-18px);
+  transition: opacity .55s cubic-bezier(.2, .7, .3, 1), transform .55s cubic-bezier(.2, .7, .3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.lb-card.is-visible .lb-row-anim,
+.bt-lb-row.lb-row-anim.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Top-3 rows: very subtle continuous shimmer to indicate "live" ---- */
+.bt-lb-row:has(.bt-rank-1)::after,
+.bt-lb-row:has(.bt-rank-2)::after,
+.bt-lb-row:has(.bt-rank-3)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 70%);
+  background-size: 300% 100%;
+  background-position: 150% 0;
+  pointer-events: none;
+  animation: ccLbShimmer 8s ease-in-out infinite;
+}
+.bt-lb-row:has(.bt-rank-2)::after { animation-delay: 0.8s; }
+.bt-lb-row:has(.bt-rank-3)::after { animation-delay: 1.6s; }
+@keyframes ccLbShimmer {
+  0%, 30% { background-position: 150% 0; }
+  70%, 100% { background-position: -50% 0; }
+}
+.bt-lb-row { position: relative; overflow: hidden; }
+
+/* ---- Hero CTA: polished-metal gleam sweep + warm pulse ---- */
+.cc-hero__cta {
+  position: relative;
+  overflow: hidden;
+  animation: ccCtaPulse 2.8s ease-in-out infinite;
+}
+/* Sheen sweep — a soft white highlight slides diagonally across the button
+   every few seconds, like a polished surface catching light. */
+.cc-hero__cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.30) 48%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0.30) 52%,
+    transparent 70%);
+  background-size: 250% 100%;
+  background-position: 150% 0;
+  pointer-events: none;
+  animation: ccCtaSheen 4.5s ease-in-out infinite;
+}
+@keyframes ccCtaSheen {
+  0%, 40%   { background-position: 150% 0; }
+  70%, 100% { background-position: -50% 0; }
+}
+/* Whole-button warm pulse — the orange tone breathes brighter */
+@keyframes ccCtaPulse {
+  0%, 100% {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.22) inset,
+      0 12px 24px -10px rgba(255, 134, 28, 0.55),
+      0 0 0 0 rgba(255, 134, 28, 0.20);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.28) inset,
+      0 16px 32px -10px rgba(255, 134, 28, 0.75),
+      0 0 0 6px rgba(255, 134, 28, 0.12);
+    filter: brightness(1.08);
+  }
+}
+
+/* ---- Trophy: subtle scale-in on load + tiny tilt on viewport scroll ---- */
+.cc-hero__trophy-img {
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+  transition: opacity .9s cubic-bezier(.2, .7, .3, 1), transform .9s cubic-bezier(.2, .7, .3, 1);
+}
+.cc-hero__visual.reveal.is-visible .cc-hero__trophy-img {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition-delay: 180ms;
+}
+
+/* ---- Aura: fades in after a beat ---- */
+.cc-hero__visual .cc-hero__aura {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.cc-hero__visual.reveal.is-visible .cc-hero__aura {
+  opacity: 0.65;
+  transition-delay: 380ms;
+}
+
+/* ---- Pagination buttons: subtle hover bounce ---- */
+.lb-page:not(:disabled):not(.is-active) {
+  transition: background .15s ease, color .15s ease, border-color .15s ease, transform .2s cubic-bezier(.2, .9, .3, 1.2);
+}
+.lb-page:not(:disabled):not(.is-active):hover {
+  transform: translateY(-2px);
+}
+.lb-page.is-active {
+  animation: ccPageActiveLand .35s cubic-bezier(.2, .9, .3, 1.2);
+}
+@keyframes ccPageActiveLand {
+  0%   { transform: scale(0.85); }
+  60%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* ---- Sticky CTA: high-attention attract loop ----
+   Periodic micro-shake + glowing pulse + continuous gleam sweep. The combo
+   is loud enough to catch peripheral vision but spaced enough not to nag. */
+.cc-fab-card__cta {
+  position: relative;
+  overflow: hidden;
+  animation: ccStickyPulse 2.4s ease-in-out infinite, ccStickyShake 6.2s ease-in-out infinite;
+}
+.cc-fab-card__cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.20) 48%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0.20) 52%,
+    transparent 70%);
+  background-size: 260% 100%;
+  background-position: 150% 0;
+  pointer-events: none;
+  animation: ccStickyGleam 3.6s ease-in-out infinite;
+}
+.cc-fab-card__cta:hover::before { animation-duration: 1.8s; }
+.cc-fab-card__cta-lbl,
+.cc-fab-card__cta-arrow { position: relative; z-index: 1; }
+.cc-fab-card__cta-arrow {
+  transition: transform .25s cubic-bezier(.2, .9, .3, 1.2);
+  animation: ccStickyArrowNudge 2.4s ease-in-out infinite;
+}
+.cc-fab-card__cta:hover .cc-fab-card__cta-arrow {
+  transform: translateX(4px);
+  animation: none;
+}
+@keyframes ccStickyGleam {
+  0%, 35%   { background-position: 150% 0; }
+  70%, 100% { background-position: -50% 0; }
+}
+@keyframes ccStickyPulse {
+  0%, 100% {
+    background-color: var(--bt-accent);
+    box-shadow: 0 0 0 0 rgba(255, 134, 28, 0.0);
+  }
+  50% {
+    background-color: var(--bt-accent-soft);
+    box-shadow: 0 0 0 8px rgba(255, 134, 28, 0.10);
+  }
+}
+/* A short, sharp shake every ~6 seconds. Lives outside .is-hovered so the
+   button still calls attention even when ignored. */
+@keyframes ccStickyShake {
+  0%, 84%, 100% { transform: translateX(0); }
+  86%  { transform: translateX(-2px); }
+  88%  { transform: translateX( 2px); }
+  90%  { transform: translateX(-2px); }
+  92%  { transform: translateX( 1px); }
+  94%  { transform: translateX(0); }
+}
+/* Arrow gentle nudge sync'd with the pulse */
+@keyframes ccStickyArrowNudge {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(3px); }
+}
+
+/* ---- Equation: each token fades in sequentially when section reveals ---- */
+.cc-formula__equation > * {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .45s ease, transform .45s cubic-bezier(.2, .8, .25, 1);
+}
+.cc-formula__equation.is-visible > * { opacity: 1; transform: none; }
+.cc-formula__equation.is-visible > *:nth-child(1) { transition-delay: 60ms; }
+.cc-formula__equation.is-visible > *:nth-child(2) { transition-delay: 140ms; }
+.cc-formula__equation.is-visible > *:nth-child(3) { transition-delay: 220ms; }
+.cc-formula__equation.is-visible > *:nth-child(4) { transition-delay: 300ms; }
+.cc-formula__equation.is-visible > *:nth-child(5) { transition-delay: 380ms; }
+.cc-formula__equation.is-visible > *:nth-child(6) { transition-delay: 460ms; }
+
+/* ---- Reduced motion: all of the above are disabled by the global rule
+   at the top of the file, but a few non-transition animations need explicit
+   opt-outs so they don't keep running. */
+@media (prefers-reduced-motion: reduce) {
+  .bt-lb-row::after,
+  .cc-hero__cta::after,
+  .cc-faq__head:hover .cc-faq__icon,
+  .cc-fab-card__cd-lbl::before {
+    animation: none !important;
+  }
+}

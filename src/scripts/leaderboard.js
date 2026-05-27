@@ -9,7 +9,10 @@ const BASE = `${BASE_URL}/data`;
 const FLAGS = `${BASE_URL}/flags`;
 const FEED = 'leaderboard-default.json';
 const POLL_MS = 30 * 1000;
-const TOP_N = 10;
+const TOP_N = 10;            // rows per page
+
+// Pagination state — page index is 0-based, starts at the top of the board.
+let currentPage = 0;
 
 const numLocale = 'en-US';
 const ptsUnit = 'pts';
@@ -81,8 +84,7 @@ function renderRows() {
   const idQ = state.filters.id.replace(/\D/g, '');
 
   if (nameQ || idQ) {
-    const pool = me ? [...all, me] : all;
-    const matches = pool.filter((r) =>
+    const matches = all.filter((r) =>
       (!nameQ || (r.name_masked || '').toLowerCase().includes(nameQ)) &&
       (!idQ || String(r.account_id || '').includes(idQ))
     );
@@ -94,14 +96,18 @@ function renderRows() {
       return;
     }
 
-    body.innerHTML = matches.map((r, idx) => rowHtml(r, isMeRow(r), idx)).join('');
+    body.innerHTML = matches.map((r, idx) => rowHtml(r, false, idx)).join('');
     document.dispatchEvent(new CustomEvent('cc:reveal:rescan'));
     updateFoot();
     return;
   }
 
-  // Default view: top N, with the current user pinned below if outside the top N.
-  const rows = all.slice(0, TOP_N);
+  // Paginated view — slice the full board into pages of TOP_N rows.
+  const totalPages = Math.max(1, Math.ceil(all.length / TOP_N));
+  if (currentPage >= totalPages) currentPage = totalPages - 1;
+  if (currentPage < 0) currentPage = 0;
+  const start = currentPage * TOP_N;
+  const rows = all.slice(start, start + TOP_N);
   const meInTop = me && rows.some((r) => r.rank === me.rank);
 
   if (!rows.length) {
@@ -109,20 +115,66 @@ function renderRows() {
     return;
   }
 
-  const topHtml = rows.map((r, idx) => rowHtml(r, meInTop && me.rank === r.rank, idx)).join('');
+  const rowsHtml = rows.map((r, idx) => rowHtml(r, meInTop && me.rank === r.rank, idx)).join('');
+  const paginationHtml = paginationBlockHtml(currentPage, totalPages);
 
-  let youHtml = '';
-  if (me && !meInTop) {
-    youHtml = rowHtml({ ...me, name_masked: me.name_masked || 'You' }, true, rows.length);
-  }
-
-  body.innerHTML = topHtml + youHtml;
+  body.innerHTML = rowsHtml + paginationHtml;
+  bindPagination(body, totalPages);
 
   // Re-attach reveal observer to the newly inserted rows (and trigger the safety
   // fallback in case the observer doesn't fire in this environment).
   document.dispatchEvent(new CustomEvent('cc:reveal:rescan'));
   updateFoot();
   flashChangedRows(body);
+}
+
+// Pagination footer — prev/next + numbered page indicator. Uses a compact
+// "windowed" page list (current ± 1, with ellipses to first/last) so pages
+// in the hundreds still fit in the row width.
+function paginationBlockHtml(page, total) {
+  if (total <= 1) return '';
+  const win = new Set([0, total - 1, page, page - 1, page + 1]);
+  const sorted = Array.from(win).filter((n) => n >= 0 && n < total).sort((a, b) => a - b);
+  const pages = [];
+  for (let i = 0; i < sorted.length; i++) {
+    if (i > 0 && sorted[i] - sorted[i - 1] > 1) pages.push('…');
+    pages.push(sorted[i]);
+  }
+  const prevDisabled = page === 0;
+  const nextDisabled = page === total - 1;
+  const pageBtns = pages.map((p) => {
+    if (p === '…') return `<span class="lb-page__ellipsis" aria-hidden="true">…</span>`;
+    const active = p === page ? ' is-active' : '';
+    return `<button class="lb-page${active}" data-lb-page="${p}" aria-label="Page ${p + 1}" aria-current="${active ? 'page' : 'false'}">${p + 1}</button>`;
+  }).join('');
+  return `
+    <nav class="lb-pagination" aria-label="Leaderboard pagination">
+      <button class="lb-page lb-page--nav" data-lb-page-prev ${prevDisabled ? 'disabled' : ''} aria-label="Previous page">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4 L6 8 L10 12"/></svg>
+      </button>
+      <div class="lb-pagination__pages">${pageBtns}</div>
+      <button class="lb-page lb-page--nav" data-lb-page-next ${nextDisabled ? 'disabled' : ''} aria-label="Next page">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4 L10 8 L6 12"/></svg>
+      </button>
+    </nav>
+  `;
+}
+
+function bindPagination(body, total) {
+  body.querySelectorAll('[data-lb-page]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const p = parseInt(btn.dataset.lbPage, 10);
+      if (Number.isFinite(p) && p !== currentPage) { currentPage = p; renderRows(); }
+    });
+  });
+  const prev = body.querySelector('[data-lb-page-prev]');
+  if (prev) prev.addEventListener('click', () => {
+    if (currentPage > 0) { currentPage--; renderRows(); }
+  });
+  const next = body.querySelector('[data-lb-page-next]');
+  if (next) next.addEventListener('click', () => {
+    if (currentPage < total - 1) { currentPage++; renderRows(); }
+  });
 }
 
 // Phase 2: compare each row's points to the previous snapshot. Rows whose
