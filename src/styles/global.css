@@ -2725,3 +2725,586 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 /* The .cc-page used to reserve space for the sticky bar at the bottom. The
    floating button doesn't need it. */
 .cc-page { padding-bottom: 0 !important; }
+
+/* ============================================================
+   WB&S Phase 5 — Targeted layout corrections
+   Reverts Phase 4 hero/FAQ/leaderboard decisions per user feedback and
+   redesigns how-it-works (no timeline) + points formula (full rewrite).
+   ============================================================ */
+
+/* ---- Hero: back to 2-column with visible trophy ----------- */
+.cc-hero { min-height: 0 !important; display: block !important; padding: 24px 0 64px !important; }
+.cc-hero__bg-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 60% at 80% 20%, rgba(255, 134, 28, 0.12), transparent 60%),
+    radial-gradient(50% 60% at 20% 80%, rgba(255, 134, 28, 0.06), transparent 70%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+}
+.cc-hero__trophy-bg { display: none !important; }
+.cc-hero__mask { display: none !important; }
+
+.cc-hero .cc-hero__grid {
+  position: relative;
+  z-index: 1;
+  display: grid !important;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 48px;
+  align-items: center;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 88px 56px 56px;
+}
+.cc-hero .cc-hero__content { display: none !important; }    /* legacy Phase 4 single-col content retired */
+
+.cc-hero__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  text-align: left;
+}
+.cc-hero .cc-headline {
+  font-size: clamp(46px, 5.6vw, 80px) !important;
+  text-align: left !important;
+  max-width: 640px;
+}
+.cc-hero .cc-headline-sub {
+  font-size: clamp(20px, 2.4vw, 30px) !important;
+  text-align: left !important;
+  max-width: 560px;
+  margin: 0 !important;
+}
+.cc-hero .cc-subhead {
+  text-align: left !important;
+  font-size: 16px !important;
+  max-width: 560px;
+}
+.cc-hero .cc-hero__cta-row { justify-content: flex-start !important; }
+.cc-hero .cc-countdown.cc-countdown--strip {
+  max-width: 600px;
+  margin-top: 8px;
+  align-items: flex-start;
+}
+.cc-hero .cc-countdown__lbl-strip::before { display: none; }
+
+/* Eyebrow sits on top of the copy column */
+.cc-hero__eyebrow { align-self: flex-start; }
+
+/* Trophy visual column */
+.cc-hero__visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 540px;
+}
+.cc-hero__trophy-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cc-hero__trophy-img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 30px 60px rgba(255, 134, 28, 0.35));
+  animation: ccTrophyDrift 6s ease-in-out infinite;
+}
+/* Rotating orange aura behind the trophy */
+.cc-hero__visual .cc-hero__aura {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 130%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 134, 28, 0) 0deg,
+    rgba(255, 134, 28, 0.55) 60deg,
+    rgba(255, 134, 28, 0) 130deg,
+    rgba(255, 158, 71, 0.50) 200deg,
+    rgba(255, 158, 71, 0) 270deg,
+    rgba(255, 134, 28, 0.45) 330deg,
+    rgba(255, 134, 28, 0) 360deg
+  );
+  -webkit-mask: radial-gradient(closest-side, #000 18%, rgba(0, 0, 0, 0.6) 48%, transparent 80%);
+          mask: radial-gradient(closest-side, #000 18%, rgba(0, 0, 0, 0.6) 48%, transparent 80%);
+  filter: blur(12px);
+  opacity: 0.85;
+  pointer-events: none;
+  animation: ccTrophyAuraBg 10s linear infinite;
+}
+
+/* Floating prize-pool chip on the trophy column — the "hint" of what's
+   below the fold. Pulses gently to draw the eye. */
+.cc-hero__prize-chip {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 22px;
+  background: rgba(30, 40, 45, 0.92);
+  border: 1px solid var(--bt-accent);
+  border-radius: var(--bt-r-xs);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 12px 28px -10px rgba(255, 134, 28, 0.45);
+  animation: ccPrizeChipFloat 4s ease-in-out infinite;
+}
+@keyframes ccPrizeChipFloat {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(-4px); }
+}
+.cc-hero__prize-chip-lbl {
+  font-family: var(--bt-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bt-text-dim);
+}
+.cc-hero__prize-chip-amt {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--bt-accent);
+}
+
+@media (max-width: 1024px) {
+  .cc-hero .cc-hero__grid { grid-template-columns: 1fr; gap: 32px; padding: 80px 24px 48px; }
+  .cc-hero__visual { min-height: 380px; order: -1; }
+  .cc-hero__trophy-wrap { max-width: 320px; }
+  .cc-hero__copy { align-items: center; text-align: center; }
+  .cc-hero .cc-headline,
+  .cc-hero .cc-headline-sub,
+  .cc-hero .cc-subhead { text-align: center !important; }
+  .cc-hero .cc-hero__cta-row { justify-content: center !important; }
+}
+@media (max-width: 640px) {
+  .cc-hero .cc-hero__grid { padding: 72px 18px 36px; }
+  .cc-hero__visual { min-height: 280px; }
+  .cc-hero__trophy-wrap { max-width: 240px; }
+}
+
+/* ---- Prize cards: drop big numerals + section chrome ------ */
+/* Section heading is removed in DOM. Keep podium varying-height behaviour. */
+.cc-prizes { padding: 8px 0 24px !important; }
+.cc-prizes__podium {
+  padding: 32px 0 24px !important;
+}
+.bt-prize__rank-block { display: none !important; }   /* numerals dropped */
+.bt-prize__rank-row,
+.bt-prize__rank,
+.bt-prize__rank-rule { display: none !important; }
+
+.bt-prize__place-tag {
+  font-family: var(--bt-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bt-text-dim);
+  margin-bottom: 12px;
+}
+.bt-prize--first .bt-prize__place-tag { color: var(--bt-accent); }
+
+/* The amount is now the dominant element — much bigger */
+.bt-prize__amount {
+  color: var(--bt-text-hi) !important;
+  font-size: clamp(48px, 5vw, 68px) !important;
+  letter-spacing: -0.035em !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  margin: 6px 0 12px !important;
+  text-align: left !important;
+}
+.bt-prize--first .bt-prize__amount {
+  color: var(--bt-accent) !important;
+  font-size: clamp(64px, 6.5vw, 92px) !important;
+  text-shadow: 0 8px 28px rgba(255, 134, 28, 0.30) !important;
+}
+.bt-prize__label {
+  font-size: 13px !important;
+  letter-spacing: 0.06em !important;
+}
+
+/* Refine podium heights — empty cards looked tall without the numerals */
+.bt-prize--first  { min-height: 360px !important; padding-top: 36px !important; }
+.bt-prize--silver { min-height: 300px !important; padding-top: 28px !important; }
+.bt-prize--bronze { min-height: 270px !important; padding-top: 24px !important; }
+
+@media (max-width: 960px) {
+  .bt-prize--first,
+  .bt-prize--silver,
+  .bt-prize--bronze { min-height: 0 !important; padding-top: 24px !important; }
+}
+
+/* ---- Leaderboard: drop podium, color top-3 rows ----------- */
+.lb-podium { display: none !important; }
+.lb-rows-rest { display: contents; }   /* unwrap legacy wrapper */
+
+/* Tier color gradients on the row backgrounds — using :has() for the rank
+   medal class on a child of the row. Falls back gracefully (no tint) on
+   older browsers — the rank badge still tells the story. */
+.bt-lb-row:has(.bt-rank-1) {
+  background: linear-gradient(90deg,
+    rgba(255, 134, 28, 0.16) 0%,
+    rgba(255, 134, 28, 0.06) 55%,
+    transparent 100%);
+  border-left: 3px solid var(--bt-accent) !important;
+  padding-left: calc(var(--lb-pad-x) - 3px);
+}
+.bt-lb-row:has(.bt-rank-2) {
+  background: linear-gradient(90deg,
+    rgba(224, 220, 211, 0.10) 0%,
+    rgba(224, 220, 211, 0.04) 55%,
+    transparent 100%);
+  border-left: 3px solid rgba(224, 220, 211, 0.55) !important;
+  padding-left: calc(var(--lb-pad-x) - 3px);
+}
+.bt-lb-row:has(.bt-rank-3) {
+  background: linear-gradient(90deg,
+    rgba(198, 138, 85, 0.12) 0%,
+    rgba(198, 138, 85, 0.05) 55%,
+    transparent 100%);
+  border-left: 3px solid rgba(198, 138, 85, 0.55) !important;
+  padding-left: calc(var(--lb-pad-x) - 3px);
+}
+/* Make top-3 row content slightly larger so the rank weight reads */
+.bt-lb-row:has(.bt-rank-1) .lb-trader,
+.bt-lb-row:has(.bt-rank-2) .lb-trader,
+.bt-lb-row:has(.bt-rank-3) .lb-trader { font-size: 15px; }
+.bt-lb-row:has(.bt-rank-1) .lb-points { color: var(--bt-accent); font-size: 18px; }
+
+/* ---- How-it-works: stacked playbook rows ------------------ */
+.cc-how__timeline,
+.cc-how__rail,
+.cc-how__node { display: none !important; }   /* Phase 4 timeline retired */
+
+.cc-how__steps {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--bt-bg-line);
+}
+.cc-how__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 96px minmax(280px, 1.2fr) 1.5fr;
+  align-items: center;
+  gap: 32px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--bt-bg-line);
+  transition: background .25s ease;
+}
+.cc-how__step:hover { background: rgba(255, 134, 28, 0.04); }
+.cc-how__step::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--bt-accent);
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.cc-how__step:hover::before { opacity: 1; }
+
+.cc-how__step-num {
+  font-family: var(--bt-mono);
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--bt-accent);
+}
+.cc-how__step-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cc-how__step-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 5px 11px;
+  border: 1px solid var(--bt-accent-100);
+  background: rgba(255, 134, 28, 0.08);
+  border-radius: var(--bt-r-xs);
+  font-family: var(--bt-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--bt-text-mid);
+}
+.cc-how__step-stat strong {
+  color: var(--bt-accent);
+  font-weight: 700;
+  font-size: 13px;
+}
+.cc-how__step-stat i {
+  font-style: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 10.5px;
+}
+.cc-how__step-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--bt-text-hi);
+  margin: 0;
+}
+.cc-how__step-desc {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--bt-text-mid);
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .cc-how__step {
+    grid-template-columns: 56px 1fr;
+    gap: 18px;
+    padding: 22px 0;
+  }
+  .cc-how__step-num { font-size: 34px; }
+  .cc-how__step-desc { grid-column: 1 / -1; padding-left: 74px; }
+  .cc-how__step-title { font-size: 18px; }
+}
+@media (max-width: 480px) {
+  .cc-how__step-desc { padding-left: 0; }
+}
+
+/* ---- Points formula: equation + calc redesign ------------- */
+.cc-formula__rewards,
+.cc-formula__example { display: none !important; }   /* legacy retired */
+
+.cc-formula { padding-top: 56px !important; padding-bottom: 56px !important; }
+
+/* Big bold equation, monospace, centered, with accent numbers */
+.cc-formula__equation {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 28px 32px;
+  margin: 24px auto 32px;
+  max-width: 980px;
+  border: 1px solid var(--bt-bg-line);
+  border-top: 2px solid var(--bt-accent);
+  border-radius: var(--bt-r-xs);
+  background: linear-gradient(180deg, var(--bt-bg-1) 0%, var(--bt-bg-2) 100%);
+  font-family: var(--bt-mono);
+  text-align: center;
+  position: relative;
+}
+.cc-formula__equation::before,
+.cc-formula__equation::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  width: 8px;
+  height: 8px;
+  background: var(--bt-accent);
+  border-radius: 50%;
+}
+.cc-formula__equation::before { left: -5px; transform: translateY(-50%); top: 0; }
+.cc-formula__equation::after  { right: -5px; transform: translateY(-50%); top: 0; }
+
+.cc-eq__var {
+  font-family: var(--bt-font);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  color: var(--bt-text-hi);
+  text-transform: uppercase;
+}
+.cc-eq__op {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--bt-accent);
+  opacity: 0.7;
+}
+.cc-eq__op--meta {
+  font-family: var(--bt-mono);
+  font-size: 12px;
+  color: var(--bt-text-dim);
+  font-weight: 500;
+  opacity: 0.8;
+  letter-spacing: 0.06em;
+  margin-left: 8px;
+}
+.cc-eq__group {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid var(--bt-bg-line);
+  border-radius: var(--bt-r-xs);
+  background: rgba(0, 0, 0, 0.20);
+}
+.cc-eq__term {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.cc-eq__term-num,
+.cc-eq__term-div {
+  font-family: var(--bt-mono);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--bt-text-hi);
+  letter-spacing: 0.02em;
+}
+.cc-eq__term-div { color: var(--bt-text-dim); margin: 0 2px; }
+.cc-eq__times {
+  font-family: var(--bt-mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--bt-accent);
+}
+.cc-eq__num-accent { color: var(--bt-accent) !important; font-size: 22px !important; font-weight: 800 !important; }
+
+/* Two-pane calculator: inputs list left, result tile right */
+.cc-formula__calc {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 18px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.cc-calc__inputs {
+  background: var(--bt-bg-1);
+  border: 1px solid var(--bt-bg-line);
+  border-radius: var(--bt-r-xs);
+  padding: 24px 26px;
+}
+.cc-calc__h {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--bt-bg-line);
+  flex-wrap: wrap;
+}
+.cc-calc__caption {
+  font-size: 13px;
+  color: var(--bt-text-mid);
+}
+.cc-calc__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.cc-calc__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--bt-bg-line);
+}
+.cc-calc__row:last-of-type { border-bottom: 0; }
+.cc-calc__row-lbl {
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--bt-text-mid);
+}
+.cc-calc__row-val {
+  font-family: var(--bt-mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--bt-text-hi);
+  letter-spacing: -0.01em;
+}
+.cc-calc__breakdown {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--bt-bg-line);
+  font-family: var(--bt-mono);
+  font-size: 12.5px;
+  color: var(--bt-text-mid);
+  letter-spacing: 0.02em;
+}
+.cc-calc__result {
+  background: linear-gradient(180deg, var(--bt-accent) 0%, var(--bt-accent-deep) 100%);
+  border-radius: var(--bt-r-xs);
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+}
+.cc-calc__result::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 50% at 50% 0%, rgba(255, 255, 255, 0.16), transparent 70%);
+  pointer-events: none;
+}
+.cc-calc__result-lbl {
+  font-family: var(--bt-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.cc-calc__result-num {
+  font-size: clamp(48px, 5vw, 72px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  margin: 8px 0 4px;
+  color: #FFFFFF;
+}
+.cc-calc__result-unit {
+  font-family: var(--bt-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.92;
+}
+
+@media (max-width: 800px) {
+  .cc-formula__equation { padding: 22px 18px; gap: 10px; }
+  .cc-eq__var { font-size: 18px; }
+  .cc-eq__op { font-size: 22px; }
+  .cc-formula__calc { grid-template-columns: 1fr; }
+}
+
+/* ---- FAQ: back to single column --------------------------- */
+/* DOM no longer has .cc-faq__grid — leftover styles harmless. */

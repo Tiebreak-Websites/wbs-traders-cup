@@ -2,8 +2,8 @@
 import enCopy from '../data/copy.en.json';
 const { copy = enCopy } = Astro.props;
 const p = copy.prizes;
-// Display order: 2nd / 1st / 3rd (true podium). Index in copy.prizes.items is
-// [1st, 2nd, 3rd]; bt-prize-pos--{N} controls visual order in the grid.
+// Display order: 2nd / 1st / 3rd. Index in copy.prizes.items is [1st, 2nd, 3rd];
+// bt-prize-pos--{N} controls visual order in the grid (1 = far-left, 2 = center, 3 = far-right).
 const podiumOrder = [2, 1, 3];
 const medal = ['gold', 'silver', 'bronze'];
 const revealDelay = [440, 270, 120];
@@ -11,12 +11,10 @@ const revealDelay = [440, 270, 120];
 
 <section class="cc-prizes" id="prizes" aria-label={p.title}>
   <div class="cc-wrap">
-    <div class="cc-section-head cc-section-head--center reveal">
-      <span class="bt-eyebrow">{p.eyebrow}</span>
-      <h2 class="cc-section-title">{p.title}</h2>
-    </div>
+    <!-- No section eyebrow or title — the prize amounts speak for themselves
+         and have already been hinted at by the hero's prize-pool chip. -->
+    <h2 class="sr-only">{p.title}</h2>
 
-    <!-- True podium: 3 cards with varying heights sharing a common base line. -->
     <div class="cc-prizes__podium">
       {p.items.map((item, i) => {
         const isFirst = i === 0;
@@ -26,17 +24,13 @@ const revealDelay = [440, 270, 120];
             data-place={item.place}
             style={`--reveal-delay: ${revealDelay[i]}ms;`}
           >
-            <div class="bt-prize__rank-block" aria-hidden="true">
-              <span class="bt-prize__rank">{String(i + 1).padStart(2, '0')}</span>
+            <span class="bt-prize__place-tag">{item.place} place</span>
+
+            <div class="bt-prize__amount bt-num">
+              <span class="bt-prize__amt-val" data-countup>{item.amount}</span>
             </div>
 
-            <div class="bt-prize__body">
-              <span class="bt-prize__place">{item.place} place</span>
-              <div class="bt-prize__amount bt-num">
-                <span class="bt-prize__amt-val" data-countup>{item.amount}</span>
-              </div>
-              {item.label && <div class="bt-prize__label">{item.label}</div>}
-            </div>
+            {item.label && <div class="bt-prize__label">{item.label}</div>}
           </article>
         );
       })}

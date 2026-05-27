@@ -11,74 +11,83 @@ const subheadHtml = h.subhead.replace(
 ---
 
 <section class="cc-hero" id="main">
-  <!-- Trophy moved to the background — full-bleed behind every text element. -->
-  <div class="cc-hero__trophy-bg" aria-hidden="true">
-    <picture>
-      <source srcset={`${base}/hero-trophy.webp`} type="image/webp" />
-      <img class="cc-hero__trophy-img"
-           src={`${base}/hero-trophy.png`}
-           alt=""
-           width="520"
-           height="588"
-           loading="eager"
-           decoding="async" />
-    </picture>
-    <span class="cc-hero__aura" aria-hidden="true"></span>
-  </div>
+  <!-- Soft ambient backdrop behind the whole hero -->
+  <div class="cc-hero__bg-fx" aria-hidden="true"></div>
 
-  <!-- Vignette to keep text legible over the trophy -->
-  <div class="cc-hero__mask" aria-hidden="true"></div>
+  <div class="cc-hero__grid">
+    <!-- LEFT: copy column -->
+    <div class="cc-hero__copy">
+      <span class="cc-hero__eyebrow reveal" style="--reveal-delay: 40ms;">
+        <span class="cc-hero__eyebrow-dot" aria-hidden="true"></span>
+        {h.eyebrow || 'Traders Championship · 2026'}
+      </span>
 
-  <!-- Single centered column, vertically stacked -->
-  <div class="cc-hero__content">
-    <span class="cc-hero__eyebrow reveal" style="--reveal-delay: 40ms;">
-      <span class="cc-hero__eyebrow-dot" aria-hidden="true"></span>
-      {h.eyebrow || 'Traders Championship · 2026'}
-    </span>
+      <h1 class="cc-headline reveal" style="--reveal-delay: 80ms;">
+        {h.headline_main}
+      </h1>
 
-    <h1 class="cc-headline reveal" style="--reveal-delay: 80ms;">
-      {h.headline_main}
-    </h1>
+      <p class="cc-headline-sub reveal" style="--reveal-delay: 140ms;">
+        {h.headline_sub}
+      </p>
 
-    <p class="cc-headline-sub reveal" style="--reveal-delay: 140ms;">
-      {h.headline_sub}
-    </p>
+      <p class="cc-subhead reveal" style="--reveal-delay: 200ms;" set:html={subheadHtml}></p>
 
-    <p class="cc-subhead reveal" style="--reveal-delay: 200ms;" set:html={subheadHtml}></p>
-
-    <!-- Horizontal countdown STRIP — full-width, segmented, no enclosing cells -->
-    <div class="cc-countdown cc-countdown--strip reveal" style="--reveal-delay: 260ms;" data-countdown data-target={h.target_date}>
-      <span class="cc-countdown__lbl-strip">{h.countdown_label}</span>
-      <div class="cc-countdown__row" role="timer" aria-live="polite">
-        <div class="bt-cd">
-          <span class="bt-cd-num bt-num" data-d>00</span>
-          <span class="bt-cd-lbl">Days</span>
+      <!-- Horizontal countdown STRIP — full-width, segmented -->
+      <div class="cc-countdown cc-countdown--strip reveal" style="--reveal-delay: 260ms;" data-countdown data-target={h.target_date}>
+        <span class="cc-countdown__lbl-strip">{h.countdown_label}</span>
+        <div class="cc-countdown__row" role="timer" aria-live="polite">
+          <div class="bt-cd">
+            <span class="bt-cd-num bt-num" data-d>00</span>
+            <span class="bt-cd-lbl">Days</span>
+          </div>
+          <span class="bt-cd-sep" aria-hidden="true"></span>
+          <div class="bt-cd">
+            <span class="bt-cd-num bt-num" data-h>00</span>
+            <span class="bt-cd-lbl">Hours</span>
+          </div>
+          <span class="bt-cd-sep" aria-hidden="true"></span>
+          <div class="bt-cd">
+            <span class="bt-cd-num bt-num" data-m>00</span>
+            <span class="bt-cd-lbl">Minutes</span>
+          </div>
+          <span class="bt-cd-sep" aria-hidden="true"></span>
+          <div class="bt-cd">
+            <span class="bt-cd-num bt-num" data-s>00</span>
+            <span class="bt-cd-lbl">Seconds</span>
+          </div>
         </div>
-        <span class="bt-cd-sep" aria-hidden="true"></span>
-        <div class="bt-cd">
-          <span class="bt-cd-num bt-num" data-h>00</span>
-          <span class="bt-cd-lbl">Hours</span>
-        </div>
-        <span class="bt-cd-sep" aria-hidden="true"></span>
-        <div class="bt-cd">
-          <span class="bt-cd-num bt-num" data-m>00</span>
-          <span class="bt-cd-lbl">Minutes</span>
-        </div>
-        <span class="bt-cd-sep" aria-hidden="true"></span>
-        <div class="bt-cd">
-          <span class="bt-cd-num bt-num" data-s>00</span>
-          <span class="bt-cd-lbl">Seconds</span>
-        </div>
+      </div>
+
+      <div class="cc-hero__cta-row reveal" style="--reveal-delay: 320ms;">
+        <a href={h.cta_href} class="bt-btn bt-btn-primary cc-hero__cta" data-magnetic target="_blank" rel="noopener noreferrer">
+          {h.cta} <span aria-hidden="true">→</span>
+        </a>
+        <a href={h.secondary_cta_href} class="cc-hero__rules">
+          {h.secondary_cta} <span aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
 
-    <div class="cc-hero__cta-row reveal" style="--reveal-delay: 320ms;">
-      <a href={h.cta_href} class="bt-btn bt-btn-primary cc-hero__cta" data-magnetic target="_blank" rel="noopener noreferrer">
-        {h.cta} <span aria-hidden="true">→</span>
-      </a>
-      <a href={h.secondary_cta_href} class="cc-hero__rules">
-        {h.secondary_cta} <span aria-hidden="true">→</span>
-      </a>
+    <!-- RIGHT: trophy column (visible asset, not background) -->
+    <div class="cc-hero__visual reveal" style="--reveal-delay: 120ms;">
+      <div class="cc-hero__trophy-wrap">
+        <span class="cc-hero__aura" aria-hidden="true"></span>
+        <picture>
+          <source srcset={`${base}/hero-trophy.webp`} type="image/webp" />
+          <img class="cc-hero__trophy-img"
+               src={`${base}/hero-trophy.png`}
+               alt="Championship trophy"
+               width="520"
+               height="588"
+               loading="eager"
+               decoding="async" />
+        </picture>
+        <!-- Floating prize amount chip — hints at the prize section below -->
+        <span class="cc-hero__prize-chip reveal" style="--reveal-delay: 480ms;" aria-hidden="true">
+          <span class="cc-hero__prize-chip-lbl">Total prize pool</span>
+          <span class="cc-hero__prize-chip-amt bt-num">$47,000</span>
+        </span>
+      </div>
     </div>
   </div>
 </section>
