@@ -2,20 +2,45 @@
 import enCopy from '../data/copy.en.json';
 const { copy = enCopy } = Astro.props;
 const s = copy.sticky_cta;
+const h = copy.hero || {};
 const isAr = copy._meta?.locale === 'ar';
 const arrow = isAr ? '←' : '→';
+const dLbl = isAr ? 'ي' : 'd';
+const hLbl = isAr ? 'س' : 'h';
+const mLbl = isAr ? 'د' : 'm';
+const sLbl = isAr ? 'ث' : 's';
 ---
 
 <aside class="cc-sticky is-hidden" data-sticky aria-label="Championship call to action">
   <div class="cc-sticky__inner">
-    <div class="cc-sticky__copy">
-      <div class="cc-sticky__t">{s.title}</div>
-      <div class="cc-sticky__d">{s.subtitle}</div>
+    <div class="cc-sticky__lead">
+      <span class="cc-sticky__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 4h-2V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H5a2 2 0 0 0-2 2v1a4 4 0 0 0 4 4h.4A5 5 0 0 0 11 13.9V16H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2h-2v-2.1A5 5 0 0 0 16.6 11H17a4 4 0 0 0 4-4V6a2 2 0 0 0-2-2zM5 7V6h2v3a2 2 0 0 1-2-2zm14 0a2 2 0 0 1-2 2V6h2v1zM8 20h8a1 1 0 0 1 0 2H8a1 1 0 0 1 0-2z"/>
+        </svg>
+      </span>
+      <div class="cc-sticky__copy">
+        <div class="cc-sticky__t">{s.title}</div>
+        <div class="cc-sticky__d">{s.subtitle}</div>
+      </div>
     </div>
 
-    <a href={s.cta_href} class="bt-btn bt-btn-on-blue">
-      {s.cta} {arrow}
-    </a>
+    <div class="cc-sticky__actions">
+      {h.target_date && (
+        <div class="cc-sticky-cd" data-countdown data-target={h.target_date} aria-label="Time remaining">
+          <span class="cc-sticky-cd__cell"><span data-d>00</span>{dLbl}</span>
+          <span class="cc-sticky-cd__sep" aria-hidden="true">:</span>
+          <span class="cc-sticky-cd__cell"><span data-h>00</span>{hLbl}</span>
+          <span class="cc-sticky-cd__sep" aria-hidden="true">:</span>
+          <span class="cc-sticky-cd__cell"><span data-m>00</span>{mLbl}</span>
+          <span class="cc-sticky-cd__sep" aria-hidden="true">:</span>
+          <span class="cc-sticky-cd__cell"><span data-s>00</span>{sLbl}</span>
+        </div>
+      )}
+      <a href={s.cta_href} class="bt-btn bt-btn-on-blue cc-sticky__cta" target="_blank" rel="noopener noreferrer">
+        {s.cta} {arrow}
+      </a>
+    </div>
   </div>
 </aside>
 

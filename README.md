@@ -1,6 +1,6 @@
-# Warren Bowie and Smith Champions Cup — Trader's Cup 2026
+# Warren Bowie & Smith Champions Cup — Trader's Cup 2026
 
-Promotional sub-page for the **Warren Bowie and Smith Champions Cup** — a three-stage trading tournament running 1 June – 19 July 2026. Intended to live at **`https://warrenbowieandsmith.com/traders-cup-2026/`** as a sub-path of the main Warren Bowie and Smith site.
+Promotional sub-page for the **Warren Bowie & Smith Champions Cup** — a three-stage trading tournament running 1 June – 19 July 2026. Intended to live at **`https://wbandsmith.com/traders-cup-2026/`** as a sub-path of the main Warren Bowie & Smith site.
 
 Built with **Astro 4**, **vanilla JavaScript**, and **vanilla CSS** — no UI framework, no CSS framework, no client-side React.
 
@@ -10,7 +10,7 @@ Built with **Astro 4**, **vanilla JavaScript**, and **vanilla CSS** — no UI fr
 
 A short scrolling landing page, designed to feel like a tournament control center:
 
-1. **Hero** — Warren Bowie and Smith logo, eyebrow "Trader's Cup", live countdown to **19 Jul 2026 23:59 UTC**, and a primary "Open Account & Join" CTA.
+1. **Hero** — Warren Bowie & Smith logo, eyebrow "Trader's Cup", live countdown to **19 Jul 2026 23:59 UTC**, and a primary "Open Account & Join" CTA.
 2. **Three stage cards** — Starters / Contenders / Champions, with stage number, status chip, deposit band and reward.
 3. **Live leaderboard** — Starters / Contenders / Champions tabs, top 5 rows visible, ranks 1–3 with medal styling, "YOU" highlight for the current user's row. Reads a static JSON feed and polls every 30 s.
 4. **How it works** — 3 cards explaining the deposit → trade → finish mechanic.
@@ -26,9 +26,9 @@ The page is single-screen on tall viewports (≥ 940 px), graceful on shorter he
 | | |
 | --- | --- |
 | Framework | [Astro 4](https://astro.build/) (static output) |
-| Fonts | Urbanist + JetBrains Mono (Google Fonts) |
+| Fonts | Poppins + JetBrains Mono (Google Fonts) |
 | Scripts | Vanilla JS — countdown + leaderboard polling, no third-party libraries |
-| Assets | Inline SVG + Warren Bowie and Smith logo SVG |
+| Assets | Inline SVG + Warren Bowie & Smith logo SVG + WebP-optimized hero imagery |
 | Node | ≥ 18.17 / 20+ |
 
 No bundler config, no Tailwind, no React on the client.
@@ -75,9 +75,9 @@ src/
 public/
   data/
     leaderboard-default.json       # mock feed; matches production JSON shape
-  wbs-logo.svg                     # dark variant
-  wbs-logo-light.svg               # light variant (used on dark hero)
-  favicon.svg
+  wbs-white.svg                    # white wordmark (used on dark slate hero)
+  wbs-black.svg                    # dark wordmark (used on light surfaces)
+  wbs-fav-icon.png
 astro.config.mjs
 package.json
 ```
@@ -90,12 +90,12 @@ Defined as CSS custom properties in `src/styles/global.css` (`:root`). The namin
 
 | Group | Highlights |
 | --- | --- |
-| Surfaces | `--bt-bg-0: #05062E` (page), `--bt-bg-1 / --bt-bg-2` (card stack) |
-| Text | `--bt-text-hi: #F4EFE3` (headings), `--bt-text: #E6E1D2` (body), `--bt-text-mid: #9A9DB8`, `--bt-text-dim: #63657F` |
-| Accent | `--bt-accent: #FF7532` (Warren Bowie and Smith orange, primary CTA fill) |
+| Surfaces | `--bt-bg-0: #28343A` (page slate), `--bt-bg-1: #36444B` (card), `--bt-bg-2: #3F4E56` (alt) |
+| Text | `--bt-text-hi: #FFFFFF` (headings), `--bt-text: #D8DDE0` (body), `--bt-text-mid: #8A969E`, `--bt-text-dim: #6A767E` |
+| Accent | `--bt-accent: #FF861C` (WB&S brand orange, primary CTA fill) |
 | Trophy | `--bt-trophy: #E0B872` — reserved for the #1 rank medal only |
-| Status | `--bt-up: #19B67B`, `--bt-down: #E25C1B` |
-| Type | Urbanist (variable) for everything; JetBrains Mono for the eyebrow + step numerals |
+| Status | `--bt-up: #2EA86C`, `--bt-down: #E25C1B` |
+| Type | Poppins 300–800 (WB&S brand typeface); JetBrains Mono for monospace accents |
 
 To restyle a tier accent, change `--bt-tier-1 / --bt-tier-2 / --bt-tier-3`.
 
@@ -145,7 +145,7 @@ Point `BASE` at your CDN (or rewrite `BASE + FEED` to a full URL). Per the origi
 
 ```jsonc
 {
-  "brand": "warren_bowie_and_smith",
+  "brand": "wbandsmith",
   "competition": "champions_cup_2026",
   "currency": "USD",
   "updated_at": "2026-06-15T09:30:00Z",
@@ -193,10 +193,10 @@ The page describes the Champions Cup as a **"trading-volume competition with dep
 
 ## Deploy
 
-`npm run build` outputs to `dist/`. Drop that on any static host (Cloudflare Pages, Vercel, Netlify, S3 + CloudFront, or the existing `warrenbowieandsmith.com` host). The page expects to be served under the path **`/traders-cup-2026/`** — controlled by the `base` option in `astro.config.mjs`. If you embed under a different path, update both `base` there and any anchor link hrefs that hard-code `/traders-cup-2026/`.
+`npm run build` outputs to `dist/`. Drop that on any static host (Cloudflare Pages, Vercel, Netlify, S3 + CloudFront, or the existing `wbandsmith.com` host). The page expects to be served under the path **`/traders-cup-2026/`** — controlled by the `base` option in `astro.config.mjs`. If you embed under a different path, update both `base` there and any anchor link hrefs that hard-code `/traders-cup-2026/`.
 
 ---
 
 ## License
 
-Internal — © Warren Bowie and Smith 2026. Not for redistribution.
+Internal — © Warren Bowie & Smith 2026. Not for redistribution.

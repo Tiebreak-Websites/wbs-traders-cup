@@ -18,9 +18,15 @@ const {
 
 const dir = locale === 'ar' ? 'rtl' : 'ltr';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const ogPath = `${base}${copy.site.og_image_path}`;
-const faviconPath = `${base}/favicon.svg`;
+const ogPath = `${base}${locale === 'ar' ? '/og-ar.png' : '/og-en.png'}`;
+const faviconPath = `${base}/wbs-fav-icon.png`;
+const logoSrc = `${base}/wbs-white.svg`;
 const skipLabel = locale === 'ar' ? 'انتقل إلى المحتوى' : 'Skip to content';
+// Only load the fonts each locale actually needs (lighter critical path).
+// WB&S brand: Poppins single-typeface system (300-800).
+const fontHref = locale === 'ar'
+  ? 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap'
+  : 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap';
 ---
 
 <!doctype html>
@@ -29,6 +35,7 @@ const skipLabel = locale === 'ar' ? 'انتقل إلى المحتوى' : 'Skip t
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#FF861C" />
+    <script is:inline>document.documentElement.classList.add('cc-loading');</script>
     <title>{title}</title>
     <meta name="description" content={description} />
 
@@ -45,18 +52,49 @@ const skipLabel = locale === 'ar' ? 'انتقل إلى المحتوى' : 'Skip t
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogPath} />
 
-    <!-- Fonts: Poppins (WB&S brand typeface) + IBM Plex Sans Arabic for Arabic -->
+    <!-- Fonts: WB&S brand uses Poppins (Latin). Arabic also loads IBM Plex Sans Arabic.
+         Loaded non-render-blocking; display=swap shows fallback text immediately. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href={fontHref} media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href={fontHref} /></noscript>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href={faviconPath} />
+    <link rel="icon" type="image/png" href={faviconPath} />
   </head>
   <body>
+    <!-- Animated chart-grid background (sits behind the whole page) -->
+    <div class="cc-bg-fx" aria-hidden="true"></div>
+
+    <!-- Page loader: branded logo focus-in, then fades away -->
+    <div id="cc-loader" class="cc-loader" aria-hidden="true">
+      <img class="cc-loader__logo" src={logoSrc} alt="" width="190" height="56" />
+    </div>
+
+    <script is:inline>
+      (function () {
+        // Hide on the REAL page load (all images/fonts ready), not a fixed timer.
+        // Then un-gate the page so reveal + loop animations start playing.
+        function done() {
+          var root = document.documentElement;
+          if (root.classList.contains('cc-loaded')) return;
+          root.classList.remove('cc-loading');
+          root.classList.add('cc-loaded');
+          var el = document.getElementById('cc-loader');
+          if (el) {
+            el.classList.add('is-done');
+            setTimeout(function () { if (el && el.parentNode) el.parentNode.removeChild(el); }, 600);
+          }
+          // Kick the reveal observer now that the page is allowed to animate.
+          document.dispatchEvent(new CustomEvent('cc:reveal:rescan'));
+        }
+        if (document.readyState === 'complete') done();
+        else window.addEventListener('load', done);
+        // Safety net only — in case a resource stalls and 'load' never fires.
+        setTimeout(done, 10000);
+      })();
+    </script>
+
     <a href="#main" class="skip-link">{skipLabel}</a>
     <slot />
 
@@ -69,6 +107,8 @@ const skipLabel = locale === 'ar' ? 'انتقل إلى المحتوى' : 'Skip t
 
         function check() {
           ticking = false;
+          // Hold all reveals until the loader has finished.
+          if (!document.documentElement.classList.contains('cc-loaded')) return;
           var winH = window.innerHeight || document.documentElement.clientHeight;
           // Trigger when element's top is within ~92% of the viewport — gives a
           // small "pre-load" margin so animations start just before the element
@@ -112,6 +152,20 @@ const skipLabel = locale === 'ar' ? 'انتقل إلى المحتوى' : 'Skip t
       })();
     </script>
 
+    <!-- Pause looping animations in sections that aren't on screen (saves CPU/GPU) -->
+    <script is:inline>
+      (function () {
+        if (!('IntersectionObserver' in window)) return;
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) { e.target.classList.toggle('cc-anim-off', !e.isIntersecting); });
+        }, { rootMargin: '140px' });
+        ['.cc-hero', '.cc-prizes'].forEach(function (sel) {
+          var el = document.querySelector(sel);
+          if (el) io.observe(el);
+        });
+      })();
+    </script>
+
     <style is:global>
       .skip-link {
         position: absolute;
@@ -127,6 +181,40 @@ const skipLabel = locale === 'ar' ? 'انتقل إلى المحتوى' : 'Skip t
         text-decoration: none;
       }
       .skip-link:focus { top: 1rem; }
+
+      /* Page loader — branded logo focus-in, then the overlay fades away */
+      .cc-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        background: var(--bt-bg-0);
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+      }
+      .cc-loader.is-done { opacity: 0; visibility: hidden; }
+      .cc-loader__logo {
+        width: 190px;
+        height: auto;
+        opacity: 0;
+        transform: scale(0.92);
+        filter: blur(10px);
+        /* Gentle pulsing focus-in that loops while the real page is loading */
+        animation: ccLoaderLogo 1.6s ease-in-out infinite alternate;
+      }
+      @keyframes ccLoaderLogo {
+        0%   { opacity: 0.55; transform: scale(0.94); filter: blur(6px); }
+        100% { opacity: 1;    transform: scale(1);    filter: blur(0); }
+      }
+      /* Hold the page's animations until the loader finishes, then let them play */
+      html.cc-loading .cc-page *,
+      html.cc-loading .cc-bg-fx,
+      html.cc-loading .cc-bg-fx::before {
+        animation-play-state: paused !important;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .cc-loader__logo { animation: none; opacity: 1; transform: none; filter: none; }
+      }
     </style>
   </body>
 </html>

@@ -1,0 +1,30 @@
+{
+  "brand": "wbandsmith",
+  "competition": "traders_championship_2026",
+  "currency": "USD",
+  "updated_at": "2026-07-08T15:30:00+04:00",
+  "next_update_at": "2026-07-08T15:45:00+04:00",
+  "qualifying_count": 4218,
+  "current_user": {
+    "rank": 36,
+    "account_id": "4127860",
+    "name_masked": "أنت",
+    "country": "AE",
+    "deposits_usd": 1400,
+    "trades": 92,
+    "points": 810,
+    "joined_month": "يوليو 2026"
+  },
+  "leaderboard": [
+    { "rank":  1, "account_id": "2048317", "name_masked": "أحمد ع***ي",   "country": "AE", "deposits_usd": 9800, "trades": 412, "points": 4520, "joined_month": "يونيو 2026" },
+    { "rank":  2, "account_id": "1937642", "name_masked": "خالد م***ح",  "country": "SA", "deposits_usd": 7600, "trades": 384, "points": 3820, "joined_month": "يونيو 2026" },
+    { "rank":  3, "account_id": "3160928", "name_masked": "يوسف ب***ي",  "country": "EG", "deposits_usd": 6200, "trades": 351, "points": 3305, "joined_month": "يونيو 2026" },
+    { "rank":  4, "account_id": "2741056", "name_masked": "عمر ح***ن",   "country": "QA", "deposits_usd": 5200, "trades": 298, "points": 2790, "joined_month": "يونيو 2026" },
+    { "rank":  5, "account_id": "1582394", "name_masked": "فيصل ر***ي", "country": "AE", "deposits_usd": 4400, "trades": 268, "points": 2440, "joined_month": "يونيو 2026" },
+    { "rank":  6, "account_id": "3904271", "name_masked": "راشد ن***ي", "country": "BH", "deposits_usd": 3800, "trades": 242, "points": 2160, "joined_month": "يونيو 2026" },
+    { "rank":  7, "account_id": "2317685", "name_masked": "مريم س***ح", "country": "KW", "deposits_usd": 3400, "trades": 216, "points": 1930, "joined_month": "يونيو 2026" },
+    { "rank":  8, "account_id": "1746203", "name_masked": "ليلى ت***ي", "country": "JO", "deposits_usd": 3000, "trades": 196, "points": 1730, "joined_month": "يونيو 2026" },
+    { "rank":  9, "account_id": "2895410", "name_masked": "حسن ف***ي",  "country": "OM", "deposits_usd": 2800, "trades": 178, "points": 1590, "joined_month": "يونيو 2026" },
+    { "rank": 10, "account_id": "3052719", "name_masked": "نور د***س",  "country": "LB", "deposits_usd": 2600, "trades": 164, "points": 1470, "joined_month": "يونيو 2026" }
+  ]
+}

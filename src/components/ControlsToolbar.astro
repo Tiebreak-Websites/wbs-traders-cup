@@ -15,53 +15,47 @@ const sLbl = isAr ? 'ث' : 's';
 ---
 
 <header class="cc-topbar" data-topbar aria-label="Site header">
-  <a href={enHref} class="cc-topbar__brand" aria-label="Warren Bowie & Smith">
-    <img class="cc-topbar__logo" src={logoSrc} alt="Warren Bowie & Smith" width="120" height="36" />
-  </a>
+  <div class="cc-topbar__inner">
+    <a href={enHref} class="cc-topbar__brand" aria-label="Warren Bowie & Smith">
+      <img class="cc-topbar__logo" src={logoSrc} alt="Warren Bowie & Smith" width="120" height="36" />
+    </a>
 
-  <div class="cc-topbar__controls">
-    {h.target_date && (
-      <div class="cc-mini-cd" data-countdown data-target={h.target_date} aria-label="Time remaining">
-        <span class="cc-mini-cd__cell"><span data-d>00</span>{dLbl}</span>
-        <span class="cc-mini-cd__sep" aria-hidden="true">:</span>
-        <span class="cc-mini-cd__cell"><span data-h>00</span>{hLbl}</span>
-        <span class="cc-mini-cd__sep" aria-hidden="true">:</span>
-        <span class="cc-mini-cd__cell"><span data-m>00</span>{mLbl}</span>
-        <span class="cc-mini-cd__sep" aria-hidden="true">:</span>
-        <span class="cc-mini-cd__cell"><span data-s>00</span>{sLbl}</span>
+    <div class="cc-topbar__controls">
+      {h.target_date && (
+        <div class="cc-mini-cd" data-countdown data-target={h.target_date} aria-label="Time remaining">
+          <span class="cc-mini-cd__cell"><span data-d>00</span>{dLbl}</span>
+          <span class="cc-mini-cd__sep" aria-hidden="true">:</span>
+          <span class="cc-mini-cd__cell"><span data-h>00</span>{hLbl}</span>
+          <span class="cc-mini-cd__sep" aria-hidden="true">:</span>
+          <span class="cc-mini-cd__cell"><span data-m>00</span>{mLbl}</span>
+          <span class="cc-mini-cd__sep" aria-hidden="true">:</span>
+          <span class="cc-mini-cd__cell"><span data-s>00</span>{sLbl}</span>
+        </div>
+      )}
+
+      <div class="cc-controls__lang" role="group" aria-label="Language">
+        <a href={enHref} class={`cc-controls__lang-btn${locale === 'en' ? ' is-active' : ''}`} aria-current={locale === 'en' ? 'page' : undefined}>EN</a>
+        <a href={arHref} class={`cc-controls__lang-btn${locale === 'ar' ? ' is-active' : ''}`} aria-current={locale === 'ar' ? 'page' : undefined}>AR</a>
       </div>
-    )}
-
-    <div class="cc-controls__lang" role="group" aria-label="Language">
-      <a href={enHref} class={`cc-controls__lang-btn${locale === 'en' ? ' is-active' : ''}`} aria-current={locale === 'en' ? 'page' : undefined}>EN</a>
-      <a href={arHref} class={`cc-controls__lang-btn${locale === 'ar' ? ' is-active' : ''}`} aria-current={locale === 'ar' ? 'page' : undefined}>AR</a>
     </div>
   </div>
 </header>
 
 <script>
-  // Reveal the fixed topbar once the user scrolls past the hero section.
+  // The topbar is always visible. It's transparent over the hero and gains a
+  // blurred, readable background as soon as the user starts scrolling down.
   (function () {
     const bar = document.querySelector('[data-topbar]');
-    const hero = document.querySelector('.cc-hero');
-    if (!bar || !hero) return;
+    if (!bar) return;
 
     let scheduled = false;
-    let lastPast = null;
+    let lastScrolled = null;
     function check() {
       scheduled = false;
-      const rect = hero.getBoundingClientRect();
-      // Show topbar when hero bottom has scrolled above the viewport top
-      // (use small offset so it appears just before fully clearing)
-      const past = rect.bottom < 32;
-      if (past === lastPast) return;
-      lastPast = past;
-      bar.classList.toggle('is-visible', past);
-      // Backstop: inline styles snap to the final state in environments where
-      // CSS transitions don't tick (real browsers still animate smoothly).
-      bar.style.transform = past ? 'translateY(0)' : 'translateY(-110%)';
-      bar.style.opacity   = past ? '1' : '0';
-      bar.style.pointerEvents = past ? 'auto' : 'none';
+      const scrolled = (window.scrollY || document.documentElement.scrollTop || 0) > 8;
+      if (scrolled === lastScrolled) return;
+      lastScrolled = scrolled;
+      bar.classList.toggle('is-scrolled', scrolled);
     }
     function schedule() {
       if (scheduled) return;

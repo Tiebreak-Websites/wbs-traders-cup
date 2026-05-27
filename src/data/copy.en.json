@@ -31,10 +31,10 @@
 
   "hero": {
     "eyebrow": "Traders Championship · 2026",
-    "headline_pre": "The MENA Trading Championship",
-    "headline_emphasis": "2026",
+    "headline_main": "Win 26 000$!",
+    "headline_sub": "Enter the Trading Championship!",
     "subhead": "Deposit $200. Compete for a $26,000 prize pool based on skill, strategy, and consistency. Built on Islamic accounts with a transparent leaderboard.",
-    "countdown_label": "Until end",
+    "countdown_label": "Until end of the Championship",
     "target_date": "2026-07-19T23:59:00+04:00",
     "cta": "Enter the Championship",
     "cta_href": "https://wbandsmith.com/register?utm_campaign=traders_championship_2026&utm_source=landing",
@@ -76,11 +76,15 @@
     "title": "Live Champion Points",
     "live_chip": "Live",
     "header_eyebrow": "Live standings",
-    "card_title": "Top traders",
+    "card_title": "Live standings",
     "card_legend": "Sorted by Champion Points · Updates every 30 sec",
+    "filter_name_placeholder": "Search by name",
+    "filter_id_placeholder": "Search by ID",
+    "no_results": "No traders match your search.",
     "columns": {
       "rank": "Rank",
       "trader": "Trader",
+      "id": "ID",
       "country": "Country",
       "deposits": "Deposits",
       "trades": "Trades",
@@ -97,7 +101,7 @@
 
   "how_it_works": {
     "eyebrow": "How it works",
-    "title": "No draw. No luck. Just results.",
+    "title": "This is how you win the $26,000 in four steps",
     "steps": [
       {
         "n": "01",
@@ -111,7 +115,7 @@
         "stat": "+50",
         "stat_label": "pts / $200",
         "t": "Climb with every deposit",
-        "d": "Every $200 you fund your account with adds 50 Champion Points. A bigger deposit, a bigger head start on the leaderboard."
+        "d": "Every $200 you fund adds 50 Champion Points — a bigger deposit, a bigger head start. Example: $1,000 → 250 points before your first trade."
       },
       {
         "n": "03",
@@ -125,7 +129,7 @@
         "stat": "2×",
         "stat_label": "final week",
         "t": "Sprint the closing week",
-        "d": "Between 13 → 19 July 2026, every point you earn counts double. The closing stretch decides the podium."
+        "d": "Between 13 → 19 July 2026, World Cup final week, every point you earn counts double. The closing stretch decides the podium."
       }
     ]
   },

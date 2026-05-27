@@ -11,39 +11,36 @@ const labels = {
   arrow:   isAr ? '←' : '→',
 };
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const logoSrc = `${base}/wbs-white.svg`;
+// Trophy image: Arabic page uses the localized cup (showing "البطل")
+const trophySlug = isAr ? 'hero-trophy-ar' : 'hero-trophy';
+// Emphasise currency amounts (e.g. $200, $26,000, 200$) in the subhead.
+const subheadHtml = h.subhead.replace(
+  /(\$\d[\d,]*(?:\.\d+)?|\d[\d,]*(?:\.\d+)?\$)/g,
+  '<strong class="cc-subhead__amt">$1</strong>'
+);
 ---
 
 <section class="cc-hero" id="main">
-  <!-- Full-width chart backdrop, sits behind everything in the hero -->
-  <img class="cc-hero__bg"
-       src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/hero-bg.png`}
-       alt=""
-       aria-hidden="true"
-       loading="eager"
-       decoding="async" />
-
-  <!-- Brand logo (always visible inside the hero, top-left) -->
-  <img class="cc-hero-logo"
-       src={logoSrc}
-       alt="Warren Bowie & Smith"
-       width="160"
-       height="48" />
+  <!-- Full-width chart backdrop (desktop/tablet only) — loaded via CSS so phones never fetch it -->
+  <div class="cc-hero__bg"
+       style={`--hero-bg-img: url('${import.meta.env.BASE_URL.replace(/\/$/, '')}/hero-bg.webp')`}
+       aria-hidden="true"></div>
 
   <div class="cc-hero__grid">
     <!-- LEFT: copy + countdown + CTA -->
     <div class="cc-hero__copy">
-      <span class="bt-eyebrow bt-eyebrow--left reveal">{h.eyebrow}</span>
-
       <h1 class="cc-headline reveal" style="--reveal-delay: 80ms;">
-        {h.headline_pre} <span class="cc-headline__accent">{h.headline_emphasis}</span>
+        {h.headline_main}
       </h1>
 
-      <p class="cc-subhead reveal" style="--reveal-delay: 160ms;">{h.subhead}</p>
+      <p class="cc-headline-sub reveal" style="--reveal-delay: 120ms;">
+        {h.headline_sub}
+      </p>
+
+      <p class="cc-subhead reveal" style="--reveal-delay: 200ms;" set:html={subheadHtml}></p>
 
       <div class="cc-countdown reveal" style="--reveal-delay: 240ms;" data-countdown data-target={h.target_date}>
         <div class="cc-countdown__lbl">
-          <span class="bt-dot bt-dot-pulse" aria-hidden="true"></span>
           <span class="bt-label">{h.countdown_label}</span>
         </div>
         <div class="cc-countdown__row" role="timer" aria-live="polite">
@@ -70,26 +67,32 @@ const logoSrc = `${base}/wbs-white.svg`;
       </div>
 
       <div class="cc-hero__cta-row reveal" style="--reveal-delay: 320ms;">
-        <a href={h.cta_href} class="bt-btn bt-btn-primary cc-hero__cta">
-          {h.cta} {labels.arrow}
+        <a href={h.cta_href} class="bt-btn bt-btn-primary cc-hero__cta" target="_blank" rel="noopener noreferrer">
+          {h.cta}
         </a>
         <a href={h.secondary_cta_href} class="cc-hero__rules">
-          {h.secondary_cta} {labels.arrow}
+          {h.secondary_cta}
         </a>
       </div>
     </div>
 
     <!-- RIGHT: trophy (transparent PNG) sitting on top of the chart backdrop -->
     <div class="cc-hero__visual reveal" style="--reveal-delay: 120ms;">
+      <div class="cc-hero__cup-bg"
+           style={`--cup-img: url('${import.meta.env.BASE_URL.replace(/\/$/, '')}/cup-bg-mobile.png')`}
+           aria-hidden="true"></div>
       <div class="cc-hero__trophy-wrap">
-        <div class="cc-hero__halo" aria-hidden="true"></div>
-        <img class="cc-hero__trophy-img"
-             src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/hero-trophy.png`}
-             alt="Championship trophy"
-             width="520"
-             height="660"
-             loading="eager"
-             decoding="async" />
+        <span class="cc-hero__aura" aria-hidden="true"></span>
+        <picture>
+          <source srcset={`${base}/${trophySlug}.webp`} type="image/webp" />
+          <img class="cc-hero__trophy-img"
+               src={`${base}/${trophySlug}.png`}
+               alt="Championship trophy"
+               width="520"
+               height="588"
+               loading="eager"
+               decoding="async" />
+        </picture>
       </div>
     </div>
   </div>
@@ -99,32 +102,45 @@ const logoSrc = `${base}/wbs-white.svg`;
   /* Two-column hero with trophy */
   .cc-hero {
     position: relative;
-    padding: 24px 56px 56px;
+    padding: 64px 0 0;
     overflow: hidden;
     isolation: isolate;
   }
-  /* Full-bleed chart backdrop covering the entire hero — behind every element */
+  /* Full-bleed chart backdrop covering the entire hero — behind every element.
+     Image is applied only at >=641px (via CSS) so phones never download it. */
   .cc-hero__bg {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
     z-index: 0;
     pointer-events: none;
-    user-select: -webkit-none;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 78%, transparent 100%);
             mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 78%, transparent 100%);
     opacity: 0.85;
   }
+  @media (min-width: 641px) {
+    .cc-hero__bg { background-image: var(--hero-bg-img); }
+  }
+  /* Desktop: nudge the chart backdrop 40px left and 60px down.
+     The box is extended (top/right) so the shift never exposes the hero edges. */
+  @media (min-width: 1025px) {
+    .cc-hero__bg {
+      inset: -60px -40px 0 0;
+      transform: translate(-40px, 60px);
+    }
+  }
+  /* Match .cc-wrap so the hero content aligns with the rest of the page grid */
   .cc-hero__grid {
     position: relative;
     z-index: 1;
-    max-width: 1320px;
+    width: 100%;
+    max-width: 1240px;
     margin: 0 auto;
+    padding: 0 56px;
     display: grid;
-    grid-template-columns: 1.05fr 1fr;
+    grid-template-columns: 1.2fr 1fr;
     gap: 40px;
     align-items: center;
   }
@@ -132,24 +148,26 @@ const logoSrc = `${base}/wbs-white.svg`;
   .cc-hero__copy {
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 26px;
     align-items: flex-start;
   }
-  html[dir="rtl"] .cc-hero__copy { align-items: flex-end; text-align: right; }
+  html[dir="rtl"] .cc-hero__copy { align-items: flex-start; text-align: right; }
 
   /* Trophy column — sits on top of the section-wide chart backdrop */
   .cc-hero__visual {
     position: relative;
-    min-height: 540px;
+    min-height: 660px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  /* Trophy (transparent PNG) on top of the chart */
+  /* Chart + glowing-base backdrop directly behind the cup — mobile only */
+  .cc-hero__cup-bg { display: none; }
+  /* Trophy (transparent PNG) on top of the chart — 50% larger, static (no animation) */
   .cc-hero__trophy-wrap {
     position: relative;
     z-index: 1;
-    width: 380px;
+    width: 560px;
     max-width: 100%;
     display: flex;
     align-items: center;
@@ -161,39 +179,81 @@ const logoSrc = `${base}/wbs-white.svg`;
     width: 100%;
     height: auto;
     display: block;
-    filter: drop-shadow(0 30px 60px rgba(255, 134, 28, 0.45));
-    animation: trophyFloat 5.2s ease-in-out infinite;
   }
-  @keyframes trophyFloat {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-8px); }
-  }
-  .cc-hero__halo {
+  /* Rotating aura glow behind the cup — feathered so it never looks 'cut' */
+  .cc-hero__aura {
     position: absolute;
-    inset: -10% -15% -20% -15%;
-    background:
-      radial-gradient(closest-side at 50% 50%, rgba(255, 134, 28, 0.55), transparent 70%),
-      radial-gradient(closest-side at 50% 92%, rgba(255, 134, 28, 0.35), transparent 70%);
-    filter: blur(8px);
-    z-index: 0;
+    left: 50%;
+    top: 50%;
+    width: 152%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      rgba(255, 134, 28, 0) 0deg,
+      rgba(255, 134, 28, 0.70) 50deg,
+      rgba(255, 134, 28, 0) 110deg,
+      rgba(255, 158, 71, 0.65) 165deg,
+      rgba(255, 158, 71, 0) 220deg,
+      rgba(255, 134, 28, 0.70) 270deg,
+      rgba(255, 134, 28, 0) 320deg,
+      rgba(255, 158, 71, 0.60) 350deg,
+      rgba(255, 158, 71, 0) 360deg
+    );
+    -webkit-mask: radial-gradient(closest-side, #000 20%, rgba(0, 0, 0, 0.6) 48%, transparent 80%);
+            mask: radial-gradient(closest-side, #000 20%, rgba(0, 0, 0, 0.6) 48%, transparent 80%);
+    filter: blur(10px);
+    opacity: 0.95;
     pointer-events: none;
-    animation: trophyGlow 3.4s ease-in-out infinite;
+    /* own compositor layer: the blurred conic gradient is rasterized once and the
+       rotation is then a cheap GPU composite (no per-frame repaint) */
+    will-change: transform;
+    animation: ccTrophyAura 9s linear infinite;
   }
-  @keyframes trophyGlow {
-    0%, 100% { opacity: 0.80; transform: scale(1); }
-    50%      { opacity: 1;    transform: scale(1.06); }
+  @keyframes ccTrophyAura {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cc-hero__aura { animation: none; }
   }
 
-  /* CTA row */
+  /* CTA row — keep the button + rules link on a single row */
   .cc-hero__cta-row {
     display: flex;
     align-items: center;
-    gap: 22px;
-    flex-wrap: wrap;
+    gap: 26px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
     margin-top: 6px;
   }
+  /* Primary CTA — golden gradient with a shimmer sweep on hover */
+  .bt-btn.cc-hero__cta {
+    height: 60px;
+    padding: 0 34px;
+    font-size: 19px;
+    font-weight: 700;
+    color: #3A2A0A;
+    background: linear-gradient(120deg, #C99A38 0%, #EAC265 26%, #F6D98C 50%, #EAC265 74%, #C99A38 100%);
+    background-size: 220% 100%;
+    background-position: 8% 0;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.4) inset,
+      0 12px 26px -10px rgba(201, 154, 56, 0.65);
+    transition: background-position .7s ease, transform .25s ease, box-shadow .25s ease;
+  }
+  .bt-btn.cc-hero__cta:hover {
+    background-position: 92% 0;
+    color: #3A2A0A;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.55) inset,
+      0 18px 36px -10px rgba(201, 163, 90, 0.78),
+      0 0 0 4px rgba(224, 184, 114, 0.18);
+  }
   .cc-hero__rules {
-    font-size: 13.5px;
+    font-size: 14.5px;
     font-weight: 600;
     color: var(--bt-text-mid);
     letter-spacing: 0.005em;
@@ -205,15 +265,59 @@ const logoSrc = `${base}/wbs-white.svg`;
 
   /* Responsive */
   @media (max-width: 1024px) {
-    .cc-hero { padding: 16px 32px 48px; }
+    .cc-hero { padding: 56px 0 0; }
     .cc-hero__grid { grid-template-columns: 1fr; gap: 24px; }
-    .cc-hero__visual { min-height: 420px; order: -1; }
-    .cc-hero__trophy-wrap { width: 280px; }
+    .cc-hero__visual { min-height: 520px; order: -1; }
+    .cc-hero__trophy-wrap { width: 420px; }
+  }
+  @media (max-width: 960px) {
+    .cc-hero__grid { padding: 0 24px; }
   }
   @media (max-width: 640px) {
-    .cc-hero { padding: 8px 20px 36px; }
-    .cc-hero__trophy-wrap { width: 220px; }
-    .cc-hero__visual { min-height: 320px; }
+    .cc-hero { padding: 52px 0 40px; } /* +40px space before the prizes (1st place) */
+    .cc-hero__trophy-wrap { width: 320px; }
+    .cc-hero__visual { min-height: 380px; }
+
+    /* Remove the old full-bleed chart backdrop on mobile */
+    .cc-hero__bg { display: none; }
+
+    /* Keep the hero copy above the cup backdrop so the title stays readable */
+    .cc-hero__copy { position: relative; z-index: 3; }
+
+    /* New chart + glowing-base backdrop sits behind the cup, fading out to the
+       page colour (#0B0F1E) at the bottom so it blends and never covers the title */
+    .cc-hero__cup-bg {
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: -6%;
+      width: 134%;
+      height: 130%;
+      transform: translateX(-50%);
+      z-index: 0;
+      pointer-events: none;
+      background-image: var(--cup-img);
+      background-size: cover;
+      background-position: center top;
+    }
+    .cc-hero__cup-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 0%, transparent 50%, #0B0F1E 92%);
+    }
+
+    /* Centre the hero content on mobile: title, subhead, timer, CTA + rules link */
+    .cc-hero__copy,
+    html[dir="rtl"] .cc-hero__copy { align-items: center; text-align: center; }
+    .cc-hero__cta-row { flex-wrap: wrap; white-space: normal; justify-content: center; }
+
+    /* Timer: shrink so all four cells fit on one row */
+    .cc-countdown__row { white-space: nowrap; }
+    .cc-countdown .bt-cd { min-width: 0; padding: 8px 9px 6px; }
+    .cc-countdown .bt-cd-num { font-size: 30px; }
+    .cc-countdown .bt-cd-lbl { font-size: 9px; margin-top: 4px; letter-spacing: 0.1em; }
+    .cc-countdown .bt-cd-sep { font-size: 24px; padding: 0 2px; }
   }
 </style>
 

@@ -3,32 +3,40 @@ import enCopy from '../data/copy.en.json';
 const { copy = enCopy } = Astro.props;
 const p = copy.prizes;
 const isAr = copy._meta?.locale === 'ar';
-const championLabel = p.champion_label ?? (isAr ? 'البطل' : 'Champion');
-const islamicLabel  = isAr ? 'شروط إسلامية' : 'Islamic terms';
-const fundedLabel   = isAr ? 'حساب ممول'   : 'Funded account';
 // JSON order: 1st, 2nd, 3rd. We assign podium order (2nd→left, 1st→center, 3rd→right)
 // via CSS .bt-prize-pos--{N} on each card.
 const podiumOrder = [2, 1, 3]; // matches the items array index order
+const medal = ['gold', 'silver', 'bronze']; // matches the items array index order
+// Entrance reveal order: 3rd → 2nd → 1st (winner last). Indexed by items order [1st, 2nd, 3rd].
+// Extra base delay so the prizes start a touch after the rest of the page.
+const revealDelay = [440, 270, 120];
+
+// Golden laurel branch (first place only) — the SVG is recoloured to gold via a
+// CSS mask and mirrored for the opposite side.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const laurelSrc = `${base}/laurel-branch.svg`;
 ---
 
-<section class="cc-prizes" id="prizes">
+<section class="cc-prizes" id="prizes" aria-label={p.title}>
   <div class="cc-wrap">
-    <div class="cc-section-head cc-section-head--center reveal">
-      <span class="bt-eyebrow">{p.eyebrow}</span>
-      <h2 class="cc-section-title">{p.title}</h2>
-      <p class="cc-section-sub">{p.subtitle}</p>
-    </div>
-
+    <h2 class="sr-only">{p.title}</h2>
     <div class="cc-prizes__grid">
       {p.items.map((item, i) => {
         const isFirst = i === 0;
         return (
           <article
-            class={`bt-prize reveal bt-prize-pos--${podiumOrder[i]}${isFirst ? ' bt-prize--first' : ''}`}
+            class={`bt-prize bt-prize--${medal[i]} reveal bt-prize-pos--${podiumOrder[i]}${isFirst ? ' bt-prize--first' : ''}`}
             data-place={item.place}
-            style={`--reveal-delay: ${(podiumOrder[i] - 1) * 120}ms;`}
+            style={`--reveal-delay: ${revealDelay[i]}ms;`}
           >
             <span class="bt-prize-marker" style={`color: ${item.color}`}></span>
+
+            {isFirst && (
+              <>
+                <span class="bt-prize__laurel bt-prize__laurel--left" style={`--laurel-src: url('${laurelSrc}')`} aria-hidden="true"></span>
+                <span class="bt-prize__laurel bt-prize__laurel--right" style={`--laurel-src: url('${laurelSrc}')`} aria-hidden="true"></span>
+              </>
+            )}
 
             {isFirst && (
               <div class="bt-prize__crown" aria-hidden="true">
@@ -38,24 +46,17 @@ const podiumOrder = [2, 1, 3]; // matches the items array index order
                   <circle cx="16" cy="4" r="2"/>
                   <circle cx="30" cy="6" r="2"/>
                 </svg>
-                <span class="bt-prize__champion">{championLabel}</span>
               </div>
             )}
 
             <div class="bt-prize__head">
-              <span class={`bt-rank bt-rank-${i + 1}`}>{i + 1}</span>
               <span class="bt-label bt-prize__place">{item.place}{isAr ? '' : ' place'}</span>
             </div>
 
-            <div class="bt-prize__amount bt-num">{item.amount}</div>
-            {item.label && <div class="bt-prize__label">{item.label}</div>}
-
-            <div class="bt-prize__divider"></div>
-
-            <div class="bt-prize__badges">
-              <span class="bt-chip bt-chip-halal">{islamicLabel}</span>
-              <span class="bt-chip">{fundedLabel}</span>
+            <div class="bt-prize__amount bt-num">
+              <span class="bt-prize__amt-val">{item.amount}</span>
             </div>
+            {item.label && <div class="bt-prize__label">{item.label}</div>}
           </article>
         );
       })}
@@ -64,56 +65,88 @@ const podiumOrder = [2, 1, 3]; // matches the items array index order
 </section>
 
 <style>
-  .cc-section-sub {
-    font-size: 15px;
-    line-height: 1.55;
-    color: var(--bt-text-mid);
-    max-width: 640px;
-    margin: 0;
-  }
-  .cc-section-head--center .cc-section-sub { margin: 0 auto; text-align: center; }
-
   /* Podium grid — 2 / 1 / 3 from left to right on desktop */
   .cc-prizes__grid {
     display: grid;
     grid-template-columns: 1fr 1.15fr 1fr;
     gap: 20px;
     align-items: end;
-    padding-top: 60px; /* room for the crown above 1st */
+    padding-top: 0;
   }
 
   .bt-prize-pos--1 { order: 1; } /* left  — 2nd place */
   .bt-prize-pos--2 { order: 2; } /* center — 1st place */
   .bt-prize-pos--3 { order: 3; } /* right — 3rd place */
 
-  /* First place — taller, elevated, gold border, stronger glow */
-  .bt-prize--first {
-    padding: 36px 30px 32px;
-    border: 1px solid var(--bt-trophy);
+  /* Entrance: podium pop, revealed 3rd → 2nd → 1st (delays set per card).
+     'backwards' fill keeps each card hidden until its delay, then hands back
+     to the settled state so hover transforms keep working afterwards. */
+  .bt-prize.reveal.is-visible {
+    animation: ccPrizeRise 0.69s cubic-bezier(.2, .8, .3, 1) backwards;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+  .bt-prize.bt-prize--first.reveal.is-visible {
+    animation-name: ccPrizePop;
+    animation-duration: 0.83s;
+  }
+  @keyframes ccPrizeRise {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes ccPrizePop {
+    0%   { opacity: 0; transform: translateY(28px) scale(0.9); }
+    55%  {
+      opacity: 1;
+      transform: translateY(-6px) scale(1.04);
+      box-shadow:
+        0 0 0 2px rgba(224, 184, 114, 0.40) inset,
+        0 32px 72px -20px rgba(224, 184, 114, 0.65),
+        0 0 0 12px rgba(224, 184, 114, 0.20);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      box-shadow:
+        0 0 0 2px rgba(224, 184, 114, 0.18) inset,
+        0 28px 60px -22px rgba(224, 184, 114, 0.40),
+        0 0 0 6px rgba(224, 184, 114, 0.10);
+    }
+  }
+
+  /* Medal card backgrounds */
+  .bt-prize.bt-prize--silver { background: linear-gradient(180deg, #4A5A63 0%, #28343A 100%); }
+  .bt-prize.bt-prize--bronze { background: linear-gradient(180deg, #2A1406 0%, #19130B 100%); }
+
+  /* First place — taller, gold border, stronger glow */
+  .bt-prize.bt-prize--first {
+    padding: 38px 32px 34px;
+    border: 2px solid #EAC265;
     box-shadow:
-      0 0 0 1px rgba(224, 184, 114, 0.18) inset,
-      0 28px 60px -22px rgba(224, 184, 114, 0.40),
-      0 0 0 6px rgba(224, 184, 114, 0.10);
-    background: linear-gradient(180deg, rgba(224, 184, 114, 0.12) 0%, var(--bt-bg-1) 42%, rgba(224, 184, 114, 0.08) 100%);
-    transform: translateY(-22px);
+      0 0 0 2px rgba(234, 194, 101, 0.18) inset,
+      0 28px 60px -22px rgba(234, 194, 101, 0.40),
+      0 0 0 6px rgba(234, 194, 101, 0.10);
+    background:
+      linear-gradient(180deg, rgba(234, 194, 101, 0.10) 0%, rgba(234, 194, 101, 0.25) 42%, rgba(234, 194, 101, 0.08) 100%),
+      var(--bt-bg-1);
     position: relative;
     z-index: 1;
   }
   .bt-prize--first .bt-prize-marker {
-    height: 4px;
-    background: linear-gradient(90deg, var(--bt-trophy-100), var(--bt-trophy), var(--bt-trophy-deep), var(--bt-trophy));
+    height: 6px;
+    background: #F6D98C;
   }
   .bt-prize--first .bt-prize__amount {
-    color: #F1DA9C;
-    font-size: 56px;
-    text-shadow: 0 6px 22px rgba(224, 184, 114, 0.35);
+    color: #F6D98C;
+    font-size: 58px;
+    text-shadow: 0 6px 22px rgba(234, 194, 101, 0.35);
   }
   .bt-prize--first .bt-prize__label { color: var(--bt-text-hi); font-weight: 700; }
+  .bt-prize--first .bt-prize__place { color: var(--bt-text-hi); }
 
   /* Crown + Champion label sitting above the 1st card */
   .bt-prize__crown {
     position: absolute;
-    top: -56px;
+    top: -40px;
     left: 50%;
     transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center; gap: 6px;
@@ -124,24 +157,13 @@ const podiumOrder = [2, 1, 3]; // matches the items array index order
     width: 44px; height: 32px;
     fill: url(#cc-crown-grad);
   }
-  .bt-prize__champion {
-    display: inline-flex; align-items: center;
-    padding: 4px 12px;
-    border-radius: var(--bt-r-pill);
-    background: linear-gradient(135deg, var(--bt-trophy-100), var(--bt-trophy-deep));
-    color: #3A2A0A;
-    font-size: 10.5px;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    box-shadow: 0 4px 10px -4px rgba(201,163,90,0.6);
-  }
 
-  /* 2nd and 3rd — slightly different visual to settle into podium hierarchy */
+  /* Rank badge + place label, centered together */
   .bt-prize__head {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap: 10px;
     margin-bottom: 14px;
   }
   .bt-prize__place {
@@ -154,43 +176,72 @@ const podiumOrder = [2, 1, 3]; // matches the items array index order
     letter-spacing: -0.03em;
     line-height: 1;
     color: var(--bt-text-hi);
+    text-align: center;
+    position: relative;
   }
+  .bt-prize__amt-val { position: relative; z-index: 1; }
+
+  /* First-place amount — periodic gold glint sweeping across the number */
+  .bt-prize--first .bt-prize__amt-val {
+    background: linear-gradient(
+      100deg,
+      #F6D98C 0%, #F6D98C 36%,
+      #FFFFFF 50%,
+      #F6D98C 64%, #F6D98C 100%
+    );
+    background-size: 280% 100%;
+    background-position: 150% 0;
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: ccAmountShimmer 3.2s ease-in-out infinite;
+  }
+  @keyframes ccAmountShimmer {
+    0%, 38%   { background-position: 150% 0; }  /* rest: uniform gold */
+    100%      { background-position: -50% 0; }  /* bright glint sweeps across */
+  }
+
+  /* Golden laurel branches (first place only) on the far left and right edges.
+     The branch SVG is recoloured to gold via a mask + gradient fill. */
+  .bt-prize__laurel {
+    position: absolute;
+    top: 50%;
+    height: 62%;
+    aspect-ratio: 640 / 1280;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.95;
+    /* Gold with a bright highlight band that travels along the branch */
+    background: linear-gradient(180deg, #C99A38 0%, #EAC265 30%, #FFFFFF 50%, #EAC265 70%, #C99A38 100%);
+    background-size: 100% 260%;
+    background-position: 50% 140%;
+    -webkit-mask: var(--laurel-src) no-repeat center / contain;
+            mask: var(--laurel-src) no-repeat center / contain;
+    filter: drop-shadow(0 2px 6px rgba(201, 163, 90, 0.35));
+    animation: ccLaurelShimmer 2.8s ease-in-out infinite;
+  }
+  @keyframes ccLaurelShimmer {
+    0%, 100% { background-position: 50% 140%; }
+    50%      { background-position: 50% -40%; }
+  }
+  .bt-prize__laurel--left  { left: 8px;  transform: translateY(-50%) scaleX(-1); }
+  .bt-prize__laurel--right { right: 8px; transform: translateY(-50%); }
   .bt-prize__label {
     margin-top: 6px;
     font-size: 14px;
     font-weight: 600;
     color: var(--bt-text-mid);
     letter-spacing: -0.005em;
+    text-align: center;
   }
-  .bt-prize__divider {
-    height: 1px;
-    background: var(--bt-bg-line);
-    margin: 18px 0 14px;
-  }
-  .bt-prize--first .bt-prize__divider {
-    background: linear-gradient(90deg, transparent, var(--bt-trophy-100), transparent);
-  }
-  .bt-prize__desc {
-    font-size: 13px;
-    line-height: 1.55;
-    color: var(--bt-text-mid);
-    margin: 0;
-    min-height: 38px;
-  }
-  .bt-prize__badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 14px;
-  }
-
   /* RTL: keep podium order natural (2/1/3 reads right-to-left = 3-1-2 visually).
      For Arabic users we still want 2nd-left/1st-center/3rd-right so leave order. */
 
   @media (max-width: 960px) {
     .cc-prizes__grid {
       grid-template-columns: 1fr;
-      padding-top: 64px;
+      padding-top: 0;
       gap: 36px;
     }
     .bt-prize-pos--1, .bt-prize-pos--2, .bt-prize-pos--3 { order: unset; }

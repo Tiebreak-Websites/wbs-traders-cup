@@ -73,7 +73,7 @@
 
   /* ---- Type (WB&S brand: Poppins single-typeface system) ---- */
   --bt-font: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --bt-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --bt-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --bt-num:  "Poppins", system-ui, sans-serif;
 }
 
@@ -106,10 +106,10 @@ html[dir="rtl"] .lb-card__cols {
   padding-left: var(--lb-pad-x);
   padding-right: calc(var(--lb-pad-x) + 3px);
 }
-html[dir="rtl"] .cc-sticky__inner { flex-direction: row-reverse; }
 html[dir="rtl"] .lb-trader-id,
 html[dir="rtl"] .lb-trader { text-align: right; }
-html[dir="rtl"] .lb-trader-stack { align-items: flex-end; }
+html[dir="rtl"] .lb-trader-stack { align-items: flex-start; }
+html[dir="rtl"] .cc-faq__head { flex-direction: row-reverse; }
 html[dir="rtl"] .bt-eyebrow::before,
 html[dir="rtl"] .bt-eyebrow::after { background: var(--bt-accent-100); }
 html[dir="rtl"] .cc-formula__example { text-align: right; }
@@ -125,36 +125,42 @@ html[dir="rtl"] .cc-controls { right: auto; left: 20px; }
   left: 0;
   right: 0;
   z-index: 60;
+  padding: 14px 0;
+  /* Always visible. Transparent over the hero, blurred + readable once scrolled. */
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background .3s ease, border-color .3s ease, backdrop-filter .3s ease;
+}
+/* Inner content shares the same grid as .cc-wrap so the logo lines up with the
+   hero text and the section content below. */
+.cc-topbar__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 14px 56px;
-  background: rgba(30, 40, 45, 0.78);
-  border-bottom: 1px solid var(--bt-bg-line);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transform: translateY(-110%);
-  transition: transform .35s cubic-bezier(.2,.7,.3,1), opacity .35s ease;
+}
+.cc-topbar.is-scrolled {
+  /* Solid translucent fill instead of backdrop-filter blur — backdrop blur is
+     one of the most expensive effects on older Macs/Safari while scrolling. */
+  background: rgba(30, 40, 45, 0.92);
+  border-bottom-color: var(--bt-bg-line);
+}
+/* The mini countdown only fades in once the bar gains its blurred background,
+   so it doesn't duplicate the large hero countdown at the very top. */
+.cc-topbar .cc-mini-cd {
   opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease, visibility .3s ease;
 }
-.cc-topbar.is-visible {
-  transform: translateY(0);
+.cc-topbar.is-scrolled .cc-mini-cd {
   opacity: 1;
+  visibility: visible;
 }
-/* Hero logo (always visible, sits inside the hero — separate from the topbar) */
-.cc-hero-logo {
-  position: absolute;
-  top: 22px;
-  left: 56px;
-  z-index: 5;
-  height: 44px;
-  width: auto;
-  display: block;
-}
-html[dir="rtl"] .cc-hero-logo { left: auto; right: 56px; }
 .cc-topbar__brand { display: inline-flex; align-items: center; }
-.cc-topbar__logo { display: block; height: 32px; width: auto; }
+.cc-topbar__logo { display: block; height: 20px; width: auto; }
 .cc-topbar__controls {
   display: inline-flex;
   align-items: center;
@@ -165,34 +171,36 @@ html[dir="rtl"] .cc-hero-logo { left: auto; right: 56px; }
 .cc-mini-cd {
   display: inline-flex;
   align-items: baseline;
-  gap: 2px;
-  padding: 6px 12px;
+  gap: 3px;
+  padding: 8px 16px;
   border-radius: var(--bt-r-pill);
-  background: var(--bt-accent-50);
-  border: 1px solid var(--bt-accent-100);
-  color: var(--bt-text-hi);
+  background: linear-gradient(180deg, rgba(255, 134, 28, 0.22), rgba(255, 134, 28, 0.14));
+  border: 1px solid rgba(255, 134, 28, 0.55);
+  box-shadow:
+    0 4px 16px -6px rgba(255, 134, 28, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  color: #FFFFFF;
   font-family: var(--bt-num);
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 700;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
 }
 .cc-mini-cd__cell {
   display: inline-flex;
   align-items: baseline;
   gap: 1px;
-  color: var(--bt-text-hi);
+  color: #FFFFFF;
 }
 .cc-mini-cd__cell span {
-  color: var(--bt-accent);
+  color: #FFFFFF;
   font-weight: 800;
-  font-size: 13px;
+  font-size: 15px;
 }
 .cc-mini-cd__sep {
-  color: var(--bt-text-dim);
-  opacity: 0.7;
-  margin: 0 2px;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0 3px;
 }
 
 @media (max-width: 640px) {
@@ -221,14 +229,19 @@ html[dir="rtl"] .cc-hero-logo { left: auto; right: 56px; }
 }
 .cc-controls__lang-btn:hover { color: var(--bt-text-hi); }
 .cc-controls__lang-btn.is-active {
-  background: var(--bt-accent);
+  /* Darker blue so white text meets WCAG AA contrast */
+  background: var(--bt-accent-deep);
   color: #FFFFFF;
   box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 4px 12px -4px rgba(255, 134, 28, 0.45);
 }
 
+/* Keep the topbar inner aligned with .cc-wrap (24px) on smaller viewports */
+@media (max-width: 960px) {
+  .cc-topbar__inner { padding: 0 24px; }
+}
 @media (max-width: 640px) {
-  .cc-topbar { padding: 12px 20px; }
-  .cc-topbar__logo { height: 28px; }
+  .cc-topbar { padding: 12px 0; }
+  .cc-topbar__logo { height: 18px; }
   .cc-controls__lang-btn { padding: 6px 10px; }
 }
 
@@ -259,6 +272,27 @@ html, body {
 
 img, svg, video { display: block; max-width: 100%; height: auto; }
 a { text-decoration: none; color: inherit; }
+
+/* Visible keyboard focus for interactive elements (follows rounded shapes) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--bt-accent-soft);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Screen-reader-only (visually hidden but readable by assistive tech / SEO) */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 /* Hero background — same plain white as the rest of the page (no special wash) */
 .bt-stage-bg,
@@ -349,13 +383,14 @@ a { text-decoration: none; color: inherit; }
 .bt-btn-on-blue {
   color: var(--bt-accent-ink);
   background: #FFFFFF;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 8px 20px -10px rgba(0,0,0,0.30);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 8px 20px -10px rgba(0,0,0,0.20);
 }
 .bt-btn-on-blue:hover {
-  background: var(--bt-accent-50);
-  color: var(--bt-text-hi);
+  /* Deep-orange fill with white text on hover */
+  background: var(--bt-accent-deep);
+  color: #FFFFFF;
   transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 12px 28px -10px rgba(0,0,0,0.40);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.15) inset, 0 14px 30px -10px rgba(0,0,0,0.45);
 }
 
 /* Pills / chips */
@@ -441,33 +476,32 @@ a { text-decoration: none; color: inherit; }
   opacity: 1;
 }
 .bt-prize--first {
-  background: linear-gradient(180deg, var(--bt-bg-1) 0%, var(--bt-bg-2) 100%);
-  border-color: var(--bt-accent);
+  border-color: var(--bt-trophy);
   box-shadow: var(--bt-shadow-card-hi);
 }
 
-/* Countdown digit cell */
+/* Countdown digit cell (hero) */
 .bt-cd {
   display: inline-flex; flex-direction: column; align-items: center;
   background: var(--bt-bg-1);
   border: 1px solid var(--bt-bg-line);
   border-radius: var(--bt-r-sm);
-  padding: 10px 14px 8px;
-  min-width: 80px;
+  padding: 11px 15px 9px;
+  min-width: 86px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
 }
 .bt-cd-num {
-  font-weight: 700; font-size: 44px; line-height: 1; letter-spacing: -0.02em;
+  font-weight: 700; font-size: 48px; line-height: 1; letter-spacing: -0.02em;
   color: var(--bt-accent);
   font-variant-numeric: tabular-nums;
 }
 .bt-cd-lbl {
   margin-top: 6px;
-  font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--bt-text-dim);
 }
 .bt-cd-sep {
-  font-weight: 700; font-size: 36px; color: var(--bt-accent-100);
+  font-weight: 700; font-size: 38px; color: var(--bt-accent-100);
   align-self: center; padding: 0 4px;
 }
 
@@ -477,10 +511,62 @@ a { text-decoration: none; color: inherit; }
 
 .cc-page {
   min-height: 100vh;
-  background: var(--bt-bg-0);
+  /* Transparent so the animated chart-grid background (.cc-bg-fx) shows through */
+  background: transparent;
   /* Reserve space at the bottom so the sticky CTA never covers the compliance footer */
   padding-bottom: var(--cc-sticky-h, 96px);
 }
+
+/* Animated chart-grid background — fixed behind the whole page */
+.cc-bg-fx {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--bt-bg-0);
+  background-image:
+    linear-gradient(rgba(255, 134, 28, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 134, 28, 0.16) 1px, transparent 1px),
+    linear-gradient(rgba(255, 134, 28, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 134, 28, 0.07) 1px, transparent 1px);
+  background-size: 150px 150px, 150px 150px, 30px 30px, 30px 30px;
+  /* Static grid — animating background-position repaints the whole viewport each
+     frame (very costly on older Macs). The glow below provides subtle motion. */
+}
+.cc-bg-fx::before {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  /* Radial gradients are already soft, so no filter: blur() needed (blur on a
+     huge surface is the single most expensive effect on weak GPUs). */
+  background:
+    radial-gradient(40% 40% at 18% 20%, rgba(255, 134, 28, 0.24), transparent 70%),
+    radial-gradient(45% 45% at 84% 68%, rgba(255, 134, 28, 0.20), transparent 72%),
+    radial-gradient(35% 35% at 60% 95%, rgba(255, 134, 28, 0.14), transparent 70%);
+  will-change: transform;
+  animation: ccBgGlow 30s ease-in-out infinite alternate;
+}
+/* Soft vignette so the grid fades toward the edges and centre stays readable */
+.cc-bg-fx::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 50% 30%, transparent 50%, rgba(30, 40, 45, 0.65) 100%);
+}
+@keyframes ccBgGlow {
+  from { transform: translate3d(-2%, -1%, 0) scale(1); }
+  to   { transform: translate3d(3%, 2%, 0) scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cc-bg-fx, .cc-bg-fx::before { animation: none; }
+}
+
+/* Pause looping animations in sections scrolled out of view (set by an
+   IntersectionObserver in BaseLayout) — saves CPU/GPU and battery. */
+.cc-anim-off,
+.cc-anim-off *,
+.cc-anim-off *::before,
+.cc-anim-off *::after { animation-play-state: paused !important; }
 
 .cc-wrap { max-width: 1240px; margin: 0 auto; padding: 0 56px; position: relative; }
 
@@ -500,41 +586,73 @@ a { text-decoration: none; color: inherit; }
 .cc-headline {
   font-family: var(--bt-font);
   font-weight: 800;
-  font-size: 58px;
-  line-height: 1.05;
-  letter-spacing: -0.022em;
+  font-size: 80px;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
   color: var(--bt-text-hi);
-  max-width: 720px;
+  max-width: 760px;
   margin: 0;
 }
+/* Arabic headline keeps its own (Arabic-capable) font */
+html[dir="rtl"] .cc-headline { font-family: var(--bt-font); letter-spacing: -0.01em; }
 .cc-headline__accent {
   color: var(--bt-accent);
   text-shadow: 0 4px 22px rgba(255, 134, 28, 0.40);
 }
+/* Secondary headline — sits under the main title, above the body copy */
+.cc-headline-sub {
+  font-family: var(--bt-font);
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--bt-text-hi);
+  margin: -8px 0 0;
+  max-width: 720px;
+}
+html[dir="rtl"] .cc-headline-sub { font-family: var(--bt-font); letter-spacing: 0; }
 /* (Prize count-up + shimmer removed — prize amount now lives on the prize cards.) */
 .cc-subhead {
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.55;
   color: var(--bt-text-mid);
   margin: 0 0 4px;
-  max-width: 680px;
+  max-width: 720px;
+}
+/* Emphasised currency amounts inside the hero subhead */
+.cc-subhead__amt {
+  color: var(--bt-accent);
+  font-weight: 700;
+  font-size: 1.18em;
 }
 
 /* Section bands */
-.cc-prizes { padding: 36px 0 0; }
+.cc-prizes { padding: 0; }
 .cc-leaderboard { padding: 28px 0 0; }
 
-/* Compliance disclaimer — rendered at the bottom of the FAQ section */
+/* Footer area at the bottom of the FAQ section: logo above the disclaimer */
+.cc-faq__footer {
+  margin-top: 72px; /* space between the FAQ list and the logo */
+  padding-top: 40px;
+  border-top: 1px solid var(--bt-bg-line);
+  text-align: center;
+}
+.cc-faq__logo {
+  display: block;
+  height: 26px;
+  width: auto;
+  margin: 0 auto 22px;
+  opacity: 0.92;
+}
+/* Compliance disclaimer — rendered below the logo */
 .cc-faq__compliance {
-  margin: 40px auto 0;
+  margin: 0 auto;
   max-width: 820px;
   text-align: center;
   font-size: 12px;
   line-height: 1.65;
   color: var(--bt-text-mid);
   letter-spacing: 0.01em;
-  padding-top: 28px;
-  border-top: 1px solid var(--bt-bg-line);
 }
 
 /* Eyebrow */
@@ -563,7 +681,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* How it works — stat-anchored cards: badge + connector + big accent stat + title + desc */
-.cc-how { padding: 80px 0 56px; }
+.cc-how { padding: 80px 0 28px; }
 .cc-how__grid {
   display: grid; grid-template-columns: repeat(4, 1fr);
   gap: 18px;
@@ -606,7 +724,7 @@ html[dir="rtl"] .cc-how__card::before { transform-origin: right; }
   min-width: 38px; height: 38px; padding: 0 12px;
   border-radius: var(--bt-r-pill);
   background: var(--bt-accent-50);
-  color: var(--bt-accent);
+  color: #FFFFFF;
   font-family: var(--bt-mono);
   font-size: 13px; font-weight: 700;
   letter-spacing: 0.12em;
@@ -663,9 +781,13 @@ html[lang="ar"] .cc-how__stat-lbl { text-transform: none; letter-spacing: 0; fon
 /* Points Formula — redesigned: header + 2 reward tiles + worked-example bar */
 .cc-formula {
   padding-top: 72px;
-  padding-bottom: 88px;
+  padding-bottom: 44px;
   border-top: 1px solid var(--bt-bg-line);
   margin-top: 56px;
+}
+/* Remove the divider line under "How it works" on mobile + tablet */
+@media (max-width: 1024px) {
+  .cc-formula { border-top: none; margin-top: 24px; }
 }
 .cc-formula__head {
   text-align: center;
@@ -873,8 +995,7 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
 
 /* FAQ */
 .cc-faq {
-  padding: 56px 0 88px;
-  background: var(--bt-bg-2);
+  padding: 28px 0 88px;
 }
 .cc-faq__wrap { max-width: 880px; }
 .cc-faq__list {
@@ -898,7 +1019,7 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
   padding: 22px 24px;
   background: none; border: 0;
   cursor: pointer;
-  text-align: left;
+  text-align: start;
   font-family: inherit; font-size: 17px; font-weight: 600;
   color: var(--bt-text-hi);
   line-height: 1.4;
@@ -958,7 +1079,31 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
   padding: 14px 56px;
   display: flex; align-items: center; justify-content: space-between; gap: 20px;
 }
-.cc-sticky__copy { display: flex; flex-direction: column; gap: 2px; }
+.cc-sticky__lead { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.cc-sticky__actions { display: flex; align-items: center; gap: 18px; }
+.cc-sticky__copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+/* Sticky-bar countdown — appears on desktop (moved here from the topbar) */
+.cc-sticky-cd {
+  display: none;
+  align-items: baseline;
+  gap: 5px;
+  color: #FFFFFF;
+  font-family: var(--bt-num);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.cc-sticky-cd__cell { display: inline-flex; align-items: baseline; gap: 1px; }
+.cc-sticky-cd__cell span { font-size: 23px; font-weight: 800; }
+.cc-sticky-cd__sep { opacity: 0.5; margin: 0 3px; font-size: 18px; }
+@media (min-width: 961px) {
+  .cc-sticky-cd { display: inline-flex; }
+  .cc-topbar .cc-mini-cd { display: none; }
+}
 .cc-sticky__t {
   font-size: 16px; font-weight: 700; letter-spacing: -0.005em;
 }
@@ -966,13 +1111,56 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
   font-size: 12.5px; opacity: 0.85;
 }
 
+/* Animated trophy icon before the copy */
+.cc-sticky__icon {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+}
+.cc-sticky__icon svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+  transform-origin: 50% 85%;
+  animation: ccTrophyBob 2.6s ease-in-out infinite;
+}
+@keyframes ccTrophyBob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  20%      { transform: translateY(-3px) rotate(-5deg); }
+  50%      { transform: translateY(-1px) rotate(0deg); }
+  80%      { transform: translateY(-3px) rotate(5deg); }
+}
+
+/* Attention: the sticky CTA expands fast in width, then settles — eye-catching but brief */
+.cc-sticky__cta {
+  transform-origin: center;
+  padding-left: 42px;   /* ~25% wider button */
+  padding-right: 42px;
+  animation: ccCtaExpand 2.4s ease-in-out infinite;
+}
+.cc-sticky__cta:hover { animation: none; }
+@keyframes ccCtaExpand {
+  0%, 58%, 100% { transform: scaleX(1); }
+  68%           { transform: scaleX(1.09); }  /* quick widen */
+  80%           { transform: scaleX(0.99); }  /* slight settle */
+}
+
 /* Tighten on smaller viewports */
 @media (max-height: 940px) {
-  .cc-headline { font-size: 50px; }
-  .cc-subhead  { font-size: 15.5px; }
+  .cc-headline { font-size: 72px; }
+  .cc-headline-sub { font-size: 30px; }
+  .cc-subhead  { font-size: 17px; }
 }
 @media (max-height: 820px) {
-  .cc-headline { font-size: 44px; }
+  .cc-headline { font-size: 64px; }
+  .cc-headline-sub { font-size: 28px; }
 }
 
 /* Mobile */
@@ -983,13 +1171,14 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
 @media (max-width: 960px) {
   .cc-hero, .cc-foot { padding-left: 24px; padding-right: 24px; }
   .cc-wrap { padding: 0 24px; }
-  .cc-headline { font-size: 36px; }
-  .cc-subhead { font-size: 14px; max-width: 620px; }
+  .cc-headline { font-size: 52px; }
+  .cc-headline-sub { font-size: 24px; max-width: 620px; }
+  .cc-subhead { font-size: 15px; max-width: 620px; }
   .cc-prizes__grid { grid-template-columns: 1fr !important; }
-  .cc-how { padding: 56px 0 36px; }
+  .cc-how { padding: 56px 0 18px; }
   .cc-how__grid { grid-template-columns: 1fr; gap: 14px; }
-  .cc-formula { padding-top: 0; padding-bottom: 48px; }
-  .cc-faq { padding: 40px 0 56px; }
+  .cc-formula { padding-top: 0; padding-bottom: 24px; }
+  .cc-faq { padding: 20px 0 56px; }
   .cc-faq__head { font-size: 15px; padding: 18px 18px; }
   .cc-faq__body { font-size: 14px; padding: 0 18px; }
   .cc-faq__item.is-open .cc-faq__body { padding: 0 18px 18px; }
@@ -1006,7 +1195,18 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
   .cc-sticky__inner { padding: 12px 20px; }
   .cc-sticky__t { font-size: 14px; }
   .cc-sticky__d { display: none; }
-  .cc-sticky .bt-btn { height: 40px; padding: 0 16px; font-size: 13px; }
+  .cc-sticky__lead { gap: 10px; }
+  .cc-sticky__icon { width: 34px; height: 34px; }
+  .cc-sticky__icon svg { width: 19px; height: 19px; }
+  .cc-sticky .bt-btn { height: 40px; padding: 0 26px; font-size: 13px; }
+}
+/* Keep the (wide) Poppins headline from clipping on narrow phones */
+@media (max-width: 600px) {
+  .cc-headline { font-size: 44px; }
+  .cc-headline-sub { font-size: 21px; }
+}
+@media (max-width: 400px) {
+  .cc-headline { font-size: 38px; }
 }
 
 /* ============================================================
@@ -1045,6 +1245,9 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
 }
 .cc-controls.is-visible { opacity: 1; transform: translateY(0); }
 
+/* Space between the "Until end…" label and the timer row so they aren't glued */
+.cc-countdown__lbl { margin-bottom: 16px; }
+
 /* Countdown digit cells — staggered transition, triggered when the parent
    .cc-countdown reveals into view. */
 .cc-countdown .bt-cd {
@@ -1068,7 +1271,6 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
 .cc-formula__card > *,
 .lb-card__head,
 .lb-card__cols,
-.lb-card__foot,
 .cc-sticky__copy,
 .cc-sticky .bt-btn,
 .cc-faq__item > * {
@@ -1102,7 +1304,6 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
 /* Leaderboard chrome stagger (header → cols → foot) */
 .lb-card.is-visible .lb-card__head { opacity: 1; transform: translateY(0); transition-delay: 200ms; }
 .lb-card.is-visible .lb-card__cols { opacity: 1; transform: translateY(0); transition-delay: 320ms; }
-.lb-card.is-visible .lb-card__foot { opacity: 1; transform: translateY(0); transition-delay: 700ms; }
 
 /* FAQ item internals */
 .cc-faq__item.is-visible > * { opacity: 1; transform: translateY(0); }

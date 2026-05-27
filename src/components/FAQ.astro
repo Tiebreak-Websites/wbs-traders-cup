@@ -3,6 +3,8 @@ import enCopy from '../data/copy.en.json';
 const { copy = enCopy } = Astro.props;
 const f = copy.faq;
 const compliance = copy.compliance;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const logoSrc = `${base}/wbs-white.svg`;
 ---
 
 <section class="cc-faq">
@@ -29,7 +31,10 @@ const compliance = copy.compliance;
       ))}
     </div>
 
-    <p class="cc-faq__compliance reveal">{compliance}</p>
+    <div class="cc-faq__footer">
+      <img class="cc-faq__logo reveal" src={logoSrc} alt="Warren Bowie & Smith" width="150" height="45" loading="lazy" />
+      <p class="cc-faq__compliance reveal">{compliance}</p>
+    </div>
   </div>
 </section>
 

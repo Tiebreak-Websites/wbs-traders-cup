@@ -4,24 +4,26 @@ const { copy = enCopy } = Astro.props;
 const s = copy.leaderboard;
 ---
 
-<section class="cc-leaderboard" id="leaderboard">
+<section class="cc-leaderboard" id="leaderboard" aria-label={s.title}>
   <div class="cc-wrap">
-    <div class="cc-section-head cc-section-head--center reveal">
-      <span class="bt-eyebrow">{s.header_eyebrow}</span>
-      <h2 class="cc-section-title">{s.title}</h2>
-    </div>
-
-    <div class="bt-card lb-card reveal" style="--reveal-delay: 120ms;" data-joined-label={s.joined_label} data-you-label={s.you_label} data-loading-text={s.loading_state} data-empty-text={s.empty_state} data-error-text={s.error_state}>
+    <h2 class="sr-only">{s.title}</h2>
+    <div class="bt-card lb-card reveal" style="--reveal-delay: 120ms;" data-you-label={s.you_label} data-loading-text={s.loading_state} data-empty-text={s.empty_state} data-error-text={s.error_state} data-no-results-text={s.no_results}>
       <header class="lb-card__head">
         <div class="lb-card__title-row">
           <h3 class="bt-h3 lb-card__title">{s.card_title}</h3>
-          <span class="bt-chip bt-chip-live">
-            <span class="bt-dot bt-dot-pulse" aria-hidden="true"></span>
-            {s.live_chip}
-          </span>
         </div>
-        <div class="lb-card__legend">
-          <span>{s.card_legend}</span>
+        <div class="lb-card__filters">
+          <label class="lb-filter">
+            <svg class="lb-filter__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.6"/>
+              <line x1="11" y1="11" x2="14.5" y2="14.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <input type="search" class="lb-filter__input" data-lb-filter-name placeholder={s.filter_name_placeholder} aria-label={s.filter_name_placeholder} autocomplete="off" />
+          </label>
+          <label class="lb-filter">
+            <span class="lb-filter__hash" aria-hidden="true">#</span>
+            <input type="search" class="lb-filter__input" data-lb-filter-id placeholder={s.filter_id_placeholder} aria-label={s.filter_id_placeholder} inputmode="numeric" autocomplete="off" />
+          </label>
         </div>
       </header>
 
@@ -37,11 +39,6 @@ const s = copy.leaderboard;
       <div class="lb-card__rows" data-lb-body>
         <div class="lb-card__loading">{s.loading_state}</div>
       </div>
-
-      <footer class="lb-card__foot">
-        <span data-lb-foot-left>{s.footer_left}</span>
-        <span>{s.footer_right}</span>
-      </footer>
     </div>
   </div>
 </section>
@@ -60,10 +57,55 @@ const s = copy.leaderboard;
   }
   .lb-card__title-row { display: flex; align-items: center; gap: 12px; }
   .lb-card__title { color: var(--bt-text-hi); }
-  .lb-card__legend {
-    font-size: 12px;
+
+  /* Search filters (replace the old legend) */
+  .lb-card__filters {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .lb-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 12px;
+    height: 36px;
+    border-radius: var(--bt-r-pill);
+    background: var(--bt-bg-2);
+    border: 1px solid var(--bt-bg-line);
     color: var(--bt-text-dim);
-    letter-spacing: 0.02em;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .lb-filter:focus-within {
+    border-color: var(--bt-accent);
+    background: var(--bt-bg-1);
+  }
+  .lb-filter__icon { width: 15px; height: 15px; flex: none; color: var(--bt-text-dim); }
+  .lb-filter__hash { font-size: 14px; font-weight: 700; line-height: 1; color: var(--bt-text-dim); }
+  .lb-filter__input {
+    border: 0;
+    background: transparent;
+    outline: none;
+    color: var(--bt-text-hi);
+    font: inherit;
+    font-size: 13px;
+    width: 130px;
+    max-width: 38vw;
+    padding: 0;
+  }
+  .lb-filter__input::placeholder { color: var(--bt-text-dim); }
+  .lb-filter__input[data-lb-filter-id] { width: 96px; font-family: var(--bt-num); }
+  /* Remove native search clear/decorations for a consistent look */
+  .lb-filter__input::-webkit-search-decoration,
+  .lb-filter__input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+
+  /* Mobile: keep both search inputs on a single row, sharing the width */
+  @media (max-width: 640px) {
+    .lb-card__filters { flex-wrap: nowrap; width: 100%; gap: 6px; }
+    .lb-filter { flex: 1 1 0; min-width: 0; padding: 0 10px; }
+    .lb-filter__input,
+    .lb-filter__input[data-lb-filter-id] { width: 100%; min-width: 0; max-width: none; }
   }
 
   .lb-card__cols {
@@ -93,22 +135,16 @@ const s = copy.leaderboard;
   }
   .lb-card__error { color: var(--bt-down); }
 
-  .lb-card__foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 14px;
-    padding: 14px 6px 2px;
-    border-top: 1px solid var(--bt-bg-line);
-    color: var(--bt-text-dim);
-    font-size: 11px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
   .lb-trader { color: var(--bt-text-hi); font-weight: 600; font-size: 14px; }
   .lb-trader-id { font-size: 11px; color: var(--bt-text-dim); letter-spacing: 0.04em; }
   .lb-trader-stack { display: flex; flex-direction: column; gap: 2px; }
+  .lb-id {
+    color: var(--bt-text-mid);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+  }
   .lb-you {
     margin-left: 8px;
     font-size: 10px;
@@ -147,6 +183,13 @@ const s = copy.leaderboard;
   .lb-deposit { justify-self: end; color: var(--bt-text); font-weight: 500; font-size: 13px; }
   .lb-trades  { justify-self: end; color: var(--bt-text); font-weight: 500; font-size: 13px; }
   .lb-points  { justify-self: end; color: var(--bt-text-hi); font-weight: 700; font-size: 16px; }
+  .lb-points__unit {
+    margin-left: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--bt-text-dim);
+  }
+  html[dir="rtl"] .lb-points__unit { margin-left: 0; margin-right: 4px; }
 
   @media (max-width: 960px) {
     .lb-card__cols { display: none; }
