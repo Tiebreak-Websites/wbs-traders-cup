@@ -6,31 +6,23 @@ interface Props {
   title?: string;
   description?: string;
   copy?: any;
-  locale?: 'en' | 'ar';
 }
 
 const {
   copy = enCopy,
-  locale = (copy?._meta?.locale === 'ar' ? 'ar' : 'en'),
   title = copy.site.title,
   description = copy.site.description,
 } = Astro.props;
 
-const dir = locale === 'ar' ? 'rtl' : 'ltr';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const ogPath = `${base}${locale === 'ar' ? '/og-ar.png' : '/og-en.png'}`;
+const ogPath = `${base}/og-en.png`;
 const faviconPath = `${base}/wbs-fav-icon.png`;
 const logoSrc = `${base}/wbs-white.svg`;
-const skipLabel = locale === 'ar' ? 'انتقل إلى المحتوى' : 'Skip to content';
-// Only load the fonts each locale actually needs (lighter critical path).
-// WB&S brand: Poppins single-typeface system (300-800).
-const fontHref = locale === 'ar'
-  ? 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap'
-  : 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap';
+const fontHref = 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap';
 ---
 
 <!doctype html>
-<html lang={locale} dir={dir}>
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -52,8 +44,7 @@ const fontHref = locale === 'ar'
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogPath} />
 
-    <!-- Fonts: WB&S brand uses Poppins (Latin). Arabic also loads IBM Plex Sans Arabic.
-         Loaded non-render-blocking; display=swap shows fallback text immediately. -->
+    <!-- Fonts: WB&S brand uses Poppins (300-800) + JetBrains Mono for tabular numerics. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href={fontHref} media="print" onload="this.media='all'" />
@@ -73,8 +64,6 @@ const fontHref = locale === 'ar'
 
     <script is:inline>
       (function () {
-        // Hide on the REAL page load (all images/fonts ready), not a fixed timer.
-        // Then un-gate the page so reveal + loop animations start playing.
         function done() {
           var root = document.documentElement;
           if (root.classList.contains('cc-loaded')) return;
@@ -85,21 +74,18 @@ const fontHref = locale === 'ar'
             el.classList.add('is-done');
             setTimeout(function () { if (el && el.parentNode) el.parentNode.removeChild(el); }, 600);
           }
-          // Kick the reveal observer now that the page is allowed to animate.
           document.dispatchEvent(new CustomEvent('cc:reveal:rescan'));
         }
         if (document.readyState === 'complete') done();
         else window.addEventListener('load', done);
-        // Safety net only — in case a resource stalls and 'load' never fires.
         setTimeout(done, 10000);
       })();
     </script>
 
-    <a href="#main" class="skip-link">{skipLabel}</a>
+    <a href="#main" class="skip-link">Skip to content</a>
     <slot />
 
-    <!-- Scroll-position reveal — adds .is-visible to .reveal elements when they
-         enter the viewport. Triggers on load, scroll, and resize. -->
+    <!-- Scroll-position reveal -->
     <script is:inline>
       (function () {
         var revealSelector = '.reveal:not(.is-visible)';
@@ -107,12 +93,8 @@ const fontHref = locale === 'ar'
 
         function check() {
           ticking = false;
-          // Hold all reveals until the loader has finished.
           if (!document.documentElement.classList.contains('cc-loaded')) return;
           var winH = window.innerHeight || document.documentElement.clientHeight;
-          // Trigger when element's top is within ~92% of the viewport — gives a
-          // small "pre-load" margin so animations start just before the element
-          // fully enters view.
           var triggerY = winH * 0.92;
           document.querySelectorAll(revealSelector).forEach(function (el) {
             var rect = el.getBoundingClientRect();
@@ -125,7 +107,6 @@ const fontHref = locale === 'ar'
         function schedule() {
           if (ticking) return;
           ticking = true;
-          // setTimeout instead of rAF — some embedded browsers don't tick rAF.
           setTimeout(check, 32);
         }
 
@@ -133,26 +114,17 @@ const fontHref = locale === 'ar'
         window.addEventListener('resize', schedule);
         document.addEventListener('cc:reveal:rescan', check);
 
-        // Initial check — runs as soon as the DOM is parsed.
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', check);
         } else {
           check();
         }
-        // Belt-and-suspenders: run a few more checks just after load in case
-        // images/fonts shift the layout and put elements over the trigger line.
         setTimeout(check, 100);
         setTimeout(check, 400);
-
-        // Safety net: if for any reason scroll/raf don't fire (some embedded
-        // browsers), make sure elements currently in the viewport are revealed.
-        // Below-the-fold elements STAY hidden until user scrolls to them — we
-        // do NOT force them visible (that would defeat the scroll-trigger UX).
         setTimeout(check, 2500);
       })();
     </script>
 
-    <!-- Pause looping animations in sections that aren't on screen (saves CPU/GPU) -->
     <script is:inline>
       (function () {
         if (!('IntersectionObserver' in window)) return;
@@ -182,7 +154,6 @@ const fontHref = locale === 'ar'
       }
       .skip-link:focus { top: 1rem; }
 
-      /* Page loader — branded logo focus-in, then the overlay fades away */
       .cc-loader {
         position: fixed;
         inset: 0;
@@ -199,14 +170,12 @@ const fontHref = locale === 'ar'
         opacity: 0;
         transform: scale(0.92);
         filter: blur(10px);
-        /* Gentle pulsing focus-in that loops while the real page is loading */
         animation: ccLoaderLogo 1.6s ease-in-out infinite alternate;
       }
       @keyframes ccLoaderLogo {
         0%   { opacity: 0.55; transform: scale(0.94); filter: blur(6px); }
         100% { opacity: 1;    transform: scale(1);    filter: blur(0); }
       }
-      /* Hold the page's animations until the loader finishes, then let them play */
       html.cc-loading .cc-page *,
       html.cc-loading .cc-bg-fx,
       html.cc-loading .cc-bg-fx::before {

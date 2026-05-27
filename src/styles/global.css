@@ -2144,3 +2144,584 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   color: var(--bt-text-mid) !important;
   letter-spacing: 0;
 }
+
+/* ============================================================
+   WB&S Phase 4 — Layout-level restructure
+   Rearranges HOW each section is presented (not just styled):
+   - Hero: single column + trophy as background
+   - Prize: podium with varying heights + common base line
+   - How-it-works: horizontal timeline with rail + step nodes
+   - FAQ: 2-column grid
+   - Leaderboard: top-3 podium header above the list
+   - Sticky CTA: floating button (bottom-right) instead of full bar
+   ============================================================ */
+
+/* ---- Hero: single column, trophy as full-bleed background -- */
+/* Neutralise legacy hero grid styles that the new HTML no longer uses */
+.cc-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 0 !important;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cc-hero__bg { display: none !important; }
+.cc-hero__trophy-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.cc-hero__trophy-bg picture {
+  display: block;
+  width: clamp(380px, 60vw, 760px);
+  opacity: 0.16;
+  filter: blur(0.5px);
+  transform: translateY(2%);
+}
+.cc-hero__trophy-bg .cc-hero__trophy-img {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+  position: static !important;
+}
+/* Aura rotating behind the trophy bg */
+.cc-hero__trophy-bg .cc-hero__aura {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(420px, 70vw, 880px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 134, 28, 0) 0deg,
+    rgba(255, 134, 28, 0.35) 50deg,
+    rgba(255, 134, 28, 0) 110deg,
+    rgba(255, 158, 71, 0.30) 165deg,
+    rgba(255, 158, 71, 0) 220deg,
+    rgba(255, 134, 28, 0.35) 270deg,
+    rgba(255, 134, 28, 0) 320deg,
+    rgba(255, 158, 71, 0.28) 350deg,
+    rgba(255, 158, 71, 0) 360deg
+  );
+  -webkit-mask: radial-gradient(closest-side, #000 20%, rgba(0,0,0,0.6) 48%, transparent 80%);
+          mask: radial-gradient(closest-side, #000 20%, rgba(0,0,0,0.6) 48%, transparent 80%);
+  filter: blur(20px);
+  opacity: 0.7;
+  animation: ccTrophyAuraBg 16s linear infinite;
+}
+@keyframes ccTrophyAuraBg { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* Vignette mask over the trophy bg for text legibility */
+.cc-hero__mask {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 80% at 50% 50%, transparent 0%, rgba(30, 40, 45, 0.55) 60%, var(--bt-bg-0) 95%),
+    linear-gradient(180deg, var(--bt-bg-0) 0%, transparent 20%, transparent 70%, var(--bt-bg-0) 100%);
+}
+
+/* Centered content column */
+.cc-hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 140px 56px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+}
+.cc-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border: 1px solid var(--bt-accent-100);
+  border-radius: 999px;
+  background: rgba(255, 134, 28, 0.06);
+  font-family: var(--bt-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--bt-accent);
+}
+.cc-hero__eyebrow-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--bt-accent);
+  box-shadow: 0 0 8px var(--bt-accent);
+  animation: ccLivePulse 1.6s ease-out infinite;
+}
+.cc-hero .cc-headline {
+  font-size: clamp(48px, 7vw, 92px) !important;
+  text-align: center !important;
+  max-width: 880px;
+}
+.cc-hero .cc-headline-sub {
+  font-size: clamp(22px, 3vw, 36px) !important;
+  text-align: center !important;
+  max-width: 760px;
+  margin: 0 !important;
+}
+.cc-hero .cc-subhead {
+  text-align: center !important;
+  font-size: 16px !important;
+  max-width: 640px;
+}
+
+/* Countdown — horizontal STRIP layout (full-width with separators) */
+.cc-countdown.cc-countdown--strip {
+  width: 100%;
+  max-width: 720px;
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.cc-countdown__lbl-strip {
+  font-family: var(--bt-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: var(--bt-text-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.cc-countdown__lbl-strip::before,
+.cc-countdown__lbl-strip::after {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--bt-accent-100);
+}
+.cc-countdown.cc-countdown--strip .cc-countdown__row {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0 !important;
+  width: 100%;
+  background: rgba(30, 40, 45, 0.55);
+  border: 1px solid var(--bt-bg-line);
+  border-radius: var(--bt-r-xs);
+  overflow: hidden;
+  padding: 0;
+}
+.cc-countdown.cc-countdown--strip .bt-cd {
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 2px solid var(--bt-accent) !important;
+  border-right: 1px solid var(--bt-bg-line) !important;
+  border-radius: 0 !important;
+  flex: 1 1 0;
+  padding: 20px 12px 16px !important;
+  min-width: 0 !important;
+  box-shadow: none !important;
+}
+.cc-countdown.cc-countdown--strip .bt-cd:last-child { border-right: 0 !important; }
+.cc-countdown.cc-countdown--strip .bt-cd-num {
+  font-size: clamp(36px, 5vw, 56px) !important;
+}
+.cc-countdown.cc-countdown--strip .bt-cd-sep { display: none !important; }
+
+/* Hero CTA row */
+.cc-hero__cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.cc-hero__rules {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--bt-text-mid);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .2s ease, transform .2s ease;
+}
+.cc-hero__rules:hover { color: var(--bt-accent); transform: translateX(3px); }
+
+@media (max-width: 960px) {
+  .cc-hero__content { padding: 110px 24px 80px; }
+  .cc-hero__trophy-bg picture { opacity: 0.12; }
+}
+@media (max-width: 640px) {
+  .cc-hero__content { padding: 96px 18px 64px; gap: 14px; }
+  .cc-countdown.cc-countdown--strip .bt-cd { padding: 14px 6px 10px !important; }
+}
+
+/* ---- Prize cards: real podium with varying heights -------- */
+.cc-prizes__grid { display: none !important; }   /* legacy grid retired */
+.cc-prizes__podium {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  align-items: end;
+  gap: 24px;
+  padding: 56px 0 28px;
+}
+.cc-prizes__podium .bt-prize {
+  /* Override Phase 3 prize card overflow:visible so the base bar reads clean */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px 24px 28px !important;
+  border-radius: var(--bt-r-xs) !important;
+}
+/* Podium order: 2nd left, 1st center (taller), 3rd right */
+.bt-prize-pos--1 { order: 1; }
+.bt-prize-pos--2 { order: 2; }
+.bt-prize-pos--3 { order: 3; }
+
+/* Varying heights — shared base, hierarchy in head height */
+.bt-prize--first  { min-height: 460px !important; padding-top: 44px !important; }
+.bt-prize--silver { min-height: 380px !important; padding-top: 36px !important; }
+.bt-prize--bronze { min-height: 340px !important; padding-top: 32px !important; }
+
+.bt-prize__rank-block {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 24px;
+}
+.bt-prize__rank {
+  font-family: var(--bt-font);
+  font-size: 84px;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+  color: var(--bt-text-dim);
+}
+.bt-prize--first  .bt-prize__rank { color: var(--bt-accent); font-size: 108px; }
+.bt-prize--silver .bt-prize__rank { color: #E0DCD3; font-size: 76px; }
+.bt-prize--bronze .bt-prize__rank { color: #C68A55; font-size: 68px; }
+
+.bt-prize__body { display: flex; flex-direction: column; gap: 6px; }
+.bt-prize__place {
+  font-family: var(--bt-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--bt-text-dim);
+  margin-bottom: 6px;
+}
+.bt-prize--first .bt-prize__place { color: var(--bt-accent); }
+
+/* Common podium base line connecting all three cards */
+.cc-prizes__base {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  height: 4px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--bt-bg-line) 8%,
+    var(--bt-accent) 50%,
+    var(--bt-bg-line) 92%,
+    transparent 100%);
+  border-radius: 2px;
+  z-index: -1;
+}
+
+@media (max-width: 960px) {
+  .cc-prizes__podium { grid-template-columns: 1fr; gap: 16px; }
+  .cc-prizes__base { display: none; }
+  .bt-prize-pos--1, .bt-prize-pos--2, .bt-prize-pos--3 { order: unset; }
+  .bt-prize--first { order: -1; }
+  .bt-prize--first,
+  .bt-prize--silver,
+  .bt-prize--bronze { min-height: 0 !important; padding-top: 28px !important; }
+}
+
+/* ---- How-it-works: horizontal timeline with rail ---------- */
+.cc-how__grid { display: none !important; }   /* legacy grid retired */
+.cc-how__timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 80px 0 48px;
+  margin: 0;
+  list-style: none;
+}
+/* The connecting horizontal rail behind the nodes */
+.cc-how__rail {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 90px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--bt-accent-100) 6%,
+    var(--bt-accent) 50%,
+    var(--bt-accent-100) 94%,
+    transparent 100%);
+  z-index: 0;
+}
+.cc-how__node {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+.cc-how__node-marker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cc-how__node-num {
+  font-family: var(--bt-font);
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--bt-accent);
+}
+.cc-how__node-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bt-bg-0);
+  border: 2px solid var(--bt-accent);
+  box-shadow: 0 0 0 4px rgba(255, 134, 28, 0.18);
+  margin-left: 6px;
+  flex: none;
+}
+.cc-how__node-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 12px;
+}
+.cc-how__node-stat {
+  font-family: var(--bt-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--bt-text-mid);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.cc-how__node-stat strong {
+  color: var(--bt-accent);
+  font-weight: 700;
+  font-size: 14px;
+}
+.cc-how__node-t {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--bt-text-hi);
+  margin: 0;
+}
+.cc-how__node-d {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--bt-text-mid);
+  margin: 0;
+}
+
+@media (max-width: 1100px) {
+  .cc-how__timeline { grid-template-columns: repeat(2, 1fr); }
+  .cc-how__rail { display: none; }
+}
+@media (max-width: 640px) {
+  .cc-how__timeline { grid-template-columns: 1fr; gap: 28px; padding: 56px 0 24px; }
+  .cc-how__node-num { font-size: 42px; }
+}
+
+/* ---- FAQ: 2-column grid ----------------------------------- */
+.cc-faq__grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 0 32px !important;
+  border-top: 1px solid var(--bt-bg-line);
+}
+.cc-faq__grid .cc-faq__item {
+  border-top: 0 !important;
+  border-bottom: 1px solid var(--bt-bg-line) !important;
+}
+@media (max-width: 860px) {
+  .cc-faq__grid { grid-template-columns: 1fr !important; gap: 0 !important; border-top: 0; }
+  .cc-faq__grid .cc-faq__item { border-top: 1px solid var(--bt-bg-line) !important; }
+}
+
+/* ---- Leaderboard: top-3 podium header --------------------- */
+.lb-podium {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  align-items: end;
+  gap: 14px;
+  padding: 18px 8px 24px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--bt-bg-line);
+}
+.lb-podium__card {
+  background: var(--bt-bg-2);
+  border: 1px solid var(--bt-bg-line);
+  border-radius: var(--bt-r-xs);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+.lb-podium__card[data-podium-rank="1"] {
+  background: linear-gradient(180deg, rgba(255, 134, 28, 0.10), rgba(255, 134, 28, 0.04));
+  border: 2px solid var(--bt-accent);
+  padding: 26px 16px 22px;
+  margin-bottom: -10px;   /* taller — sits above the other two */
+}
+.lb-podium__card[data-podium-rank="2"] {
+  border-color: rgba(224, 220, 211, 0.30);
+}
+.lb-podium__card[data-podium-rank="3"] {
+  border-color: rgba(198, 138, 85, 0.32);
+}
+.lb-podium__rank-badge {
+  font-family: var(--bt-font);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--bt-text-dim);
+}
+.lb-podium__card[data-podium-rank="1"] .lb-podium__rank-badge { color: var(--bt-accent); font-size: 40px; }
+.lb-podium__card[data-podium-rank="2"] .lb-podium__rank-badge { color: #E0DCD3; }
+.lb-podium__card[data-podium-rank="3"] .lb-podium__rank-badge { color: #C68A55; }
+.lb-podium__name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--bt-text-hi);
+}
+.lb-podium__id {
+  font-family: var(--bt-mono);
+  font-size: 11px;
+  color: var(--bt-text-dim);
+  letter-spacing: 0.04em;
+}
+.lb-podium__country {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--bt-text-mid);
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+.lb-podium__points {
+  margin-top: 8px;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--bt-text-hi);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.lb-podium__points span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--bt-text-dim);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.lb-podium__card[data-podium-rank="1"] .lb-podium__points { color: var(--bt-accent); font-size: 26px; }
+
+@media (max-width: 720px) {
+  .lb-podium { grid-template-columns: 1fr; gap: 10px; padding: 14px 4px 18px; }
+  .lb-podium__card[data-podium-rank="1"] { margin-bottom: 0; order: -1; }
+}
+
+/* Container for ranks #4+ (gets the column headers above it via CSS-only). */
+.lb-rows-rest { display: block; }
+
+/* ---- Sticky CTA → floating bottom-right button ------------ */
+.cc-sticky { display: none !important; }   /* legacy bar retired */
+
+.cc-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 22px;
+  background: var(--bt-accent);
+  color: #FFFFFF;
+  font-family: var(--bt-font);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--bt-r-xs);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22) inset,
+    0 12px 28px -10px rgba(255, 134, 28, 0.65),
+    0 0 0 0 rgba(255, 134, 28, 0.20);
+  transform: translateY(0);
+  transition:
+    transform .35s cubic-bezier(.2, .8, .25, 1),
+    box-shadow .25s ease,
+    opacity .25s ease,
+    background .2s ease;
+}
+.cc-fab:hover {
+  transform: translateY(-3px);
+  background: var(--bt-accent-deep);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.28) inset,
+    0 18px 36px -10px rgba(255, 134, 28, 0.75),
+    0 0 0 6px rgba(255, 134, 28, 0.14);
+}
+.cc-fab.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+}
+.cc-fab__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+}
+.cc-fab__icon svg { width: 100%; height: 100%; }
+@media (max-width: 640px) {
+  .cc-fab { right: 14px; bottom: 14px; padding: 12px 16px; font-size: 12px; }
+  .cc-fab__label { display: none; }
+  .cc-fab__icon { width: 20px; height: 20px; }
+}
+
+/* The .cc-page used to reserve space for the sticky bar at the bottom. The
+   floating button doesn't need it. */
+.cc-page { padding-bottom: 0 !important; }

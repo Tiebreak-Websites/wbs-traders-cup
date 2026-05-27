@@ -12,22 +12,23 @@ const f = copy.formula;
       <h2 class="cc-section-title">{h.title}</h2>
     </div>
 
-    <ol class="cc-how__grid">
+    <!-- Horizontal timeline: 4 step nodes connected by a single line.
+         Each node has a numeral anchor; body content hangs below.
+         On narrow screens the timeline rotates to vertical. -->
+    <ol class="cc-how__timeline" role="list">
+      <span class="cc-how__rail" aria-hidden="true"></span>
       {h.steps.map((step, i) => (
-        <li class="cc-how__card reveal" style={`--reveal-delay: ${i * 90}ms;`}>
-          <div class="cc-how__top">
-            <span class="cc-how__badge">{step.n}</span>
-            <span class="cc-how__connector" aria-hidden="true"></span>
+        <li class="cc-how__node reveal" style={`--reveal-delay: ${i * 90}ms;`}>
+          <div class="cc-how__node-marker" aria-hidden="true">
+            <span class="cc-how__node-num">{step.n}</span>
+            <span class="cc-how__node-dot"></span>
           </div>
-
-          <div class="cc-how__stat-row">
-            <span class="cc-how__stat">{step.stat}</span>
-            <span class="cc-how__stat-lbl">{step.stat_label}</span>
-          </div>
-
-          <div class="cc-how__body">
-            <h3 class="cc-how__t">{step.t}</h3>
-            <p class="cc-how__d">{step.d}</p>
+          <div class="cc-how__node-body">
+            <span class="cc-how__node-stat">
+              <strong>{step.stat}</strong> <span>{step.stat_label}</span>
+            </span>
+            <h3 class="cc-how__node-t">{step.t}</h3>
+            <p class="cc-how__node-d">{step.d}</p>
           </div>
         </li>
       ))}

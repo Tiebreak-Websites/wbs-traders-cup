@@ -1,69 +1,41 @@
 ---
 import enCopy from '../data/copy.en.json';
 const { copy = enCopy } = Astro.props;
-const locale = copy._meta?.locale === 'ar' ? 'ar' : 'en';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const enHref = `${base}/`;
-const arHref = `${base}/ar/`;
+const homeHref = `${base}/`;
 const logoSrc = `${base}/wbs-white.svg`;
 const h = copy.hero || {};
-const isAr = locale === 'ar';
-const dLbl = isAr ? 'ي' : 'd';
-const hLbl = isAr ? 'س' : 'h';
-const mLbl = isAr ? 'د' : 'm';
-const sLbl = isAr ? 'ث' : 's';
 ---
 
 <header class="cc-topbar" data-topbar aria-label="Site header">
   <div class="cc-topbar__inner">
-    <a href={enHref} class="cc-topbar__brand" aria-label="Warren Bowie & Smith">
+    <a href={homeHref} class="cc-topbar__brand" aria-label="Warren Bowie & Smith">
       <img class="cc-topbar__logo" src={logoSrc} alt="Warren Bowie & Smith" width="160" height="48" />
     </a>
 
-    <div class="cc-topbar__controls">
-      {h.target_date && (
+    {h.target_date && (
+      <div class="cc-topbar__controls">
         <div class="cc-mini-cd" data-countdown data-target={h.target_date} aria-label="Time remaining">
           <span class="cc-mini-cd__live" aria-hidden="true"></span>
           <span class="cc-mini-cd__bracket" aria-hidden="true">[</span>
-          <span class="cc-mini-cd__cell"><span data-d>00</span><i>{dLbl}</i></span>
+          <span class="cc-mini-cd__cell"><span data-d>00</span><i>d</i></span>
           <span class="cc-mini-cd__sep" aria-hidden="true">:</span>
-          <span class="cc-mini-cd__cell"><span data-h>00</span><i>{hLbl}</i></span>
+          <span class="cc-mini-cd__cell"><span data-h>00</span><i>h</i></span>
           <span class="cc-mini-cd__sep" aria-hidden="true">:</span>
-          <span class="cc-mini-cd__cell"><span data-m>00</span><i>{mLbl}</i></span>
+          <span class="cc-mini-cd__cell"><span data-m>00</span><i>m</i></span>
           <span class="cc-mini-cd__sep" aria-hidden="true">:</span>
-          <span class="cc-mini-cd__cell"><span data-s>00</span><i>{sLbl}</i></span>
+          <span class="cc-mini-cd__cell"><span data-s>00</span><i>s</i></span>
           <span class="cc-mini-cd__bracket" aria-hidden="true">]</span>
         </div>
-      )}
-
-      <div class="cc-controls__lang" role="group" aria-label="Language">
-        <a href={enHref} class={`cc-controls__lang-btn${locale === 'en' ? ' is-active' : ''}`} aria-current={locale === 'en' ? 'page' : undefined}>
-          <svg class="cc-lang__icon" viewBox="0 0 16 16" aria-hidden="true">
-            <circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
-            <path d="M1.5 8h13M8 1.5a10 6 0 0 1 0 13M8 1.5a10 6 0 0 0 0 13" fill="none" stroke="currentColor" stroke-width="1.2"/>
-          </svg>
-          <span class="cc-lang__code">EN</span>
-        </a>
-        <span class="cc-controls__lang-divider" aria-hidden="true"></span>
-        <a href={arHref} class={`cc-controls__lang-btn${locale === 'ar' ? ' is-active' : ''}`} aria-current={locale === 'ar' ? 'page' : undefined}>
-          <svg class="cc-lang__icon" viewBox="0 0 16 16" aria-hidden="true">
-            <circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
-            <path d="M1.5 8h13M8 1.5a10 6 0 0 1 0 13M8 1.5a10 6 0 0 0 0 13" fill="none" stroke="currentColor" stroke-width="1.2"/>
-          </svg>
-          <span class="cc-lang__code">AR</span>
-        </a>
       </div>
-    </div>
+    )}
   </div>
 </header>
 
 <script>
-  // The topbar is always visible. It's transparent over the hero and gains a
-  // blurred, readable background as soon as the user starts scrolling down.
   (function () {
     const bar = document.querySelector('[data-topbar]');
     if (!bar) return;
-
     let scheduled = false;
     let lastScrolled = null;
     function check() {

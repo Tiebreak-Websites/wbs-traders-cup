@@ -14,7 +14,7 @@ const logoSrc = `${base}/wbs-white.svg`;
       <h2 class="cc-section-title">{f.title}</h2>
     </div>
 
-    <div class="cc-faq__list" data-faq-list>
+    <div class="cc-faq__list cc-faq__grid" data-faq-list>
       {f.items.map((item, i) => (
         <div class={`cc-faq__item reveal${i === 0 ? ' is-open' : ''}`} style={`--reveal-delay: ${i * 60}ms;`} data-faq-item>
           <button class="cc-faq__head" data-faq-toggle aria-expanded={i === 0 ? 'true' : 'false'}>

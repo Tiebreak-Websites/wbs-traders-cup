@@ -7,21 +7,14 @@
 const BASE_URL = import.meta.env.BASE_URL.replace(/\/$/, '');
 const BASE = `${BASE_URL}/data`;
 const FLAGS = `${BASE_URL}/flags`;
-const FEED = document.documentElement.lang === 'ar'
-  ? 'leaderboard-default.ar.json'
-  : 'leaderboard-default.json';
+const FEED = 'leaderboard-default.json';
 const POLL_MS = 30 * 1000;
 const TOP_N = 10;
 
-const isAr = document.documentElement.lang === 'ar';
-// Keep Western Arabic numerals (0-9) even on the AR page — the rest of the
-// landing page uses Latin digits, so the leaderboard should match.
 const numLocale = 'en-US';
-const ptsUnit = isAr ? 'نقطة' : 'pts';
+const ptsUnit = 'pts';
 const fmt = {
-  usd: (n) => isAr
-    ? Math.round(n).toLocaleString(numLocale) + '$'
-    : '$' + Math.round(n).toLocaleString(numLocale),
+  usd: (n) => '$' + Math.round(n).toLocaleString(numLocale),
   num: (n) => Math.round(n).toLocaleString(numLocale),
 };
 
@@ -55,6 +48,37 @@ function rowHtml(r, isMe, index) {
       <span class="lb-deposit bt-num">${fmt.usd(r.deposits_usd)}</span>
       <span class="lb-trades bt-num">${fmt.num(r.trades)}</span>
       <span class="lb-points bt-num">${fmt.num(r.points)}<span class="lb-points__unit">${ptsUnit}</span></span>
+    </div>
+  `;
+}
+
+// Top-3 podium header — only shown on the default unfiltered view.
+function podiumHtml(top3) {
+  if (!top3 || top3.length < 3) return '';
+  // Visual order: 2nd / 1st / 3rd (true podium reading)
+  const order = [top3[1], top3[0], top3[2]];
+  const tierClass = ['lb-podium--silver', 'lb-podium--gold', 'lb-podium--bronze'];
+  const rankNum = [2, 1, 3];
+  return `
+    <div class="lb-podium reveal" data-podium>
+      ${order.map((r, i) => {
+        if (!r) return '';
+        const code = (r.country || '').toLowerCase();
+        return `
+          <div class="lb-podium__card ${tierClass[i]}" data-podium-rank="${rankNum[i]}">
+            <div class="lb-podium__rank-badge">${String(rankNum[i]).padStart(2, '0')}</div>
+            <div class="lb-podium__name">${r.name_masked}</div>
+            <div class="lb-podium__id">#${r.account_id || '—'}</div>
+            <div class="lb-podium__country">
+              <img class="lb-country__flag" src="${FLAGS}/${code}.svg" alt="" width="20" height="14" loading="lazy" />
+              <span>${r.country || ''}</span>
+            </div>
+            <div class="lb-podium__points bt-num">
+              <strong>${fmt.num(r.points)}</strong><span>${ptsUnit}</span>
+            </div>
+          </div>
+        `;
+      }).join('')}
     </div>
   `;
 }
@@ -115,14 +139,19 @@ function renderRows() {
     return;
   }
 
-  const topHtml = rows.map((r, idx) => rowHtml(r, meInTop && me.rank === r.rank, idx)).join('');
+  // Top-3 are featured in a podium block above the regular list.
+  const podium = podiumHtml(rows.slice(0, 3));
+  const restRows = rows.slice(3);
+  const restHtml = restRows.length
+    ? `<div class="lb-rows-rest">${restRows.map((r, idx) => rowHtml(r, meInTop && me.rank === r.rank, idx + 3)).join('')}</div>`
+    : '';
 
   let youHtml = '';
   if (me && !meInTop) {
-    youHtml = rowHtml({ ...me, name_masked: me.name_masked || (isAr ? 'أنت' : 'You') }, true, rows.length);
+    youHtml = rowHtml({ ...me, name_masked: me.name_masked || 'You' }, true, rows.length);
   }
 
-  body.innerHTML = topHtml + youHtml;
+  body.innerHTML = podium + restHtml + youHtml;
 
   // Re-attach reveal observer to the newly inserted rows (and trigger the safety
   // fallback in case the observer doesn't fire in this environment).
