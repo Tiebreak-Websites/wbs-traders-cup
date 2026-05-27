@@ -1711,15 +1711,7 @@ html[dir="rtl"] .bt-lb-row.is-updated {
   border-color: var(--bt-accent-100) !important;
   box-shadow: none !important;
 }
-.cc-faq__item.is-open::after {
-  /* Orange left rule when open */
-  content: "";
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 2px;
-  background: var(--bt-accent);
-}
-html[dir="rtl"] .cc-faq__item.is-open::after { left: auto; right: 0; }
+/* (Orange left rule on open FAQ item removed per design feedback.) */
 
 .cc-faq__head {
   padding: 22px 28px !important;
