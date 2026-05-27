@@ -1,34 +1,35 @@
 /* ============================================================
-   200Invest Traders Championship 2026 — Design Tokens + Page CSS
-   Light theme matching 200invest.com brand language.
-   Brand blue #0050F9, near-black #303030, Inter typography.
+   Warren Bowie & Smith — Traders Cup 2026 — Design Tokens + Page CSS
+   Dark slate + warm orange palette, sharp 2px architecture.
+   Brand orange #FF861C, slate #28343A / #36444B, Poppins typography.
+   Sourced from wbandsmith.com production CSS.
    ============================================================ */
 
 :root {
-  /* ---- Surfaces (dark — only theme) ---- */
-  --bt-bg-0:        #0A0F1E;            /* page */
-  --bt-bg-1:        #131A2D;            /* card */
-  --bt-bg-2:        #1A2238;            /* alt surface */
-  --bt-bg-3:        #232C46;            /* deeper alt surface */
-  --bt-bg-line:     #2A3350;            /* hairline border */
-  --bt-bg-line-2:   #3A4566;            /* stronger border */
-  --bt-brand-navy:  #0A1B4D;            /* brand navy accent */
+  /* ---- Surfaces (dark slate — only theme) ---- */
+  --bt-bg-0:        #28343A;            /* page (brand slate) */
+  --bt-bg-1:        #36444B;            /* card (brand secondary slate) */
+  --bt-bg-2:        #3F4E56;            /* alt surface */
+  --bt-bg-3:        #4A5A63;            /* deeper alt surface */
+  --bt-bg-line:     #4A5A63;            /* hairline border */
+  --bt-bg-line-2:   #5C6E78;            /* stronger border */
+  --bt-brand-slate: #1E282D;            /* deepest slate for hero washes */
 
   /* ---- Text ---- */
-  --bt-text-hi:     #F5F7FB;            /* headings */
-  --bt-text:        #D9DEEC;            /* body */
-  --bt-text-mid:    #8895AE;            /* secondary body */
-  --bt-text-dim:    #5C6680;            /* labels, micro */
+  --bt-text-hi:     #FFFFFF;            /* headings — pure white per brand */
+  --bt-text:        #D8DDE0;            /* body */
+  --bt-text-mid:    #8A969E;            /* secondary body */
+  --bt-text-dim:    #6A767E;            /* labels, micro */
 
-  /* ---- Primary accent: 200Invest blue (brightened for dark surfaces) ---- */
-  --bt-accent-50:   rgba(0, 80, 249, 0.18);
-  --bt-accent-100:  rgba(0, 80, 249, 0.35);
-  --bt-accent:      #2D75FF;
-  --bt-accent-soft: #4D82FB;
-  --bt-accent-deep: #1E5BE0;
-  --bt-accent-ink:  #FFFFFF;
+  /* ---- Primary accent: WB&S brand orange ---- */
+  --bt-accent-50:   rgba(255, 134, 28, 0.14);
+  --bt-accent-100:  rgba(255, 134, 28, 0.32);
+  --bt-accent:      #FF861C;
+  --bt-accent-soft: #FF9E47;
+  --bt-accent-deep: #E0701A;
+  --bt-accent-ink:  #1E282D;            /* dark text on orange */
 
-  /* Gold aliases (legacy compat — now blue) */
+  /* Gold aliases (legacy compat — now orange) */
   --bt-gold-50:     var(--bt-accent-50);
   --bt-gold-100:    var(--bt-accent-100);
   --bt-gold:        var(--bt-accent);
@@ -45,19 +46,19 @@
   --bt-bronze-deep: #B17746;
 
   /* ---- Status ---- */
-  --bt-up:          #15A86C;
-  --bt-down:        #D33B3B;
+  --bt-up:          #2EA86C;
+  --bt-down:        #E25C1B;
 
-  /* ---- Radius / shadow ---- */
-  --bt-r-xs: 6px;
-  --bt-r-sm: 10px;
-  --bt-r-md: 14px;
-  --bt-r-lg: 20px;
+  /* ---- Radius (sharp / architectural per WB&S 2px aesthetic) ---- */
+  --bt-r-xs: 2px;
+  --bt-r-sm: 4px;
+  --bt-r-md: 6px;
+  --bt-r-lg: 8px;
   --bt-r-pill: 999px;
 
-  --bt-shadow-card:    0 1px 2px rgba(0, 0, 0, 0.30), 0 12px 30px -16px rgba(0, 0, 0, 0.55);
-  --bt-shadow-card-hi: 0 4px 14px rgba(0, 0, 0, 0.40), 0 24px 50px -16px rgba(45, 117, 255, 0.30);
-  --bt-glow-accent:    0 14px 30px -10px rgba(45, 117, 255, 0.45), 0 0 0 6px rgba(45, 117, 255, 0.08);
+  --bt-shadow-card:    0 1px 2px rgba(0, 0, 0, 0.35), 0 14px 32px -18px rgba(0, 0, 0, 0.60);
+  --bt-shadow-card-hi: 0 4px 14px rgba(0, 0, 0, 0.45), 0 24px 50px -18px rgba(255, 134, 28, 0.28);
+  --bt-glow-accent:    0 14px 30px -10px rgba(255, 134, 28, 0.42), 0 0 0 6px rgba(255, 134, 28, 0.08);
 
   /* ---- Spacing (8pt) ---- */
   --bt-s-1: 4px;
@@ -70,16 +71,16 @@
   --bt-s-8: 40px;
   --bt-s-9: 56px;
 
-  /* ---- Type ---- */
-  --bt-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* ---- Type (WB&S brand: Poppins single-typeface system) ---- */
+  --bt-font: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --bt-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  --bt-num:  "Inter", system-ui, sans-serif;
+  --bt-num:  "Poppins", system-ui, sans-serif;
 }
 
 /* Arabic locale uses IBM Plex Sans Arabic */
 html[lang="ar"] {
-  --bt-font: "IBM Plex Sans Arabic", "Inter", system-ui, -apple-system, sans-serif;
-  --bt-num:  "IBM Plex Sans Arabic", "Inter", system-ui, sans-serif;
+  --bt-font: "IBM Plex Sans Arabic", "Poppins", system-ui, -apple-system, sans-serif;
+  --bt-num:  "IBM Plex Sans Arabic", "Poppins", system-ui, sans-serif;
 }
 
 /* Dark-only — base tokens above are the source of truth. The below are
@@ -88,7 +89,7 @@ html[lang="ar"] {
 .bt-rank { background: var(--bt-bg-3); color: var(--bt-text-mid); border-color: var(--bt-bg-line-2); }
 .bt-cd { background: var(--bt-bg-1); }
 .cc-faq__icon { background: var(--bt-accent-50); border-color: var(--bt-accent-100); }
-.cc-faq__item.is-open { box-shadow: 0 12px 36px -18px rgba(45, 117, 255, 0.45); }
+.cc-faq__item.is-open { box-shadow: 0 12px 36px -18px rgba(255, 134, 28, 0.45); }
 
 /* ============================================================
    RTL adjustments
@@ -129,7 +130,7 @@ html[dir="rtl"] .cc-controls { right: auto; left: 20px; }
   justify-content: space-between;
   gap: 16px;
   padding: 14px 56px;
-  background: rgba(10, 15, 30, 0.72);
+  background: rgba(30, 40, 45, 0.78);
   border-bottom: 1px solid var(--bt-bg-line);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -147,12 +148,13 @@ html[dir="rtl"] .cc-controls { right: auto; left: 20px; }
   top: 22px;
   left: 56px;
   z-index: 5;
-  height: 20px;
+  height: 44px;
+  width: auto;
   display: block;
 }
 html[dir="rtl"] .cc-hero-logo { left: auto; right: 56px; }
 .cc-topbar__brand { display: inline-flex; align-items: center; }
-.cc-topbar__logo { display: block; height: 20px; width: auto; }
+.cc-topbar__logo { display: block; height: 32px; width: auto; }
 .cc-topbar__controls {
   display: inline-flex;
   align-items: center;
@@ -221,12 +223,12 @@ html[dir="rtl"] .cc-hero-logo { left: auto; right: 56px; }
 .cc-controls__lang-btn.is-active {
   background: var(--bt-accent);
   color: #FFFFFF;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 4px 12px -4px rgba(0, 80, 249, 0.45);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 4px 12px -4px rgba(255, 134, 28, 0.45);
 }
 
 @media (max-width: 640px) {
   .cc-topbar { padding: 12px 20px; }
-  .cc-topbar__logo { height: 18px; }
+  .cc-topbar__logo { height: 28px; }
   .cc-controls__lang-btn { padding: 6px 10px; }
 }
 
@@ -320,14 +322,14 @@ a { text-decoration: none; color: inherit; }
   background: var(--bt-accent);
   box-shadow:
     0 1px 0 rgba(255,255,255,0.18) inset,
-    0 10px 24px -10px rgba(0, 80, 249, 0.45);
+    0 10px 24px -10px rgba(255, 134, 28, 0.45);
 }
 .bt-btn-primary:hover {
   background: var(--bt-accent-deep);
   box-shadow:
     0 1px 0 rgba(255,255,255,0.22) inset,
-    0 18px 36px -10px rgba(0, 80, 249, 0.62),
-    0 0 0 6px rgba(0, 80, 249, 0.10);
+    0 18px 36px -10px rgba(255, 134, 28, 0.62),
+    0 0 0 6px rgba(255, 134, 28, 0.10);
   transform: translateY(-2px) scale(1.05);
 }
 .bt-btn-primary:active {
@@ -336,19 +338,24 @@ a { text-decoration: none; color: inherit; }
 }
 .bt-btn-ghost {
   color: var(--bt-text-hi);
-  background: #FFFFFF;
-  border: 1px solid var(--bt-bg-line);
+  background: transparent;
+  border: 2px solid var(--bt-accent);
 }
-.bt-btn-ghost:hover { border-color: var(--bt-accent); color: var(--bt-accent); }
+.bt-btn-ghost:hover {
+  background: var(--bt-accent);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
 .bt-btn-on-blue {
-  color: var(--bt-accent);
+  color: var(--bt-accent-ink);
   background: #FFFFFF;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 8px 20px -10px rgba(0,0,0,0.20);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 8px 20px -10px rgba(0,0,0,0.30);
 }
 .bt-btn-on-blue:hover {
   background: var(--bt-accent-50);
+  color: var(--bt-text-hi);
   transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 12px 28px -10px rgba(0,0,0,0.30);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 12px 28px -10px rgba(0,0,0,0.40);
 }
 
 /* Pills / chips */
@@ -375,11 +382,11 @@ a { text-decoration: none; color: inherit; }
   background: rgba(21, 168, 108, 0.08);
   border-color: rgba(21, 168, 108, 0.25);
 }
-.bt-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bt-accent); box-shadow: 0 0 0 4px rgba(0, 80, 249, 0.18); }
+.bt-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bt-accent); box-shadow: 0 0 0 4px rgba(255, 134, 28, 0.18); }
 .bt-dot-pulse { animation: btPulse 1.6s ease-out infinite; }
 @keyframes btPulse {
-  0%   { box-shadow: 0 0 0 0   rgba(0, 80, 249, 0.5);  }
-  100% { box-shadow: 0 0 0 10px rgba(0, 80, 249, 0);    }
+  0%   { box-shadow: 0 0 0 0   rgba(255, 134, 28, 0.5);  }
+  100% { box-shadow: 0 0 0 10px rgba(255, 134, 28, 0);    }
 }
 
 /* Leaderboard rows — shared grid template via CSS var keeps header + rows + YOU row aligned */
@@ -399,7 +406,7 @@ a { text-decoration: none; color: inherit; }
 .bt-lb-row + .bt-lb-row { border-top: 1px solid var(--bt-bg-line); border-radius: 0; }
 .bt-lb-row:hover { background: var(--bt-bg-2); }
 .bt-lb-row.is-you {
-  background: linear-gradient(90deg, var(--bt-accent-50), rgba(229, 238, 255, 0) 80%);
+  background: linear-gradient(90deg, var(--bt-accent-50), rgba(255, 134, 28, 0) 80%);
   border-left-color: var(--bt-accent);
 }
 .bt-rank {
@@ -434,8 +441,8 @@ a { text-decoration: none; color: inherit; }
   opacity: 1;
 }
 .bt-prize--first {
-  background: linear-gradient(180deg, #FFFFFF 0%, #F6F9FF 100%);
-  border-color: var(--bt-accent-100);
+  background: linear-gradient(180deg, var(--bt-bg-1) 0%, var(--bt-bg-2) 100%);
+  border-color: var(--bt-accent);
   box-shadow: var(--bt-shadow-card-hi);
 }
 
@@ -447,7 +454,7 @@ a { text-decoration: none; color: inherit; }
   border-radius: var(--bt-r-sm);
   padding: 10px 14px 8px;
   min-width: 80px;
-  box-shadow: 0 1px 2px rgba(15, 22, 38, 0.04);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
 }
 .bt-cd-num {
   font-weight: 700; font-size: 44px; line-height: 1; letter-spacing: -0.02em;
@@ -502,7 +509,7 @@ a { text-decoration: none; color: inherit; }
 }
 .cc-headline__accent {
   color: var(--bt-accent);
-  text-shadow: 0 4px 22px rgba(45, 117, 255, 0.40);
+  text-shadow: 0 4px 22px rgba(255, 134, 28, 0.40);
 }
 /* (Prize count-up + shimmer removed — prize amount now lives on the prize cards.) */
 .cc-subhead {
@@ -713,7 +720,7 @@ html[lang="ar"] .cc-how__stat-lbl { text-transform: none; letter-spacing: 0; fon
   border-radius: var(--bt-r-pill);
   background: linear-gradient(135deg, var(--bt-accent) 0%, var(--bt-accent-deep) 100%);
   color: #FFFFFF;
-  box-shadow: 0 10px 24px -10px rgba(0, 80, 249, 0.50);
+  box-shadow: 0 10px 24px -10px rgba(255, 134, 28, 0.50);
   flex: none;
 }
 .cc-reward__stat {
@@ -883,7 +890,7 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
 .cc-faq__item:hover { border-color: var(--bt-bg-line-2); }
 .cc-faq__item.is-open {
   border-color: var(--bt-accent-100);
-  box-shadow: 0 12px 36px -18px rgba(0, 80, 249, 0.30);
+  box-shadow: 0 12px 36px -18px rgba(255, 134, 28, 0.30);
 }
 .cc-faq__head {
   width: 100%;
@@ -941,7 +948,7 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
   color: #FFFFFF;
   z-index: 50;
   border-top: 1px solid rgba(0,0,0,0.05);
-  box-shadow: 0 -10px 30px -10px rgba(0, 80, 249, 0.35);
+  box-shadow: 0 -10px 30px -10px rgba(255, 134, 28, 0.35);
   transform: translateY(0);
   transition: transform .28s ease;
 }

@@ -1,14 +1,14 @@
 {
   "_meta": {
     "locale": "en",
-    "brand": "200Invest",
+    "brand": "Warren Bowie & Smith",
     "competition": "Traders Championship 2026",
     "internal_code": "traders_championship_2026",
     "market": "MENA"
   },
 
   "site": {
-    "title": "200Invest Traders Championship 2026 — Compete for $26,000",
+    "title": "Warren Bowie & Smith Traders Championship 2026 — Compete for $26,000",
     "description": "Sharia-friendly, skill-based trading competition for the MENA market. Deposit $200 to qualify. World Cup window: 1 June → 19 July 2026.",
     "og_image_path": "/og-traders-championship.jpg"
   },
@@ -37,7 +37,7 @@
     "countdown_label": "Until end",
     "target_date": "2026-07-19T23:59:00+04:00",
     "cta": "Enter the Championship",
-    "cta_href": "https://200invest.com/register?utm_campaign=traders_championship_2026&utm_source=landing",
+    "cta_href": "https://wbandsmith.com/register?utm_campaign=traders_championship_2026&utm_source=landing",
     "secondary_cta": "View rules & scoring",
     "secondary_cta_href": "#how",
     "trophy_label_top": "200",
@@ -162,7 +162,7 @@
     "eyebrow": "Eligibility & conduct",
     "title": "Open, transparent, and rule-clean.",
     "items": [
-      "Open to all KYC-verified 200Invest clients in eligible MENA jurisdictions.",
+      "Open to all KYC-verified Warren Bowie & Smith clients in eligible MENA jurisdictions.",
       "Islamic (swap-free) accounts fully eligible — no exclusions.",
       "Trading must use the client's own funds and follow standard risk-management rules.",
       "Wash trading, hedging-only patterns, and other artificial-volume tactics → disqualification.",
@@ -177,7 +177,7 @@
     "items": [
       {
         "t": "Is the Championship Sharia-compliant?",
-        "d": "Yes. The mechanic is structured to satisfy mainstream contemporary Islamic finance scholarship: your deposit funds your own trading account and stays fully yours, Islamic (swap-free) accounts are fully eligible, and winners are decided by a transparent skill leaderboard — not by chance. Final sign-off is routed to 200Invest's Sharia advisory board before launch."
+        "d": "Yes. The mechanic is structured to satisfy mainstream contemporary Islamic finance scholarship: your deposit funds your own trading account and stays fully yours, Islamic (swap-free) accounts are fully eligible, and winners are decided by a transparent skill leaderboard — not by chance. Final sign-off is routed to Warren Bowie & Smith's Sharia advisory board before launch."
       },
       {
         "t": "Is this gambling or a lottery?",
@@ -189,7 +189,7 @@
       },
       {
         "t": "What counts as an Islamic account?",
-        "d": "A swap-free account: no overnight interest (riba) on positions. 200Invest's Islamic account product is fully eligible for the Championship and competes on the same leaderboard as all other accounts."
+        "d": "A swap-free account: no overnight interest (riba) on positions. Warren Bowie & Smith's Islamic account product is fully eligible for the Championship and competes on the same leaderboard as all other accounts."
       },
       {
         "t": "Is there a cap on deposits?",
@@ -201,7 +201,7 @@
       },
       {
         "t": "When and how are winners announced?",
-        "d": "Final standings lock at 23:59 GST on 19 July 2026 (World Cup Final day). Winners are announced 20 July 2026 on the 200Invest website, by email, and across our social channels. Funded trading accounts are credited on Islamic terms."
+        "d": "Final standings lock at 23:59 GST on 19 July 2026 (World Cup Final day). Winners are announced 20 July 2026 on the Warren Bowie & Smith website, by email, and across our social channels. Funded trading accounts are credited on Islamic terms."
       }
     ]
   },
@@ -210,7 +210,7 @@
     "title": "Deposit $200. Enter the Championship.",
     "subtitle": "Skill-based · Islamic accounts eligible · Compete for $26,000",
     "cta": "Start now",
-    "cta_href": "https://200invest.com/register?utm_campaign=traders_championship_2026&utm_source=sticky_bar"
+    "cta_href": "https://wbandsmith.com/register?utm_campaign=traders_championship_2026&utm_source=sticky_bar"
   },
 
   "controls": {
@@ -219,5 +219,5 @@
     "switch_to_ar": "AR"
   },
 
-  "compliance": "The 200Invest Traders Championship 2026 is a skill-based trading competition. Your deposit funds your own trading account and remains fully yours. Winners are determined by a transparent Champion Points leaderboard, not by chance. Islamic (swap-free) accounts fully eligible. KYC, eligibility, and market-specific rules apply. Trading carries risk of loss. Terms & Conditions apply. © 2026 200Invest."
+  "compliance": "The Warren Bowie & Smith Traders Championship 2026 is a skill-based trading competition. Your deposit funds your own trading account and remains fully yours. Winners are determined by a transparent Champion Points leaderboard, not by chance. Islamic (swap-free) accounts fully eligible. KYC, eligibility, and market-specific rules apply. Trading carries risk of loss. Terms & Conditions apply. © 2026 Warren Bowie & Smith."
 }

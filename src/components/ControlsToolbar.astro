@@ -5,7 +5,7 @@ const locale = copy._meta?.locale === 'ar' ? 'ar' : 'en';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const enHref = `${base}/`;
 const arHref = `${base}/ar/`;
-const logoSrc = `${base}/200invest-logo.svg`;
+const logoSrc = `${base}/wbs-white.svg`;
 const h = copy.hero || {};
 const isAr = locale === 'ar';
 const dLbl = isAr ? 'ي' : 'd';
@@ -15,8 +15,8 @@ const sLbl = isAr ? 'ث' : 's';
 ---
 
 <header class="cc-topbar" data-topbar aria-label="Site header">
-  <a href={enHref} class="cc-topbar__brand" aria-label="200Invest">
-    <img class="cc-topbar__logo" src={logoSrc} alt="200Invest" width="120" height="20" />
+  <a href={enHref} class="cc-topbar__brand" aria-label="Warren Bowie & Smith">
+    <img class="cc-topbar__logo" src={logoSrc} alt="Warren Bowie & Smith" width="120" height="36" />
   </a>
 
   <div class="cc-topbar__controls">

@@ -1,9 +1,9 @@
 {
-  "name": "200invest-traders-championship",
+  "name": "wbs-traders-cup",
   "type": "module",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "200Invest Traders Championship 2026 — Sharia-friendly skill-based trading competition (sub-page of 200invest.com) for the MENA market",
+  "description": "Warren Bowie & Smith Traders Cup 2026 — Sharia-friendly skill-based trading competition (sub-page of wbandsmith.com) for the MENA market",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
