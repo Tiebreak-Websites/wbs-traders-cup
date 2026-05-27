@@ -54,7 +54,7 @@ const laurelSrc = `${base}/laurel-branch.svg`;
             </div>
 
             <div class="bt-prize__amount bt-num">
-              <span class="bt-prize__amt-val">{item.amount}</span>
+              <span class="bt-prize__amt-val" data-countup>{item.amount}</span>
             </div>
             {item.label && <div class="bt-prize__label">{item.label}</div>}
           </article>
@@ -262,3 +262,8 @@ const laurelSrc = `${base}/laurel-branch.svg`;
     </linearGradient>
   </defs>
 </svg>
+
+<script>
+  // Phase 2: prize amounts count up from 0 once cards reveal into view.
+  import '../scripts/count-up.js';
+</script>

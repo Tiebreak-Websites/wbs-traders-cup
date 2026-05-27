@@ -67,7 +67,7 @@ const subheadHtml = h.subhead.replace(
       </div>
 
       <div class="cc-hero__cta-row reveal" style="--reveal-delay: 320ms;">
-        <a href={h.cta_href} class="bt-btn bt-btn-primary cc-hero__cta" target="_blank" rel="noopener noreferrer">
+        <a href={h.cta_href} class="bt-btn bt-btn-primary cc-hero__cta" data-magnetic target="_blank" rel="noopener noreferrer">
           {h.cta}
         </a>
         <a href={h.secondary_cta_href} class="cc-hero__rules">
@@ -228,29 +228,28 @@ const subheadHtml = h.subhead.replace(
     white-space: nowrap;
     margin-top: 6px;
   }
-  /* Primary CTA — golden gradient with a shimmer sweep on hover */
+  /* Primary CTA — WB&S brand orange with shimmer sweep on hover */
   .bt-btn.cc-hero__cta {
     height: 60px;
     padding: 0 34px;
     font-size: 19px;
     font-weight: 700;
-    color: #3A2A0A;
-    background: linear-gradient(120deg, #C99A38 0%, #EAC265 26%, #F6D98C 50%, #EAC265 74%, #C99A38 100%);
+    color: #FFFFFF;
+    background: linear-gradient(120deg, #E0701A 0%, #FF861C 26%, #FFA040 50%, #FF861C 74%, #E0701A 100%);
     background-size: 220% 100%;
     background-position: 8% 0;
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.4) inset,
-      0 12px 26px -10px rgba(201, 154, 56, 0.65);
-    transition: background-position .7s ease, transform .25s ease, box-shadow .25s ease;
+      0 1px 0 rgba(255, 255, 255, 0.22) inset,
+      0 12px 26px -10px rgba(255, 134, 28, 0.65);
+    transition: background-position .7s ease, transform .25s cubic-bezier(.2, .8, .25, 1), box-shadow .25s ease;
   }
   .bt-btn.cc-hero__cta:hover {
     background-position: 92% 0;
-    color: #3A2A0A;
-    transform: translateY(-2px) scale(1.03);
+    color: #FFFFFF;
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.55) inset,
-      0 18px 36px -10px rgba(201, 163, 90, 0.78),
-      0 0 0 4px rgba(224, 184, 114, 0.18);
+      0 1px 0 rgba(255, 255, 255, 0.28) inset,
+      0 18px 36px -10px rgba(255, 134, 28, 0.78),
+      0 0 0 4px rgba(255, 134, 28, 0.18);
   }
   .cc-hero__rules {
     font-size: 14.5px;
@@ -323,5 +322,6 @@ const subheadHtml = h.subhead.replace(
 
 <script>
   import '../scripts/countdown.js';
+  import '../scripts/magnetic.js';
   // prize-count.js no longer needed — the prize amount lives in the prize cards, not the headline.
 </script>

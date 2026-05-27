@@ -26,6 +26,10 @@ const fmt = {
 };
 
 const state = { data: null, timer: null, filters: { name: '', id: '' } };
+// Phase 2: remember each account's previous points so we can flash rows whose
+// score changed between polls. Keyed by account_id → last known points value.
+const prevPoints = new Map();
+let firstRender = true;
 
 const $ = (s, r = document) => r.querySelector(s);
 const card = () => document.querySelector('.lb-card');
@@ -38,7 +42,7 @@ function rowHtml(r, isMe, index) {
   // Each row gets its own animation delay (stagger), capped so late rows still feel snappy.
   const delay = Math.min((index || 0) * 60, 700);
   return `
-    <div class="bt-lb-row reveal lb-row-anim${isMe ? ' is-you' : ''}" style="--reveal-delay: ${delay}ms;">
+    <div class="bt-lb-row reveal lb-row-anim${isMe ? ' is-you' : ''}" data-account-id="${r.account_id || ''}" style="--reveal-delay: ${delay}ms;">
       <span class="${rankCls}">${r.rank}</span>
       <div class="lb-trader-stack">
         <span class="lb-trader">${r.name_masked}${isMe ? `<span class="lb-you">${youLabel}</span>` : ''}</span>
@@ -124,6 +128,34 @@ function renderRows() {
   // fallback in case the observer doesn't fire in this environment).
   document.dispatchEvent(new CustomEvent('cc:reveal:rescan'));
   updateFoot();
+  flashChangedRows(body);
+}
+
+// Phase 2: compare each row's points to the previous snapshot. Rows whose
+// points moved get .is-updated for 1.4s (CSS plays the orange left-rule flash).
+function flashChangedRows(body) {
+  if (!state.data || !state.data.leaderboard) return;
+  // Skip the very first render — every row is "new" on initial paint, so a
+  // page-load flash would be a distraction, not a signal.
+  if (firstRender) {
+    state.data.leaderboard.forEach((r) => prevPoints.set(r.account_id, r.points));
+    firstRender = false;
+    return;
+  }
+  state.data.leaderboard.forEach((r) => {
+    const prev = prevPoints.get(r.account_id);
+    if (prev !== undefined && prev !== r.points) {
+      const el = body.querySelector(`[data-account-id="${r.account_id}"]`);
+      if (el) {
+        el.classList.remove('is-updated');
+        // eslint-disable-next-line no-unused-expressions
+        void el.offsetWidth;
+        el.classList.add('is-updated');
+        setTimeout(() => el.classList.remove('is-updated'), 1500);
+      }
+    }
+    prevPoints.set(r.account_id, r.points);
+  });
 }
 
 function renderError() {

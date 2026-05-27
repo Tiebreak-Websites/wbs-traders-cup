@@ -1351,3 +1351,208 @@ html, body,
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ============================================================
+   WB&S Phase 2 — Motion & micro-interactions
+   Edge-light card hover, flip-clock countdown tick, magnetic CTA,
+   axis-line section reveal, leaderboard row update flash,
+   trophy drift + orange rim-light.
+   ============================================================ */
+
+/* ---- Edge-light hover on cards ---------------------------- */
+/* 1px sharp orange top-edge that flares in from center, with a soft
+   glow above so it reads as "illuminated". Matches WB&S 2px aesthetic. */
+.bt-prize,
+.cc-faq__item {
+  position: relative;
+  overflow: hidden;
+}
+.bt-prize::before,
+.cc-faq__item::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--bt-accent) 20%,
+    var(--bt-accent-soft) 50%,
+    var(--bt-accent) 80%,
+    transparent 100%);
+  box-shadow: 0 0 12px 1px rgba(255, 134, 28, 0.55);
+  transform: translateX(-50%);
+  transition: width .45s cubic-bezier(.2, .7, .3, 1);
+  pointer-events: none;
+  z-index: 2;
+}
+.bt-prize:hover::before,
+.cc-faq__item:hover::before,
+.cc-faq__item.is-open::before {
+  width: 80%;
+}
+
+/* Upgrade the existing how-card top-edge from solid 3px → 1px illuminated */
+.cc-how__card::before {
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--bt-accent) 20%,
+    var(--bt-accent-soft) 50%,
+    var(--bt-accent) 80%,
+    transparent 100%);
+  box-shadow: 0 0 12px 1px rgba(255, 134, 28, 0.55);
+  transform-origin: center;
+  transform: scaleX(0);
+  transition: transform .45s cubic-bezier(.2, .7, .3, 1);
+}
+.cc-how__card:hover::before { transform: scaleX(1); }
+html[dir="rtl"] .cc-how__card::before { transform-origin: center; }
+
+/* ---- Flip-clock countdown digit tick ---------------------- */
+/* Class added by countdown.js when a digit value changes.
+   Quick vertical roll-in, removed after animation completes. */
+.bt-cd-num.is-tick {
+  animation: ccCdFlip .42s cubic-bezier(.2, .9, .25, 1.1);
+}
+@keyframes ccCdFlip {
+  0%   { transform: translateY(-100%) scale(.92); opacity: 0; filter: blur(1px); }
+  55%  { transform: translateY(8%) scale(1.04);   opacity: 1; filter: blur(0); }
+  100% { transform: translateY(0)    scale(1);     opacity: 1; }
+}
+/* Mini-countdown in the topbar also picks up the tick effect */
+.cc-mini-cd__cell span.is-tick {
+  animation: ccCdFlipMini .35s cubic-bezier(.2, .9, .25, 1.1);
+}
+@keyframes ccCdFlipMini {
+  0%   { transform: translateY(-90%); opacity: 0; }
+  60%  { transform: translateY(6%);   opacity: 1; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+/* ---- Magnetic primary CTA --------------------------------- */
+/* magnetic.js sets --cta-x / --cta-y on the element. We compose those
+   with the existing hover lift so the magnet works WITH the hover state. */
+.cc-hero__cta {
+  --cta-x: 0px;
+  --cta-y: 0px;
+  transform: translate(var(--cta-x), var(--cta-y));
+  transition: transform .35s cubic-bezier(.2, .8, .25, 1), padding .28s cubic-bezier(.2,.7,.3,1), box-shadow .25s ease, background .2s ease;
+}
+.cc-hero__cta:hover {
+  transform: translate(var(--cta-x), calc(var(--cta-y) - 2px)) scale(1.04);
+}
+.cc-hero__cta.is-magnetizing {
+  /* during active pointer-tracking, lerp updates each rAF — disable transition
+     so the magnet is buttery and not laggy. Hover lift stays smooth via its own rule. */
+  transition: padding .28s cubic-bezier(.2,.7,.3,1), box-shadow .25s ease, background .2s ease;
+}
+
+/* ---- Axis-line reveal on centered section heads ----------- */
+/* Hairline rule below the section eyebrow + title — draws in from center on reveal. */
+.cc-section-head--center {
+  position: relative;
+  padding-bottom: 22px;
+}
+.cc-section-head--center::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--bt-accent-100) 30%,
+    var(--bt-accent) 50%,
+    var(--bt-accent-100) 70%,
+    transparent 100%);
+  transform: translateX(-50%);
+  transition: width 1s cubic-bezier(.2, .7, .3, 1) .25s;
+}
+.cc-section-head--center.is-visible::after { width: 220px; }
+
+/* ---- Leaderboard row update flash ------------------------- */
+/* leaderboard.js adds .is-updated to rows whose points changed since the
+   previous poll. Quick orange left-rule + tinted wash that fades out. */
+.bt-lb-row.is-updated {
+  animation: ccLbFlash 1.4s cubic-bezier(.2, .7, .3, 1);
+}
+@keyframes ccLbFlash {
+  0%   {
+    background: rgba(255, 134, 28, 0.16);
+    box-shadow: inset 3px 0 0 var(--bt-accent);
+  }
+  55%  {
+    background: rgba(255, 134, 28, 0.08);
+    box-shadow: inset 3px 0 0 var(--bt-accent-soft);
+  }
+  100% {
+    background: transparent;
+    box-shadow: inset 3px 0 0 transparent;
+  }
+}
+html[dir="rtl"] .bt-lb-row.is-updated {
+  animation-name: ccLbFlashRtl;
+}
+@keyframes ccLbFlashRtl {
+  0%   { background: rgba(255, 134, 28, 0.16); box-shadow: inset -3px 0 0 var(--bt-accent); }
+  55%  { background: rgba(255, 134, 28, 0.08); box-shadow: inset -3px 0 0 var(--bt-accent-soft); }
+  100% { background: transparent;              box-shadow: inset -3px 0 0 transparent; }
+}
+
+/* ---- Stat count-up ---------------------------------------- */
+/* count-up.js animates the numeric portion. Add a subtle tabular-nums
+   stability so the layout doesn't shift while digits change. */
+[data-countup] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ---- Trophy drift + orange rim-light ---------------------- */
+/* Subtle 6s vertical drift on the hero trophy + a feathered orange rim
+   under the cup. The dev-branch redesign had no drift; this brings it back
+   gently and integrates the WB&S orange palette into the floor glow. */
+.cc-hero__trophy-img {
+  animation: ccTrophyDrift 6s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes ccTrophyDrift {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+.cc-hero__trophy-wrap::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 75%;
+  height: 90px;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(ellipse at center, rgba(255, 134, 28, 0.55) 0%, rgba(255, 134, 28, 0.18) 35%, transparent 70%);
+  filter: blur(18px);
+  z-index: 0;
+  pointer-events: none;
+  animation: ccTrophyRim 4.2s ease-in-out infinite;
+}
+@keyframes ccTrophyRim {
+  0%, 100% { opacity: 0.75; transform: translateX(-50%) scaleX(1);    }
+  50%      { opacity: 1;    transform: translateX(-50%) scaleX(1.08); }
+}
+
+/* Accessibility — Phase 2 motion respects prefers-reduced-motion via the
+   global rule above. These specific keyframes are paused under reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .cc-hero__trophy-img,
+  .cc-hero__trophy-wrap::after,
+  .bt-cd-num.is-tick,
+  .cc-mini-cd__cell span.is-tick,
+  .bt-lb-row.is-updated {
+    animation: none !important;
+  }
+  .cc-section-head--center::after { transition: none !important; width: 220px !important; }
+  .bt-prize::before,
+  .cc-faq__item::before,
+  .cc-how__card::before { transition: none !important; }
+}
