@@ -8,6 +8,7 @@ const subheadHtml = h.subhead.replace(
   /(\$\d[\d,]*(?:\.\d+)?|\d[\d,]*(?:\.\d+)?\$)/g,
   '<strong class="cc-subhead__amt">$1</strong>'
 );
+const u = h.cd_units || { days: 'Days', hours: 'Hours', minutes: 'Minutes', seconds: 'Seconds' };
 ---
 
 <section class="cc-hero" id="main">
@@ -43,22 +44,22 @@ const subheadHtml = h.subhead.replace(
         <div class="cc-countdown__row" role="timer" aria-live="polite">
           <div class="bt-cd">
             <span class="bt-cd-num bt-num" data-d>00</span>
-            <span class="bt-cd-lbl">Days</span>
+            <span class="bt-cd-lbl">{u.days}</span>
           </div>
           <span class="bt-cd-sep" aria-hidden="true"></span>
           <div class="bt-cd">
             <span class="bt-cd-num bt-num" data-h>00</span>
-            <span class="bt-cd-lbl">Hours</span>
+            <span class="bt-cd-lbl">{u.hours}</span>
           </div>
           <span class="bt-cd-sep" aria-hidden="true"></span>
           <div class="bt-cd">
             <span class="bt-cd-num bt-num" data-m>00</span>
-            <span class="bt-cd-lbl">Minutes</span>
+            <span class="bt-cd-lbl">{u.minutes}</span>
           </div>
           <span class="bt-cd-sep" aria-hidden="true"></span>
           <div class="bt-cd">
             <span class="bt-cd-num bt-num" data-s>00</span>
-            <span class="bt-cd-lbl">Seconds</span>
+            <span class="bt-cd-lbl">{u.seconds}</span>
           </div>
         </div>
       </div>

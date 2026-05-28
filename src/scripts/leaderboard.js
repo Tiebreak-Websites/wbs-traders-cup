@@ -15,7 +15,6 @@ const TOP_N = 10;            // rows per page
 let currentPage = 0;
 
 const numLocale = 'en-US';
-const ptsUnit = 'pts';
 const fmt = {
   usd: (n) => '$' + Math.round(n).toLocaleString(numLocale),
   num: (n) => Math.round(n).toLocaleString(numLocale),
@@ -35,6 +34,7 @@ function rowHtml(r, isMe, index) {
   const rankCls = r.rank <= 3 ? `bt-rank bt-rank-${r.rank}` : 'bt-rank';
   const code = (r.country || '').toLowerCase();
   const youLabel = t('youLabel', 'YOU');
+  const ptsUnit = t('ptsUnit', 'pts');
   // Each row gets its own animation delay (stagger), capped so late rows still feel snappy.
   const delay = Math.min((index || 0) * 60, 700);
   return `
@@ -62,7 +62,11 @@ function updateFoot() {
     const updated = new Date(state.data.updated_at);
     const now = Date.now();
     const seconds = Math.max(0, Math.floor((now - updated.getTime()) / 1000));
-    foot.textContent = `Updated ${seconds < 60 ? seconds + ' sec' : Math.floor(seconds / 60) + ' min'} ago · refreshes every 30 sec`;
+    const secShort = t('secondsShort', 'sec');
+    const minShort = t('minutesShort', 'min');
+    const timeStr = seconds < 60 ? `${seconds} ${secShort}` : `${Math.floor(seconds / 60)} ${minShort}`;
+    const template = t('updatedTemplate', 'Updated {time} ago · refreshes every 30 sec');
+    foot.textContent = template.replace('{time}', timeStr);
   }
 }
 
@@ -142,18 +146,23 @@ function paginationBlockHtml(page, total) {
   }
   const prevDisabled = page === 0;
   const nextDisabled = page === total - 1;
+  const pageTpl = t('pageLabelTemplate', 'Page {n}');
+  const paginationLbl = t('paginationLabel', 'Leaderboard pagination');
+  const prevLbl = t('prevPageLabel', 'Previous page');
+  const nextLbl = t('nextPageLabel', 'Next page');
   const pageBtns = pages.map((p) => {
     if (p === '…') return `<span class="lb-page__ellipsis" aria-hidden="true">…</span>`;
     const active = p === page ? ' is-active' : '';
-    return `<button class="lb-page${active}" data-lb-page="${p}" aria-label="Page ${p + 1}" aria-current="${active ? 'page' : 'false'}">${p + 1}</button>`;
+    const ariaLbl = pageTpl.replace('{n}', String(p + 1));
+    return `<button class="lb-page${active}" data-lb-page="${p}" aria-label="${ariaLbl}" aria-current="${active ? 'page' : 'false'}">${p + 1}</button>`;
   }).join('');
   return `
-    <nav class="lb-pagination" aria-label="Leaderboard pagination">
-      <button class="lb-page lb-page--nav" data-lb-page-prev ${prevDisabled ? 'disabled' : ''} aria-label="Previous page">
+    <nav class="lb-pagination" aria-label="${paginationLbl}">
+      <button class="lb-page lb-page--nav" data-lb-page-prev ${prevDisabled ? 'disabled' : ''} aria-label="${prevLbl}">
         <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4 L6 8 L10 12"/></svg>
       </button>
       <div class="lb-pagination__pages">${pageBtns}</div>
-      <button class="lb-page lb-page--nav" data-lb-page-next ${nextDisabled ? 'disabled' : ''} aria-label="Next page">
+      <button class="lb-page lb-page--nav" data-lb-page-next ${nextDisabled ? 'disabled' : ''} aria-label="${nextLbl}">
         <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4 L10 8 L6 12"/></svg>
       </button>
     </nav>

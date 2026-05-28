@@ -1,0 +1,254 @@
+{
+  "_meta": {
+    "locale": "es",
+    "brand": "Warren Bowie & Smith",
+    "competition": "Campeonato de Traders 2026",
+    "internal_code": "traders_championship_2026",
+    "market": "LATAM"
+  },
+
+  "site": {
+    "title": "Campeonato de Traders Warren Bowie & Smith 2026 — Compite por $26,000",
+    "description": "Competencia de trading basada en habilidad. Deposita $100 para calificar. Ventana del campeonato: 1 de junio → 19 de julio de 2026.",
+    "og_image_path": "/og-traders-championship.jpg"
+  },
+
+  "mechanic": {
+    "ftd_min_usd": 100,
+    "points_per_200_deposit": 10,
+    "points_per_closed_trade": 5,
+    "final_week_multiplier": 2,
+    "final_week_start": "2026-07-13",
+    "final_week_end": "2026-07-19",
+    "deposit_points_soft_cap_usd": 10000,
+    "deposit_points_soft_cap_pts": 500,
+    "campaign_start": "2026-06-01",
+    "campaign_end": "2026-07-19T23:59:00+04:00",
+    "winners_announced": "2026-07-20",
+    "currency": "USD",
+    "timezone_label": "GST"
+  },
+
+  "hero": {
+    "eyebrow": "Campeonato de Traders · 2026",
+    "headline_main": "¡Gana 26 000$!",
+    "headline_sub": "¡Inscríbete en el Campeonato de Trading!",
+    "subhead": "Deposita $100. Compite por un pozo de premios de $26,000 basado en habilidad, estrategia y constancia. Con cuentas elegibles y una tabla de posiciones transparente.",
+    "countdown_label": "Hasta el cierre del Campeonato",
+    "cd_units": {
+      "days": "Días",
+      "hours": "Horas",
+      "minutes": "Minutos",
+      "seconds": "Segundos"
+    },
+    "target_date": "2026-07-19T23:59:00+04:00",
+    "cta": "Inscríbete al Campeonato",
+    "cta_href": "https://wbandsmith.com/register?utm_campaign=traders_championship_2026&utm_source=landing&lang=es",
+    "secondary_cta": "Ver reglas y puntaje",
+    "secondary_cta_href": "#how",
+    "trophy_label_top": "200",
+    "trophy_label_mid": "CAMPEÓN",
+    "trophy_label_bot": "2026"
+  },
+
+  "prizes": {
+    "eyebrow": "Pozo de premios",
+    "title": "Tres cuentas de trading financiadas.",
+    "subtitle": "Ganadores definidos por la tabla final de Puntos de Campeón.",
+    "champion_label": "Campeón",
+    "place_word": "lugar",
+    "items": [
+      {
+        "place": "1.°",
+        "amount": "$26,000",
+        "label": "El Campeón 2026",
+        "color": "var(--bt-trophy-deep)"
+      },
+      {
+        "place": "2.°",
+        "amount": "$14,000",
+        "label": "Cuenta financiada",
+        "color": "var(--bt-silver-deep)"
+      },
+      {
+        "place": "3.°",
+        "amount": "$7,000",
+        "label": "Cuenta financiada",
+        "color": "var(--bt-bronze-deep)"
+      }
+    ]
+  },
+
+  "leaderboard": {
+    "title": "Puntos de Campeón en vivo",
+    "live_chip": "En vivo",
+    "header_eyebrow": "Posiciones en vivo",
+    "card_title": "Posiciones en vivo",
+    "card_legend": "Ordenado por Puntos de Campeón · Se actualiza cada 30 seg",
+    "filter_name_placeholder": "Buscar por nombre",
+    "filter_id_placeholder": "Buscar por ID",
+    "no_results": "Ningún trader coincide con tu búsqueda.",
+    "columns": {
+      "rank": "Puesto",
+      "trader": "Trader",
+      "id": "ID",
+      "country": "País",
+      "deposits": "Depósitos",
+      "trades": "Operaciones",
+      "points": "Puntos"
+    },
+    "footer_left": "Actualizado hace 12 seg · se refresca cada 30 seg",
+    "footer_right": "Nombres ocultos por privacidad",
+    "you_label": "TÚ",
+    "loading_state": "Cargando tabla de posiciones…",
+    "empty_state": "La tabla aparecerá aquí cuando comience el campeonato.",
+    "error_state": "No se pudo cargar la tabla. Refresca para reintentar.",
+    "joined_label": "Inscrito",
+    "pts_unit": "pts",
+    "updated_ago_template": "Actualizado hace {time} · se refresca cada 30 seg",
+    "seconds_short": "seg",
+    "minutes_short": "min",
+    "pagination_label": "Paginación de la tabla",
+    "prev_page_label": "Página anterior",
+    "next_page_label": "Página siguiente",
+    "page_label_template": "Página {n}"
+  },
+
+  "how_it_works": {
+    "eyebrow": "Cómo funciona",
+    "title": "Así ganas los $26,000 en cuatro pasos",
+    "steps": [
+      {
+        "n": "01",
+        "stat": "$100",
+        "stat_label": "Depósito inicial",
+        "t": "Deposita para calificar",
+        "d": "Un depósito inicial de $100 o más abre tu lugar en el Campeonato. Una calificación por cuenta verificada por KYC."
+      },
+      {
+        "n": "02",
+        "stat": "+10",
+        "stat_label": "pts / $200",
+        "t": "Sube con cada depósito",
+        "d": "Cada $200 que depositas suma 10 Puntos de Campeón — un depósito mayor, una ventaja mayor. Ejemplo: $1,000 → 50 puntos antes de tu primera operación."
+      },
+      {
+        "n": "03",
+        "stat": "+5",
+        "stat_label": "pts / operación",
+        "t": "Opera para escalar",
+        "d": "Cada operación cerrada durante la ventana del campeonato suma 5 puntos. Una sola métrica. Sin multiplicadores por lote ni puntajes paralelos."
+      },
+      {
+        "n": "04",
+        "stat": "2×",
+        "stat_label": "semana final",
+        "t": "Acelera en la semana de cierre",
+        "d": "Entre el 13 → 19 de julio de 2026, semana final del Mundial, cada punto que ganes cuenta el doble. El tramo final decide el podio."
+      }
+    ]
+  },
+
+  "formula": {
+    "eyebrow": "La fórmula de puntos",
+    "title": "Dos formas de subir en la tabla.",
+    "rewards": [
+      {
+        "stat": "+10",
+        "unit": "pts",
+        "per": "por cada $200 depositados",
+        "desc": "Depósito mayor, ventaja mayor."
+      },
+      {
+        "stat": "+5",
+        "unit": "pts",
+        "per": "por operación cerrada",
+        "desc": "Cada operación cerrada suma puntos."
+      }
+    ],
+    "example_label": "Ejemplo práctico",
+    "example_caption": "Pon números reales, mira los puntos.",
+    "example_inputs": [
+      { "value": "$1,000", "label": "depositado" },
+      { "value": "10",     "label": "operaciones cerradas" }
+    ],
+    "example_breakdown": "(1,000 ÷ 200) × 10 = 50 · 10 × 5 = 50",
+    "example_value": "100",
+    "example_unit": "Puntos de Campeón"
+  },
+
+  "eligibility": {
+    "eyebrow": "Elegibilidad y conducta",
+    "title": "Abierto, transparente y con reglas claras.",
+    "items": [
+      "Abierto a todos los clientes de Warren Bowie & Smith verificados por KYC en jurisdicciones LATAM elegibles.",
+      "Cuentas elegibles sin exclusiones.",
+      "Las operaciones deben realizarse con fondos propios del cliente y respetar las reglas estándar de gestión de riesgo.",
+      "Wash trading, patrones de cobertura artificial y otras tácticas de volumen artificial → descalificación.",
+      "Una cuenta por cliente. Abuso de múltiples cuentas → descalificación.",
+      "Las posiciones se cierran a las 23:59 GST del 19 de julio de 2026. Ganadores anunciados el 20 de julio de 2026."
+    ]
+  },
+
+  "faq": {
+    "eyebrow": "Preguntas frecuentes",
+    "title": "Preguntas, respondidas.",
+    "items": [
+      {
+        "t": "¿Es esto un juego de azar o una lotería?",
+        "d": "No. No hay sorteo ni selección aleatoria. El depósito de $100 no es una cuota de lotería — financia tu propia cuenta y sigue siendo tuyo para operar. Los tres mejores traders al cierre son los tres primeros de la tabla de Puntos de Campeón. Resultados, no azar."
+      },
+      {
+        "t": "¿Cómo se calculan los Puntos de Campeón?",
+        "d": "Dos entradas. Cada $200 depositados durante la ventana suman 10 puntos. Cada operación cerrada suma 5 puntos. La fórmula es exactamente: (Depósitos ÷ $200) × 10 + (Operaciones cerradas × 5). Durante la semana final (13–19 de julio), todos los puntos ganados cuentan 2×."
+      },
+      {
+        "t": "¿Hay un límite a los depósitos?",
+        "d": "Los puntos por depósito tienen un tope suave en $10,000 depositados (= 500 puntos). Más allá de eso, la tabla se decide por la actividad de trading. Esto protege los principios de trading responsable y mantiene la competencia justa."
+      },
+      {
+        "t": "¿Qué pasa con el riesgo de pérdida?",
+        "d": "El trading conlleva riesgo de pérdida. El Campeonato premia habilidad y constancia durante la ventana de campaña — tu depósito financia tu propia cuenta y está expuesto al riesgo normal del mercado como cualquier operación. Opera dentro de tus posibilidades y usa las herramientas de gestión de riesgo de la plataforma."
+      },
+      {
+        "t": "¿Cuándo y cómo se anuncian los ganadores?",
+        "d": "Las posiciones finales se cierran a las 23:59 GST del 19 de julio de 2026 (día de la Final del Mundial). Los ganadores se anuncian el 20 de julio de 2026 en el sitio web de Warren Bowie & Smith, por correo electrónico y en nuestros canales sociales. Las cuentas de trading financiadas se acreditan según los términos correspondientes."
+      },
+      {
+        "t": "¿Quién puede participar?",
+        "d": "Todos los clientes de Warren Bowie & Smith verificados por KYC en jurisdicciones LATAM elegibles pueden participar. Una cuenta por cliente; el abuso de múltiples cuentas conlleva descalificación."
+      },
+      {
+        "t": "¿El depósito de $100 se pierde?",
+        "d": "No. El depósito de $100 financia tu propia cuenta de trading y permanece tuyo. Lo usas para operar durante la ventana del campeonato según las condiciones normales de la plataforma."
+      }
+    ]
+  },
+
+  "sticky_cta": {
+    "title": "Deposita $100. Entra al Campeonato.",
+    "subtitle": "Basado en habilidad · Compite por $26,000",
+    "cd_label": "Cierra en",
+    "cta": "Empieza ahora",
+    "cta_href": "https://wbandsmith.com/register?utm_campaign=traders_championship_2026&utm_source=sticky_bar&lang=es"
+  },
+
+  "controls": {
+    "language_label": "Idioma",
+    "languages": [
+      { "code": "en", "label": "EN", "name": "English",    "flag": "gb" },
+      { "code": "es", "label": "ES", "name": "Español",    "flag": "es" },
+      { "code": "pt", "label": "PT", "name": "Português",  "flag": "pt" }
+    ]
+  },
+
+  "a11y": {
+    "skip_to_content": "Saltar al contenido"
+  },
+
+  "formula_calc": {
+    "result_label": "Puntos de Campeón"
+  },
+
+  "compliance": "El Campeonato de Traders Warren Bowie & Smith 2026 es una competencia de trading basada en habilidad. Tu depósito financia tu propia cuenta de trading y sigue siendo totalmente tuyo. Los ganadores se determinan por una tabla transparente de Puntos de Campeón, no por azar. Aplican KYC, elegibilidad y reglas específicas del mercado. El trading conlleva riesgo de pérdida. Aplican Términos y Condiciones. © 2026 Warren Bowie & Smith."
+}

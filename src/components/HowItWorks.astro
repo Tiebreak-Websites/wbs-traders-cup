@@ -3,6 +3,13 @@ import enCopy from '../data/copy.en.json';
 const { copy = enCopy } = Astro.props;
 const h = copy.how_it_works;
 const f = copy.formula;
+const m = copy.mechanic || {};
+// Formula equation: drive the rates from the mechanic data so the
+// displayed equation stays in sync if the points formula changes.
+const depositChunk = `$${m.points_per_200_deposit ? 200 : 200}`; // chunk size is $200 by spec
+const ptsPerChunk = m.points_per_200_deposit ?? 10;
+const ptsPerTrade = m.points_per_closed_trade ?? 5;
+const finalWeekMult = m.final_week_multiplier ?? 2;
 ---
 
 <section class="cc-how" id="how">
@@ -47,18 +54,18 @@ const f = copy.formula;
           <span class="cc-eq__term">
             <span class="cc-eq__term-num">DEPOSITS</span>
             <span class="cc-eq__term-div">/</span>
-            <span class="cc-eq__term-num">$200</span>
+            <span class="cc-eq__term-num">{depositChunk}</span>
           </span>
           <span class="cc-eq__times">×</span>
-          <span class="cc-eq__term-num cc-eq__num-accent">50</span>
+          <span class="cc-eq__term-num cc-eq__num-accent">{ptsPerChunk}</span>
         </span>
         <span class="cc-eq__op">+</span>
         <span class="cc-eq__group">
           <span class="cc-eq__term-num">TRADES</span>
           <span class="cc-eq__times">×</span>
-          <span class="cc-eq__term-num cc-eq__num-accent">5</span>
+          <span class="cc-eq__term-num cc-eq__num-accent">{ptsPerTrade}</span>
         </span>
-        <span class="cc-eq__op cc-eq__op--meta">[ × 2 in final week ]</span>
+        <span class="cc-eq__op cc-eq__op--meta">[ × {finalWeekMult} in final week ]</span>
       </div>
 
       <!-- A two-pane "calc" — left lists the inputs, right shows the result -->
@@ -80,7 +87,7 @@ const f = copy.formula;
         </div>
 
         <div class="cc-calc__result">
-          <span class="cc-calc__result-lbl">Champion Points</span>
+          <span class="cc-calc__result-lbl">{copy.formula_calc?.result_label || f.example_unit || 'Champion Points'}</span>
           <div class="cc-calc__result-num bt-num">{f.example_value}</div>
           <span class="cc-calc__result-unit">{f.example_unit}</span>
         </div>

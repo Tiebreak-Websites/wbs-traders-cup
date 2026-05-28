@@ -4,24 +4,24 @@
     "brand": "Warren Bowie & Smith",
     "competition": "Traders Championship 2026",
     "internal_code": "traders_championship_2026",
-    "market": "MENA"
+    "market": "Global"
   },
 
   "site": {
     "title": "Warren Bowie & Smith Traders Championship 2026 — Compete for $26,000",
-    "description": "Sharia-friendly, skill-based trading competition for the MENA market. Deposit $200 to qualify. World Cup window: 1 June → 19 July 2026.",
+    "description": "Skill-based trading competition. Deposit $100 to qualify. World Cup window: 1 June → 19 July 2026.",
     "og_image_path": "/og-traders-championship.jpg"
   },
 
   "mechanic": {
-    "ftd_min_usd": 200,
-    "points_per_200_deposit": 50,
+    "ftd_min_usd": 100,
+    "points_per_200_deposit": 10,
     "points_per_closed_trade": 5,
     "final_week_multiplier": 2,
     "final_week_start": "2026-07-13",
     "final_week_end": "2026-07-19",
     "deposit_points_soft_cap_usd": 10000,
-    "deposit_points_soft_cap_pts": 2500,
+    "deposit_points_soft_cap_pts": 500,
     "campaign_start": "2026-06-01",
     "campaign_end": "2026-07-19T23:59:00+04:00",
     "winners_announced": "2026-07-20",
@@ -33,8 +33,14 @@
     "eyebrow": "Traders Championship · 2026",
     "headline_main": "Win 26 000$!",
     "headline_sub": "Enter the Trading Championship!",
-    "subhead": "Deposit $200. Compete for a $26,000 prize pool based on skill, strategy, and consistency. Built on Islamic accounts with a transparent leaderboard.",
+    "subhead": "Deposit $100. Compete for a $26,000 prize pool based on skill, strategy, and consistency. Transparent leaderboard, results decided by performance.",
     "countdown_label": "Until end of the Championship",
+    "cd_units": {
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds"
+    },
     "target_date": "2026-07-19T23:59:00+04:00",
     "cta": "Enter the Championship",
     "cta_href": "https://wbandsmith.com/register?utm_campaign=traders_championship_2026&utm_source=landing",
@@ -48,8 +54,9 @@
   "prizes": {
     "eyebrow": "Prize pool",
     "title": "Three funded trading accounts.",
-    "subtitle": "Islamic (swap-free) terms. Winners decided by the final Champion Points leaderboard.",
+    "subtitle": "Winners decided by the final Champion Points leaderboard.",
     "champion_label": "Champion",
+    "place_word": "place",
     "items": [
       {
         "place": "1st",
@@ -96,7 +103,15 @@
     "loading_state": "Loading leaderboard…",
     "empty_state": "The leaderboard will appear here once the championship begins.",
     "error_state": "Couldn't load the leaderboard. Refresh to try again.",
-    "joined_label": "Joined"
+    "joined_label": "Joined",
+    "pts_unit": "pts",
+    "updated_ago_template": "Updated {time} ago · refreshes every 30 sec",
+    "seconds_short": "sec",
+    "minutes_short": "min",
+    "pagination_label": "Leaderboard pagination",
+    "prev_page_label": "Previous page",
+    "next_page_label": "Next page",
+    "page_label_template": "Page {n}"
   },
 
   "how_it_works": {
@@ -105,17 +120,17 @@
     "steps": [
       {
         "n": "01",
-        "stat": "$200",
-        "stat_label": "FTD",
+        "stat": "$100",
+        "stat_label": "Initial deposit",
         "t": "Deposit to qualify",
-        "d": "A first-time deposit of $200 or more opens your spot in the Championship. One qualification per KYC-verified account."
+        "d": "An initial deposit of $100 or more opens your spot in the Championship. One qualification per KYC-verified account."
       },
       {
         "n": "02",
-        "stat": "+50",
+        "stat": "+10",
         "stat_label": "pts / $200",
         "t": "Climb with every deposit",
-        "d": "Every $200 you fund adds 50 Champion Points — a bigger deposit, a bigger head start. Example: $1,000 → 250 points before your first trade."
+        "d": "Every $200 you fund adds 10 Champion Points — a bigger deposit, a bigger head start. Example: $1,000 → 50 points before your first trade."
       },
       {
         "n": "03",
@@ -139,7 +154,7 @@
     "title": "Two ways to climb the leaderboard.",
     "rewards": [
       {
-        "stat": "+50",
+        "stat": "+10",
         "unit": "pts",
         "per": "per $200 deposited",
         "desc": "Bigger deposit, bigger head start."
@@ -157,8 +172,8 @@
       { "value": "$1,000", "label": "deposited" },
       { "value": "10",     "label": "trades closed" }
     ],
-    "example_breakdown": "(1,000 ÷ 200) × 50 = 250 · 10 × 5 = 50",
-    "example_value": "300",
+    "example_breakdown": "(1,000 ÷ 200) × 10 = 50 · 10 × 5 = 50",
+    "example_value": "100",
     "example_unit": "Champion Points"
   },
 
@@ -166,8 +181,7 @@
     "eyebrow": "Eligibility & conduct",
     "title": "Open, transparent, and rule-clean.",
     "items": [
-      "Open to all KYC-verified Warren Bowie & Smith clients in eligible MENA jurisdictions.",
-      "Islamic (swap-free) accounts fully eligible — no exclusions.",
+      "Open to all KYC-verified Warren Bowie & Smith clients in eligible jurisdictions.",
       "Trading must use the client's own funds and follow standard risk-management rules.",
       "Wash trading, hedging-only patterns, and other artificial-volume tactics → disqualification.",
       "One account per client. Multi-account abuse → disqualification.",
@@ -180,24 +194,16 @@
     "title": "Questions, answered.",
     "items": [
       {
-        "t": "Is the Championship Sharia-compliant?",
-        "d": "Yes. The mechanic is structured to satisfy mainstream contemporary Islamic finance scholarship: your deposit funds your own trading account and stays fully yours, Islamic (swap-free) accounts are fully eligible, and winners are decided by a transparent skill leaderboard — not by chance. Final sign-off is routed to Warren Bowie & Smith's Sharia advisory board before launch."
-      },
-      {
         "t": "Is this gambling or a lottery?",
-        "d": "No. There is no draw and no random selection. The $200 deposit is not a lottery fee — it funds your own account and remains yours to trade. The top three traders at the final standings are the top three on the Champion Points leaderboard. Results, not chance."
+        "d": "No. There is no draw and no random selection. The $100 deposit is not a lottery fee — it funds your own account and remains yours to trade. The top three traders at the final standings are the top three on the Champion Points leaderboard. Results, not chance."
       },
       {
         "t": "How are Champion Points calculated?",
-        "d": "Two inputs. Every $200 deposited during the window adds 50 points. Every closed trade adds 5 points. The formula is exactly: (Deposits ÷ $200) × 50 + (Closed Trades × 5). During the final week (13–19 July), all points earned count 2×."
-      },
-      {
-        "t": "What counts as an Islamic account?",
-        "d": "A swap-free account: no overnight interest (riba) on positions. Warren Bowie & Smith's Islamic account product is fully eligible for the Championship and competes on the same leaderboard as all other accounts."
+        "d": "Two inputs. Every $200 deposited during the window adds 10 points. Every closed trade adds 5 points. The formula is exactly: (Deposits ÷ $200) × 10 + (Closed Trades × 5). During the final week (13–19 July), all points earned count 2×."
       },
       {
         "t": "Is there a cap on deposits?",
-        "d": "Deposit points are soft-capped at $10,000 deposited (= 2,500 points). Beyond that, the leaderboard is decided by trading activity. This protects responsible-trading principles and keeps the competition fair."
+        "d": "Deposit points are soft-capped at $10,000 deposited (= 500 points). Beyond that, the leaderboard is decided by trading activity. This protects responsible-trading principles and keeps the competition fair."
       },
       {
         "t": "What about the risk of loss?",
@@ -205,23 +211,35 @@
       },
       {
         "t": "When and how are winners announced?",
-        "d": "Final standings lock at 23:59 GST on 19 July 2026 (World Cup Final day). Winners are announced 20 July 2026 on the Warren Bowie & Smith website, by email, and across our social channels. Funded trading accounts are credited on Islamic terms."
+        "d": "Final standings lock at 23:59 GST on 19 July 2026 (World Cup Final day). Winners are announced 20 July 2026 on the Warren Bowie & Smith website, by email, and across our social channels. Funded trading accounts are credited per the standard terms."
       }
     ]
   },
 
   "sticky_cta": {
-    "title": "Deposit $200. Enter the Championship.",
-    "subtitle": "Skill-based · Islamic accounts eligible · Compete for $26,000",
+    "title": "Deposit $100. Enter the Championship.",
+    "subtitle": "Skill-based · Compete for $26,000",
+    "cd_label": "Ends in",
     "cta": "Start now",
     "cta_href": "https://wbandsmith.com/register?utm_campaign=traders_championship_2026&utm_source=sticky_bar"
   },
 
   "controls": {
     "language_label": "Language",
-    "switch_to_en": "EN",
-    "switch_to_ar": "AR"
+    "languages": [
+      { "code": "en", "label": "EN", "name": "English",    "flag": "gb" },
+      { "code": "es", "label": "ES", "name": "Español",    "flag": "es" },
+      { "code": "pt", "label": "PT", "name": "Português",  "flag": "pt" }
+    ]
   },
 
-  "compliance": "The Warren Bowie & Smith Traders Championship 2026 is a skill-based trading competition. Your deposit funds your own trading account and remains fully yours. Winners are determined by a transparent Champion Points leaderboard, not by chance. Islamic (swap-free) accounts fully eligible. KYC, eligibility, and market-specific rules apply. Trading carries risk of loss. Terms & Conditions apply. © 2026 Warren Bowie & Smith."
+  "a11y": {
+    "skip_to_content": "Skip to content"
+  },
+
+  "formula_calc": {
+    "result_label": "Champion Points"
+  },
+
+  "compliance": "The Warren Bowie & Smith Traders Championship 2026 is a skill-based trading competition. Your deposit funds your own trading account and remains fully yours. Winners are determined by a transparent Champion Points leaderboard, not by chance. KYC, eligibility, and market-specific rules apply. Trading carries risk of loss. Terms & Conditions apply. © 2026 Warren Bowie & Smith."
 }
