@@ -8,7 +8,7 @@ const target = copy.hero?.target_date || '';
 <aside class="cc-fab-card is-hidden" data-sticky aria-label="Championship call to action">
   <!-- Countdown row — D : H : M : S -->
   <div class="cc-fab-card__cd" data-countdown data-target={target} aria-label="Time remaining">
-    <span class="cc-fab-card__cd-lbl">Ends in</span>
+    <span class="cc-fab-card__cd-lbl">{s.cd_label || 'Ends in'}</span>
     <div class="cc-fab-card__cd-row" role="timer" aria-live="polite">
       <span class="cc-fab-card__cd-cell"><span data-d>00</span><i>d</i></span>
       <span class="cc-fab-card__cd-sep" aria-hidden="true">:</span>

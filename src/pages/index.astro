@@ -13,9 +13,9 @@ import ControlsToolbar  from '../components/ControlsToolbar.astro';
 import copy from '../data/copy.en.json';
 ---
 
-<BaseLayout copy={copy}>
+<BaseLayout copy={copy} locale="en">
   <div class="bt cc-page">
-    <ControlsToolbar copy={copy} />
+    <ControlsToolbar copy={copy} locale="en" />
 
     <main class="cc-main">
       <HeroPanel        copy={copy} />

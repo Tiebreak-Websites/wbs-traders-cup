@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.3.0",
   "private": true,
-  "description": "Warren Bowie & Smith Traders Cup 2026 — Sharia-friendly skill-based trading competition (sub-page of wbandsmith.com) for the MENA market",
+  "description": "Warren Bowie & Smith Traders Cup 2026 — skill-based trading competition (sub-page of wbandsmith.com)",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

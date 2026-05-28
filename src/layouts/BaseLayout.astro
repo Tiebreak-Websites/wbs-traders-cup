@@ -6,10 +6,12 @@ interface Props {
   title?: string;
   description?: string;
   copy?: any;
+  locale?: string;
 }
 
 const {
   copy = enCopy,
+  locale = copy?._meta?.locale || 'en',
   title = copy.site.title,
   description = copy.site.description,
 } = Astro.props;
@@ -19,10 +21,11 @@ const ogPath = `${base}/og-en.png`;
 const faviconPath = `${base}/wbs-fav-icon.png`;
 const logoSrc = `${base}/wbs-white.svg`;
 const fontHref = 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap';
+const skipLabel = copy?.a11y?.skip_to_content || 'Skip to content';
 ---
 
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang={locale} dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -95,7 +98,7 @@ const fontHref = 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;
       })();
     </script>
 
-    <a href="#main" class="skip-link">Skip to content</a>
+    <a href="#main" class="skip-link">{skipLabel}</a>
     <slot />
 
     <!-- Scroll-position reveal -->

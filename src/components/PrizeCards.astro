@@ -21,7 +21,7 @@ const revealDelay = [60, 140, 220];
           style={`--reveal-delay: ${revealDelay[i]}ms;`}
           data-place={item.place}
         >
-          <span class="cc-prize-strip__rank">{item.place} place</span>
+          <span class="cc-prize-strip__rank">{item.place} {p.place_word || 'place'}</span>
           <div class="cc-prize-strip__amt bt-num">
             <span data-countup>{item.amount}</span>
           </div>

@@ -412,11 +412,6 @@ input:focus-visible,
   background: var(--bt-accent-50);
   border-color: var(--bt-accent-100);
 }
-.bt-chip-halal {
-  color: var(--bt-up);
-  background: rgba(21, 168, 108, 0.08);
-  border-color: rgba(21, 168, 108, 0.25);
-}
 .bt-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bt-accent); box-shadow: 0 0 0 4px rgba(255, 134, 28, 0.18); }
 .bt-dot-pulse { animation: btPulse 1.6s ease-out infinite; }
 @keyframes btPulse {

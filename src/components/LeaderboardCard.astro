@@ -7,7 +7,23 @@ const s = copy.leaderboard;
 <section class="cc-leaderboard" id="leaderboard" aria-label={s.title}>
   <div class="cc-wrap">
     <h2 class="sr-only">{s.title}</h2>
-    <div class="bt-card lb-card reveal" style="--reveal-delay: 120ms;" data-you-label={s.you_label} data-loading-text={s.loading_state} data-empty-text={s.empty_state} data-error-text={s.error_state} data-no-results-text={s.no_results}>
+    <div
+      class="bt-card lb-card reveal"
+      style="--reveal-delay: 120ms;"
+      data-you-label={s.you_label}
+      data-loading-text={s.loading_state}
+      data-empty-text={s.empty_state}
+      data-error-text={s.error_state}
+      data-no-results-text={s.no_results}
+      data-pts-unit={s.pts_unit || 'pts'}
+      data-updated-template={s.updated_ago_template || 'Updated {time} ago · refreshes every 30 sec'}
+      data-seconds-short={s.seconds_short || 'sec'}
+      data-minutes-short={s.minutes_short || 'min'}
+      data-pagination-label={s.pagination_label || 'Leaderboard pagination'}
+      data-prev-page-label={s.prev_page_label || 'Previous page'}
+      data-next-page-label={s.next_page_label || 'Next page'}
+      data-page-label-template={s.page_label_template || 'Page {n}'}
+    >
       <header class="lb-card__head">
         <div class="lb-card__title-row">
           <h3 class="bt-h3 lb-card__title">{s.card_title}</h3>
