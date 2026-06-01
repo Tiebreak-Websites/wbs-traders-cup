@@ -4,12 +4,9 @@ const { copy = enCopy } = Astro.props;
 const h = copy.how_it_works;
 const f = copy.formula;
 const m = copy.mechanic || {};
-// Formula equation: drive the rates from the mechanic data so the
-// displayed equation stays in sync if the points formula changes.
-const depositChunk = `$${m.points_per_200_deposit ? 200 : 200}`; // chunk size is $200 by spec
-const ptsPerChunk = m.points_per_200_deposit ?? 10;
-const ptsPerTrade = m.points_per_closed_trade ?? 5;
-const finalWeekMult = m.final_week_multiplier ?? 2;
+// Ticket equation: one ticket per $100 deposited. Drive the rate from the
+// mechanic data so the displayed equation stays in sync if it ever changes.
+const usdPerTicket = `$${m.usd_per_ticket ?? 100}`;
 ---
 
 <section class="cc-how" id="how">
@@ -48,24 +45,15 @@ const finalWeekMult = m.final_week_multiplier ?? 2;
       <!-- Big bold equation — the formula spelled out in monospace, then a
            worked-example "calculator" panel below showing how it computes. -->
       <div class="cc-formula__equation reveal" style="--reveal-delay: 120ms;" aria-hidden="true">
-        <span class="cc-eq__var">POINTS</span>
+        <span class="cc-eq__var">TICKETS</span>
         <span class="cc-eq__op">=</span>
         <span class="cc-eq__group">
           <span class="cc-eq__term">
             <span class="cc-eq__term-num">DEPOSITS</span>
-            <span class="cc-eq__term-div">/</span>
-            <span class="cc-eq__term-num">{depositChunk}</span>
+            <span class="cc-eq__term-div">÷</span>
+            <span class="cc-eq__term-num cc-eq__num-accent">{usdPerTicket}</span>
           </span>
-          <span class="cc-eq__times">×</span>
-          <span class="cc-eq__term-num cc-eq__num-accent">{ptsPerChunk}</span>
         </span>
-        <span class="cc-eq__op">+</span>
-        <span class="cc-eq__group">
-          <span class="cc-eq__term-num">TRADES</span>
-          <span class="cc-eq__times">×</span>
-          <span class="cc-eq__term-num cc-eq__num-accent">{ptsPerTrade}</span>
-        </span>
-        <span class="cc-eq__op cc-eq__op--meta">[ × {finalWeekMult} in final week ]</span>
       </div>
 
       <!-- A two-pane "calc" — left lists the inputs, right shows the result -->

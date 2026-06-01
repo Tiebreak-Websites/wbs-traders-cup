@@ -5,6 +5,19 @@ const f = copy.faq;
 const compliance = copy.compliance;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const logoSrc = `${base}/wbs-white.svg`;
+
+// Footer language switcher (moved here from the top bar).
+const locale = copy?._meta?.locale || 'en';
+const c = copy.controls || {};
+const languages = (c.languages && c.languages.length)
+  ? c.languages
+  : [
+      { code: 'en', label: 'EN', name: 'English',   flag: 'gb' },
+      { code: 'es', label: 'ES', name: 'Español',   flag: 'es' },
+      { code: 'pt', label: 'PT', name: 'Português', flag: 'pt' },
+    ];
+const flagsBase = `${base}/flags`;
+const langHref = (code) => (code === 'en' ? `${base}/` : `${base}/${code}/`);
 ---
 
 <section class="cc-faq">
@@ -35,8 +48,61 @@ const logoSrc = `${base}/wbs-white.svg`;
 
     <div class="cc-faq__footer">
       <img class="cc-faq__logo reveal" src={logoSrc} alt="Warren Bowie & Smith" width="188" height="56" loading="lazy" />
+
+      <nav class="cc-foot-lang reveal" aria-label={c.language_label || 'Language'}>
+        {languages.map((lang) => (
+          <a
+            href={langHref(lang.code)}
+            class={`cc-foot-lang__opt${lang.code === locale ? ' is-active' : ''}`}
+            hreflang={lang.code}
+            lang={lang.code}
+            aria-current={lang.code === locale ? 'true' : 'false'}
+          >
+            <img class="cc-foot-lang__flag" src={`${flagsBase}/${lang.flag}.svg`} alt="" width="20" height="14" loading="lazy" />
+            <span>{lang.name}</span>
+          </a>
+        ))}
+      </nav>
+
       <p class="cc-faq__compliance reveal">{compliance}</p>
     </div>
+
+    <style>
+      .cc-foot-lang {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin: 4px 0 18px;
+      }
+      .cc-foot-lang__opt {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 14px;
+        border-radius: var(--bt-r-pill, 999px);
+        background: var(--bt-bg-2, rgba(255, 255, 255, 0.04));
+        border: 1px solid var(--bt-bg-line, rgba(255, 255, 255, 0.08));
+        color: var(--bt-text-mid, rgba(255, 255, 255, 0.7));
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background .15s ease, border-color .15s ease, color .15s ease;
+      }
+      .cc-foot-lang__opt:hover { color: var(--bt-text-hi, #fff); border-color: rgba(255, 255, 255, 0.2); }
+      .cc-foot-lang__opt.is-active {
+        color: var(--bt-text-hi, #fff);
+        border-color: var(--bt-accent, #FF861C);
+        background: rgba(255, 134, 28, 0.12);
+      }
+      .cc-foot-lang__flag {
+        width: 20px;
+        height: 14px;
+        border-radius: 2px;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+        object-fit: cover;
+      }
+    </style>
   </div>
 </section>
 
