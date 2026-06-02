@@ -29,7 +29,7 @@
     "headline_main": "Win",
     "headline_amount": "$26,000!",
     "headline_sub": "Enter the Prize Draw and Win!",
-    "subhead": "Deposit $100, get a ticket. One winner takes the full $26,000.",
+    "subhead": "Deposit $100, get a ticket.<br class=\"cc-subhead__br\">One winner takes the full $26,000.",
     "countdown_label": "Until the draw",
     "cd_units": {
       "days": "Days",
@@ -64,37 +64,19 @@
   },
 
   "leaderboard": {
-    "title": "Live entries",
-    "live_chip": "Live",
-    "header_eyebrow": "Live entries",
-    "card_title": "Live entries",
-    "card_legend": "Sorted by tickets · Updates every 30 sec",
-    "filter_name_placeholder": "Search by name",
-    "filter_id_placeholder": "Search by ID",
-    "no_results": "No entrants match your search.",
-    "columns": {
-      "rank": "Rank",
-      "trader": "Entrant",
-      "id": "ID",
-      "country": "Country",
-      "deposits": "Deposits",
-      "tickets": "Tickets"
-    },
-    "footer_left": "Updated 12 sec ago · refreshes every 30 sec",
-    "footer_right": "Names masked for privacy",
-    "you_label": "YOU",
-    "loading_state": "Loading entries…",
-    "empty_state": "Entries will appear here once the draw opens.",
-    "error_state": "Couldn't load entries. Refresh to try again.",
-    "joined_label": "Joined",
+    "title": "Check your tickets",
+    "subtitle": "Enter your account ID to see how many tickets you hold in the draw.",
+    "input_placeholder": "Your account ID",
+    "check_cta": "Check",
+    "checking": "Checking…",
+    "not_found": "This ID doesn't have any tickets yet.",
+    "not_found_cta": "Deposit $100 to enter",
+    "found_msg": "You're in the draw — good luck!",
+    "deposit_label": "Deposit",
+    "tickets_label": "Tickets",
     "tickets_unit": "tickets",
-    "updated_ago_template": "Updated {time} ago · refreshes every 30 sec",
-    "seconds_short": "sec",
-    "minutes_short": "min",
-    "pagination_label": "Entries pagination",
-    "prev_page_label": "Previous page",
-    "next_page_label": "Next page",
-    "page_label_template": "Page {n}"
+    "input_required": "Error: please enter an account ID.",
+    "error_state": "Couldn't check right now. Try again."
   },
 
   "how_it_works": {
