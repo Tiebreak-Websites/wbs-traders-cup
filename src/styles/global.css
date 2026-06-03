@@ -3631,7 +3631,7 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 
 .cc-prize-strip {
   display: grid;
-  grid-template-columns: 1fr 1fr 1.3fr;   /* 1st (right) wider */
+  grid-template-columns: 1.3fr 1fr 1fr;   /* 1st (left) wider */
   align-items: stretch;
   background: linear-gradient(180deg, var(--bt-bg-1) 0%, var(--bt-bg-2) 100%);
   border: 1px solid var(--bt-bg-line);
@@ -3670,11 +3670,11 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 .cc-prize-strip__tier:last-child { border-right: 0; }
 .cc-prize-strip__tier:hover { background: rgba(255, 255, 255, 0.02); }
 
-/* Visual order: 3rd → 2nd → 1st */
-.cc-prize-strip__tier--third  { order: 1; }
+/* Visual order: 1st → 2nd → 3rd */
+.cc-prize-strip__tier--first  { order: 1; }
 .cc-prize-strip__tier--second { order: 2; }
+.cc-prize-strip__tier--third  { order: 3; }
 .cc-prize-strip__tier--first  {
-  order: 3;
   background:
     radial-gradient(120% 100% at 100% 0%, rgba(255, 158, 71, 0.16) 0%, transparent 60%),
     linear-gradient(135deg, rgba(255, 134, 28, 0.12) 0%, rgba(255, 134, 28, 0.04) 100%);
