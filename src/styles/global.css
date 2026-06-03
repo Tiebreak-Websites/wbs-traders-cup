@@ -421,7 +421,7 @@ input:focus-visible,
 
 /* Leaderboard rows — shared grid template via CSS var keeps header + rows + YOU row aligned */
 :root {
-  --lb-cols: 56px minmax(180px, 1fr) 92px 120px 100px 120px;
+  --lb-cols: 56px minmax(180px, 1fr) 92px 120px;
   --lb-gap: 16px;
   --lb-pad-x: 18px;
 }
@@ -1311,9 +1311,7 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
     gap: 10px;
     padding: 12px 14px;
   }
-  .bt-lb-row > *:nth-child(3),
-  .bt-lb-row > *:nth-child(4),
-  .bt-lb-row > *:nth-child(5) { display: none; }
+  .bt-lb-row > *:nth-child(3) { display: none; }
   .cc-sticky__inner { padding: 12px 20px; }
   .cc-sticky__t { font-size: 14px; }
   .cc-sticky__d { display: none; }

@@ -20,7 +20,16 @@ const fmt = {
   num: (n) => Math.round(n).toLocaleString(numLocale),
 };
 
-const state = { data: null, timer: null, filters: { name: '', id: '' } };
+const state = { data: null, timer: null, filters: { q: '' } };
+
+// Reduce a masked name ("Mateo G***z") to initials only ("M.G.").
+const initials = (name) =>
+  String(name || '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((w) => w[0].toUpperCase() + '.')
+    .join('');
 // Phase 2: remember each account's previous points so we can flash rows whose
 // score changed between polls. Keyed by account_id → last known points value.
 const prevPoints = new Map();
@@ -41,15 +50,13 @@ function rowHtml(r, isMe, index) {
     <div class="bt-lb-row reveal lb-row-anim${isMe ? ' is-you' : ''}" data-account-id="${r.account_id || ''}" style="--reveal-delay: ${delay}ms;">
       <span class="${rankCls}">${r.rank}</span>
       <div class="lb-trader-stack">
-        <span class="lb-trader">${r.name_masked}${isMe ? `<span class="lb-you">${youLabel}</span>` : ''}</span>
+        <span class="lb-trader">${initials(r.name_masked)}${isMe ? `<span class="lb-you">${youLabel}</span>` : ''}</span>
         <span class="lb-trader-id">#${r.account_id || '—'}</span>
       </div>
       <span class="lb-country">
         <img class="lb-country__flag" src="${FLAGS}/${code}.svg" alt="" width="20" height="14" loading="lazy" />
         <span class="lb-country__code">${r.country}</span>
       </span>
-      <span class="lb-deposit bt-num">${fmt.usd(r.deposits_usd)}</span>
-      <span class="lb-trades bt-num">${fmt.num(r.trades)}</span>
       <span class="lb-points bt-num">${fmt.num(r.points)}<span class="lb-points__unit">${ptsUnit}</span></span>
     </div>
   `;
@@ -83,15 +90,17 @@ function renderRows() {
   const me = state.data.current_user || null;
   const isMeRow = (r) => !!(me && r.account_id === me.account_id && r.rank === me.rank);
 
-  // Active search filters (name = substring on masked name, id = digits substring)
-  const nameQ = state.filters.name.trim().toLowerCase();
-  const idQ = state.filters.id.replace(/\D/g, '');
+  // Combined search — matches by name (masked name or initials) or by ID.
+  const q = (state.filters.q || '').trim().toLowerCase();
 
-  if (nameQ || idQ) {
-    const matches = all.filter((r) =>
-      (!nameQ || (r.name_masked || '').toLowerCase().includes(nameQ)) &&
-      (!idQ || String(r.account_id || '').includes(idQ))
-    );
+  if (q) {
+    const qDigits = q.replace(/\D/g, '');
+    const matches = all.filter((r) => {
+      const name = (r.name_masked || '').toLowerCase();
+      const ini = initials(r.name_masked).toLowerCase();
+      const id = String(r.account_id || '');
+      return name.includes(q) || ini.includes(q) || (!!qDigits && id.includes(qDigits));
+    });
 
     if (!matches.length) {
       body.innerHTML = `<div class="lb-card__empty">${t('noResultsText', 'No traders match your search.')}</div>`;
@@ -232,17 +241,10 @@ async function load() {
 }
 
 function bindFilters() {
-  const nameInput = $('[data-lb-filter-name]');
-  const idInput = $('[data-lb-filter-id]');
-  if (nameInput) {
-    nameInput.addEventListener('input', () => {
-      state.filters.name = nameInput.value;
-      renderRows();
-    });
-  }
-  if (idInput) {
-    idInput.addEventListener('input', () => {
-      state.filters.id = idInput.value;
+  const qInput = $('[data-lb-filter-q]');
+  if (qInput) {
+    qInput.addEventListener('input', () => {
+      state.filters.q = qInput.value;
       renderRows();
     });
   }

@@ -89,6 +89,7 @@
     "header_eyebrow": "Live standings",
     "card_title": "Championship Leaderboard",
     "card_legend": "Sorted by Champion Points · Updates every 30 sec",
+    "filter_placeholder": "Search",
     "filter_name_placeholder": "Search by name",
     "filter_id_placeholder": "Search by ID",
     "no_results": "No traders match your search.",

@@ -89,6 +89,7 @@
     "header_eyebrow": "Posiciones en vivo",
     "card_title": "Tabla del Campeonato",
     "card_legend": "Ordenado por Puntos de Campeón · Se actualiza cada 30 seg",
+    "filter_placeholder": "Buscar",
     "filter_name_placeholder": "Buscar por nombre",
     "filter_id_placeholder": "Buscar por ID",
     "no_results": "Ningún trader coincide con tu búsqueda.",

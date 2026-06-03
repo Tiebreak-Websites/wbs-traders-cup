@@ -84,6 +84,7 @@
     "header_eyebrow": "Ranking ao vivo",
     "card_title": "Ranking do Campeonato",
     "card_legend": "Ordenado por Pontos de Campeão · Atualiza a cada 30 seg",
+    "filter_placeholder": "Buscar",
     "filter_name_placeholder": "Buscar por nome",
     "filter_id_placeholder": "Buscar por ID",
     "no_results": "Nenhum trader corresponde à sua busca.",
