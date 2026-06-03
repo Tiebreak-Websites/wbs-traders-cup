@@ -199,32 +199,24 @@
     "title": "Tú preguntas, nosotros escuchamos.",
     "items": [
       {
-        "t": "¿El Campeonato sigue los principios de las finanzas islámicas (Sharia)?",
-        "d": "Por supuesto. La competencia se ha estructurado para alinearse con los estándares reconocidos por los principales especialistas contemporáneos en finanzas islámicas. Tu depósito va directamente a tu propia cuenta de trading y permanece allí — es tuyo en todo momento. Las cuentas sin swap califican por completo, los ganadores se deciden mediante un sistema de puntos claro y basado en habilidad en lugar de cualquier elemento de azar, y toda la estructura ha sido revisada y aprobada por el consejo asesor de Sharia de Warren Bowie & Smith antes del lanzamiento."
-      },
-      {
-        "t": "¿Esto califica como juego de azar o lotería?",
-        "d": "No. No hay sorteo ni selección aleatoria. El depósito de $200 no es una cuota de lotería — financia tu propia cuenta y sigue siendo tuyo para operar. Los tres mejores traders al cierre son simplemente los tres primeros de la tabla de Puntos de Campeón. Resultados, no azar."
-      },
-      {
         "t": "¿Cómo se calcula mi puntaje?",
-        "d": "Dos entradas. Cada $200 depositados durante la ventana suman 500 puntos. Cada operación cerrada suma 50 puntos. La fórmula es exactamente: (Depósitos ÷ $200) × 500 + (Operaciones cerradas × 50). Durante la semana final (13–19 de julio), todos los puntos ganados cuentan 2×."
+        "d": "Tus Puntos de Campeón se calculan en función de tu rendimiento de trading durante el período de la competencia. Obtienes 500 y 50 por cada puntos por cada depósito y La tabla se actualiza en tiempo real para que puedas seguir tu posición a lo largo del Campeonato."
       },
       {
-        "t": "¿Qué cuenta como cuenta sin swap?",
-        "d": "Una cuenta sin swap (islámica) no genera intereses por swap ni rollover a un día sobre tus posiciones, en línea con los principios de la Sharia. Si tu cuenta está registrada como sin swap, califica por completo para el Campeonato — tus puntos se ganan exactamente de la misma forma, mediante depósitos y operaciones cerradas."
+        "t": "¿Qué tipos de cuenta son elegibles para participar?",
+        "d": "Todas las cuentas de trading activas registradas en la plataforma son elegibles para entrar al Campeonato, incluidas las cuentas estándar, profesionales y cualquier tipo de cuenta especializada disponible en tu región. Tu cuenta simplemente debe estar verificada, financiada y en regla antes de que abra la competencia. Si no estás seguro de si tu tipo de cuenta específico califica, contacta a nuestro equipo de soporte antes de que comience el Campeonato y confirmaremos tu elegibilidad."
       },
       {
         "t": "¿Hay un límite máximo de depósito?",
-        "d": "Los puntos por depósito tienen un tope suave en $10,000 depositados (= 25,000 puntos). Más allá de eso, la tabla se decide por tu actividad de trading. Esto mantiene la competencia justa y respalda los principios de trading responsable."
+        "d": "No hay un tope máximo para tu depósito. Puedes financiar tu cuenta al nivel que se adapte a tu enfoque de trading. Ten en cuenta que los Puntos de Campeón se calculan como un rendimiento porcentual sobre tu saldo, por lo que la competencia premia la habilidad y la constancia, no solo el tamaño de tu depósito."
       },
       {
         "t": "¿Qué pasa si tengo una pérdida?",
-        "d": "El trading conlleva riesgo de pérdida. El Campeonato premia habilidad y constancia durante la ventana de campaña — tu depósito financia tu propia cuenta y está expuesto al riesgo normal del mercado como cualquier operación. Opera dentro de tus posibilidades y usa las herramientas de gestión de riesgo de la plataforma."
+        "d": "Tu depósito financia tu propia cuenta de trading personal y sigue siendo tuyo durante toda la competencia. Si sufres una pérdida en una operación, esa pérdida afecta el saldo de tu cuenta de la forma habitual, como ocurriría fuera del Campeonato. La competencia no asegura contra pérdidas, y el trading siempre conlleva riesgo. Recomendamos encarecidamente operar solo con fondos que estés dispuesto a arriesgar."
       },
       {
-        "t": "¿Cuándo y cómo se notifica a los ganadores?",
-        "d": "Las posiciones finales se cierran a las 23:59 GST del 19 de julio de 2026 (día de la Final del Mundial). Los ganadores son notificados el 20 de julio de 2026 en el sitio web de Warren Bowie & Smith, por correo electrónico y en nuestros canales sociales. Las cuentas de trading financiadas se acreditan según los términos correspondientes."
+        "t": "¿Cómo y cuándo se notificará a los ganadores?",
+        "d": "Los ganadores serán contactados directamente a través de la dirección de correo electrónico registrada en su cuenta de trading dentro de un período definido tras el cierre del Campeonato. Las posiciones finales se confirmarán una vez que todas las operaciones estén liquidadas y la tabla esté verificada. Todos los detalles sobre el calendario de anuncios están disponibles en los Términos y Condiciones."
       }
     ]
   },

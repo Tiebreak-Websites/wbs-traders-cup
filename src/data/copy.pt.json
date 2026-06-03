@@ -196,32 +196,24 @@
     "title": "Você pergunta, nós ouvimos.",
     "items": [
       {
-        "t": "O Campeonato segue os princípios das finanças islâmicas (Sharia)?",
-        "d": "Com certeza. A competição foi estruturada para se alinhar aos padrões reconhecidos pelos principais estudiosos contemporâneos de finanças islâmicas. Seu depósito vai diretamente para sua própria conta de trading e permanece lá — é seu o tempo todo. Contas sem swap se qualificam integralmente, os vencedores são decididos por um sistema de pontos claro e baseado em habilidade, e não por qualquer elemento de sorte, e toda a estrutura foi revisada e aprovada pelo conselho consultivo de Sharia da Warren Bowie & Smith antes do lançamento."
-      },
-      {
-        "t": "Isto se qualifica como jogo de azar ou loteria?",
-        "d": "Não. Não há sorteio nem seleção aleatória. O depósito de $200 não é uma taxa de loteria — ele financia sua própria conta e continua sendo seu para operar. Os três melhores traders no ranking final são simplesmente os três primeiros em Pontos de Campeão. Resultado, não sorte."
-      },
-      {
         "t": "Como minha pontuação é calculada?",
-        "d": "Duas entradas. Cada $200 depositados durante a janela adicionam 500 pontos. Cada operação encerrada adiciona 50 pontos. A fórmula é exatamente: (Depósitos ÷ $200) × 500 + (Operações encerradas × 50). Durante a semana final (13–19 de julho), todos os pontos contam em 2×."
+        "d": "Seus Pontos de Campeão são calculados com base no seu desempenho de trading durante o período da competição. Você ganha 500 e 50 por cada pontos por cada depósito e O ranking é atualizado em tempo real para que você possa acompanhar sua posição ao longo do Campeonato."
       },
       {
-        "t": "O que qualifica como conta sem swap?",
-        "d": "Uma conta sem swap (islâmica) não gera juros de swap ou rollover overnight sobre suas posições, em linha com os princípios da Sharia. Se sua conta estiver registrada como sem swap, ela se qualifica integralmente para o Campeonato — seus pontos são ganhos exatamente da mesma forma, por meio de depósitos e operações encerradas."
+        "t": "Quais tipos de conta são elegíveis para participar?",
+        "d": "Todas as contas de trading ativas registradas na plataforma são elegíveis para entrar no Campeonato - incluindo contas padrão, profissionais e quaisquer tipos de conta especializados disponíveis na sua região. Sua conta só precisa estar verificada, financiada e em situação regular antes de a competição abrir. Se você não tiver certeza se o seu tipo de conta específico se qualifica, entre em contato com nossa equipe de suporte antes do início do Campeonato e confirmaremos sua elegibilidade."
       },
       {
         "t": "Existe um limite máximo de depósito?",
-        "d": "Os pontos por depósito têm um teto suave em $10.000 depositados (= 25.000 pontos). Acima disso, o ranking é decidido pela sua atividade de trading. Isso mantém a competição justa e apoia os princípios de trading responsável."
+        "d": "Não há um teto máximo para o seu depósito. Você pode financiar sua conta no nível que melhor se adequa à sua abordagem de trading. Lembre-se de que os Pontos de Campeão são calculados como um retorno percentual sobre o seu saldo - por isso a competição recompensa habilidade e consistência, não apenas o tamanho do seu depósito."
       },
       {
         "t": "O que acontece se eu tiver uma perda?",
-        "d": "O trading envolve risco de perda. O Campeonato recompensa habilidade e consistência ao longo da janela da campanha — seu depósito financia sua própria conta e está exposto ao risco normal do mercado como qualquer operação. Opere dentro das suas possibilidades e use as ferramentas de gestão de risco da plataforma."
+        "d": "Seu depósito financia sua própria conta de trading pessoal e continua sendo seu durante toda a competição. Se você tiver uma perda em uma operação, essa perda afeta o saldo da sua conta da forma normal - como aconteceria fora do Campeonato. A competição não garante contra perdas, e o trading sempre envolve risco. Recomendamos fortemente operar apenas com recursos que você esteja preparado para arriscar."
       },
       {
-        "t": "Quando e como os vencedores serão notificados?",
-        "d": "O ranking final trava às 23:59 GST de 19 de julho de 2026 (dia da Final da Copa). Os vencedores são notificados em 20 de julho de 2026 no site da Warren Bowie & Smith, por e-mail e em nossos canais sociais. As contas de trading financiadas são creditadas conforme os termos aplicáveis."
+        "t": "Como e quando os vencedores serão notificados?",
+        "d": "Os vencedores serão contatados diretamente pelo endereço de e-mail registrado em sua conta de trading dentro de um período definido após o encerramento do Campeonato. As posições finais serão confirmadas assim que todas as operações forem liquidadas e o ranking for verificado. Todos os detalhes sobre o cronograma de anúncio estão disponíveis nos Termos e Condições."
       }
     ]
   },

@@ -198,32 +198,24 @@
     "title": "You ask, we listen.",
     "items": [
       {
-        "t": "Does the Championship follow Islamic-Sharia finance principles?",
-        "d": "Absolutely. The competition has been structured to align with the standards recognised by mainstream contemporary Islamic finance scholars. Your deposit goes directly into your own trading account and stays there — it is yours throughout. Swap-free accounts qualify in full, winners are decided by a clear, skill-based points system rather than any element of chance, and the entire structure has been reviewed and signed off by Warren Bowie & Smith's dedicated Sharia advisory board ahead of launch."
-      },
-      {
-        "t": "Does this qualify as gambling or a lottery?",
-        "d": "No. There is no draw and no random selection. The $200 deposit is not a lottery fee — it funds your own account and remains yours to trade. The top three traders at the final standings are simply the top three on the Champion Points leaderboard. Results, not chance."
-      },
-      {
         "t": "How is my points score worked out?",
-        "d": "Two inputs. Every $200 deposited during the window adds 500 points. Every closed trade adds 50 points. The formula is exactly: (Deposits ÷ $200) × 500 + (Closed Trades × 50). During the final week (13–19 July), all points earned count 2×."
+        "d": "Your Champion Points are calculated based on your trading performance over the competition period. You get 500 and 50 for each points for each deposit and The leaderboard updates in real time so you can track your standing throughout the Championship."
       },
       {
-        "t": "What qualifies as a swap-free account?",
-        "d": "A swap-free (Islamic) account carries no overnight swap or rollover interest on your positions, in line with Sharia principles. If your account is registered as swap-free, it qualifies for the Championship in full — your points are earned exactly the same way, through deposits and closed trades."
+        "t": "What account types are eligible to participate?",
+        "d": "All active trading accounts registered on the platform are eligible to enter the Championship - including standard, professional, and any specialist account types available in your region. Your account simply needs to be verified, funded, and in good standing before the competition opens. If you are unsure whether your specific account type qualifies, reach out to our support team before the Championship begins and we will confirm your eligibility."
       },
       {
         "t": "Is there a maximum deposit limit?",
-        "d": "Deposit points are soft-capped at $10,000 deposited (= 25,000 points). Beyond that, the leaderboard is decided by your trading activity. This keeps the competition fair and supports responsible-trading principles."
+        "d": "There is no upper cap on your deposit. You can fund your account to whatever level suits your trading approach. Bear in mind that Champion Points are calculated as a percentage return on your balance - so the competition rewards skill and consistency, not the size of your deposit alone."
       },
       {
         "t": "What happens if I make a loss?",
-        "d": "Trading carries risk of loss. The Championship rewards skill and consistency over the campaign window — your deposit funds your own account and is exposed to normal market risk like any trading. Trade within your means and use the risk-management tools on the platform."
+        "d": "Your deposit funds your own personal trading account and remains yours throughout the competition. If you make a loss on a trade, that loss affects your account balance in the normal way - as it would outside the Championship. The competition does not insure against losses, and trading always carries risk. We strongly recommend trading only with funds you are prepared to risk."
       },
       {
         "t": "How and when will winners be notified?",
-        "d": "Final standings lock at 23:59 GST on 19 July 2026 (World Cup Final day). Winners are notified on 20 July 2026 on the Warren Bowie & Smith website, by email, and across our social channels. Funded trading accounts are credited per the standard terms."
+        "d": "Winners will be contacted directly via the email address registered to their trading account within a defined period after the Championship closes. Final standings will be confirmed once all positions are settled and the leaderboard is verified. Full details on the announcement timeline are available in the Terms and Conditions."
       }
     ]
   },
