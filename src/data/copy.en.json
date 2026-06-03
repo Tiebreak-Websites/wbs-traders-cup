@@ -9,19 +9,19 @@
 
   "site": {
     "title": "Warren Bowie & Smith Traders Championship 2026 — Compete for $26,000",
-    "description": "Skill-based trading competition. Deposit $200 to qualify and compete for $26,000 in credits during the World Cup. 1 June → 19 July 2026.",
+    "description": "Skill-based trading competition. Deposit $100 to qualify and compete for $26,000 in credits during the World Cup. 1 June → 19 July 2026.",
     "og_image_path": "/og-traders-championship.jpg"
   },
 
   "mechanic": {
     "ftd_min_usd": 100,
-    "points_per_200_deposit": 500,
+    "points_per_100_deposit": 500,
     "points_per_closed_trade": 50,
     "final_week_multiplier": 2,
     "final_week_start": "2026-07-13",
     "final_week_end": "2026-07-19",
     "deposit_points_soft_cap_usd": 10000,
-    "deposit_points_soft_cap_pts": 25000,
+    "deposit_points_soft_cap_pts": 50000,
     "campaign_start": "2026-06-01",
     "campaign_end": "2026-07-19T23:59:00+04:00",
     "winners_announced": "2026-07-20",
@@ -133,9 +133,9 @@
       {
         "n": "02",
         "stat": "+500",
-        "stat_label": "pts / $200",
+        "stat_label": "pts / $100",
         "t": "Grow with every deposit",
-        "d": "You get 500 Championship Points for every $200 you fund. This way you get a bigger chance of winning the competition. Here's an example: if you deposit $1,000 you get 2,500 points before ever placing your first trade."
+        "d": "You get 500 Championship Points for every $100 you fund. This way you get a bigger chance of winning the competition. Here's an example: if you deposit $1,000 you get 5,000 points before ever placing your first trade."
       },
       {
         "n": "03",
@@ -161,7 +161,7 @@
       {
         "stat": "+500",
         "unit": "pts",
-        "per": "per $200 deposited",
+        "per": "per $100 deposited",
         "desc": "The bigger the deposit amount, the bigger the lead."
       },
       {
@@ -177,8 +177,8 @@
       { "value": "$1,000", "label": "deposited" },
       { "value": "10",     "label": "trades closed" }
     ],
-    "example_breakdown": "(1,000 ÷ 200) × 500 = 2500 · 10 × 50 = 500",
-    "example_value": "3000",
+    "example_breakdown": "(1,000 ÷ 100) × 500 = 5000 · 10 × 50 = 500",
+    "example_value": "5500",
     "example_unit": "Champion Points"
   },
 

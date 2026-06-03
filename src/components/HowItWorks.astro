@@ -6,8 +6,8 @@ const f = copy.formula;
 const m = copy.mechanic || {};
 // Formula equation: drive the rates from the mechanic data so the
 // displayed equation stays in sync if the points formula changes.
-const depositChunk = `$${m.points_per_200_deposit ? 200 : 200}`; // chunk size is $200 by spec
-const ptsPerChunk = m.points_per_200_deposit ?? 10;
+const depositChunk = '$100'; // points are awarded per $100 deposited
+const ptsPerChunk = m.points_per_100_deposit ?? 500;
 const ptsPerTrade = m.points_per_closed_trade ?? 5;
 const finalWeekMult = m.final_week_multiplier ?? 2;
 ---

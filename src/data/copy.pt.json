@@ -8,18 +8,18 @@
   },
   "site": {
     "title": "Campeonato de Traders Warren Bowie & Smith 2026 — Concorra a $26.000",
-    "description": "Competição de trading baseada em habilidade. Deposite $200 para se qualificar e concorra a $26.000 em créditos durante a Copa. 1 de junho → 19 de julho de 2026.",
+    "description": "Competição de trading baseada em habilidade. Deposite $100 para se qualificar e concorra a $26.000 em créditos durante a Copa. 1 de junho → 19 de julho de 2026.",
     "og_image_path": "/og-traders-championship.jpg"
   },
   "mechanic": {
     "ftd_min_usd": 100,
-    "points_per_200_deposit": 500,
+    "points_per_100_deposit": 500,
     "points_per_closed_trade": 50,
     "final_week_multiplier": 2,
     "final_week_start": "2026-07-13",
     "final_week_end": "2026-07-19",
     "deposit_points_soft_cap_usd": 10000,
-    "deposit_points_soft_cap_pts": 25000,
+    "deposit_points_soft_cap_pts": 50000,
     "campaign_start": "2026-06-01",
     "campaign_end": "2026-07-19T23:59:00+04:00",
     "winners_announced": "2026-07-20",
@@ -127,9 +127,9 @@
       {
         "n": "02",
         "stat": "+500",
-        "stat_label": "pts / $200",
+        "stat_label": "pts / $100",
         "t": "Cresça a cada depósito",
-        "d": "Você ganha 500 Pontos de Campeão a cada $200 que deposita. Assim você tem uma chance maior de vencer a competição. Um exemplo: se você depositar $1.000, ganha 2.500 pontos antes mesmo de fazer sua primeira operação."
+        "d": "Você ganha 500 Pontos de Campeão a cada $100 que deposita. Assim você tem uma chance maior de vencer a competição. Um exemplo: se você depositar $1.000, ganha 5.000 pontos antes mesmo de fazer sua primeira operação."
       },
       {
         "n": "03",
@@ -154,7 +154,7 @@
       {
         "stat": "+500",
         "unit": "pts",
-        "per": "por $200 depositados",
+        "per": "por $100 depositados",
         "desc": "Quanto maior o depósito, maior a vantagem."
       },
       {
@@ -176,8 +176,8 @@
         "label": "operações encerradas"
       }
     ],
-    "example_breakdown": "(1.000 ÷ 200) × 500 = 2500 · 10 × 50 = 500",
-    "example_value": "3000",
+    "example_breakdown": "(1.000 ÷ 100) × 500 = 5000 · 10 × 50 = 500",
+    "example_value": "5500",
     "example_unit": "Pontos de Campeão"
   },
   "eligibility": {
