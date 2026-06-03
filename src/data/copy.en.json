@@ -9,19 +9,19 @@
 
   "site": {
     "title": "Warren Bowie & Smith Traders Championship 2026 — Compete for $26,000",
-    "description": "Skill-based trading competition. Deposit $100 to qualify. World Cup window: 1 June → 19 July 2026.",
+    "description": "Skill-based trading competition. Deposit $200 to qualify and compete for $26,000 in credits during the World Cup. 1 June → 19 July 2026.",
     "og_image_path": "/og-traders-championship.jpg"
   },
 
   "mechanic": {
-    "ftd_min_usd": 100,
-    "points_per_200_deposit": 10,
-    "points_per_closed_trade": 5,
+    "ftd_min_usd": 200,
+    "points_per_200_deposit": 500,
+    "points_per_closed_trade": 50,
     "final_week_multiplier": 2,
     "final_week_start": "2026-07-13",
     "final_week_end": "2026-07-19",
     "deposit_points_soft_cap_usd": 10000,
-    "deposit_points_soft_cap_pts": 500,
+    "deposit_points_soft_cap_pts": 25000,
     "campaign_start": "2026-06-01",
     "campaign_end": "2026-07-19T23:59:00+04:00",
     "winners_announced": "2026-07-20",
@@ -31,9 +31,11 @@
 
   "hero": {
     "eyebrow": "Traders Championship · 2026",
-    "headline_main": "Win 26 000$!",
-    "headline_sub": "Enter the Trading Championship!",
-    "subhead": "Deposit $100. Compete for a $26,000 prize pool based on skill, strategy, and consistency. Transparent leaderboard, results decided by performance.",
+    "headline_lead": "Trade for",
+    "headline_amount": "$26,000!",
+    "headline_main": "Trade for 26 000$!",
+    "headline_sub": "Are you the next trading Champion?",
+    "subhead": "Get ready to enter the most exciting trading competition this Summer! See how you rank against other traders and get the chance to win $26,000 in credits during the World Cup with as little as a $200 deposit!",
     "countdown_label": "Until end of the Championship",
     "cd_units": {
       "days": "Days",
@@ -42,8 +44,10 @@
       "seconds": "Seconds"
     },
     "target_date": "2026-07-19T23:59:00+04:00",
-    "cta": "Enter the Championship",
+    "cta": "Enter the competition",
     "cta_href": "https://wbandsmith.com/register?utm_campaign=traders_championship_2026&utm_source=landing",
+    "cta_note": "*Credit. Terms & Conditions apply.",
+    "cta_note_href": "/terms",
     "secondary_cta": "View rules & scoring",
     "secondary_cta_href": "#how",
     "trophy_label_top": "200",
@@ -61,29 +65,29 @@
       {
         "place": "1st",
         "amount": "$26,000",
-        "label": "The 2026 Champion",
+        "label": "The Undisputed Champion",
         "color": "var(--bt-trophy-deep)"
       },
       {
         "place": "2nd",
         "amount": "$14,000",
-        "label": "Funded account",
+        "label": "Get a Funded account",
         "color": "var(--bt-silver-deep)"
       },
       {
         "place": "3rd",
         "amount": "$7,000",
-        "label": "Funded account",
+        "label": "Get a Funded account",
         "color": "var(--bt-bronze-deep)"
       }
     ]
   },
 
   "leaderboard": {
-    "title": "Live Champion Points",
+    "title": "Championship Leaderboard",
     "live_chip": "Live",
     "header_eyebrow": "Live standings",
-    "card_title": "Live standings",
+    "card_title": "Championship Leaderboard",
     "card_legend": "Sorted by Champion Points · Updates every 30 sec",
     "filter_name_placeholder": "Search by name",
     "filter_id_placeholder": "Search by ID",
@@ -115,65 +119,65 @@
   },
 
   "how_it_works": {
-    "eyebrow": "How it works",
-    "title": "This is how you win the $26,000 in four steps",
+    "eyebrow": "Let's break it down",
+    "title": "How to win the $26,000 in 4 simple steps",
     "steps": [
       {
         "n": "01",
-        "stat": "$100",
-        "stat_label": "Initial deposit",
-        "t": "Deposit to qualify",
-        "d": "An initial deposit of $100 or more opens your spot in the Championship. One qualification per KYC-verified account."
+        "stat": "$200",
+        "stat_label": "deposit",
+        "t": "Enter the competition",
+        "d": "You need a minimum first-time deposit of $200 or more to secure your spot in the competition. Keep in mind you only have 1 qualification per account, which has to be KYC-verified."
       },
       {
         "n": "02",
-        "stat": "+10",
+        "stat": "+500",
         "stat_label": "pts / $200",
-        "t": "Climb with every deposit",
-        "d": "Every $200 you fund adds 10 Champion Points — a bigger deposit, a bigger head start. Example: $1,000 → 50 points before your first trade."
+        "t": "Grow with every deposit",
+        "d": "You get 500 Championship Points for every $200 you fund. This way you get a bigger chance of winning the competition. Here's an example: if you deposit $1,000 you get 2,500 points before ever placing your first trade."
       },
       {
         "n": "03",
-        "stat": "+5",
+        "stat": "+50",
         "stat_label": "pts / trade",
-        "t": "Trade your way up",
-        "d": "Each closed trade during the championship window adds 5 points. One metric. No lot multipliers, no parallel scoring."
+        "t": "Trade and get more points",
+        "d": "You can add 50 more points with each closed trade during the tournament. Clean and simple — one score tells the whole story, with nothing running in the background to complicate it. Give it a go!"
       },
       {
         "n": "04",
         "stat": "2×",
         "stat_label": "final week",
-        "t": "Sprint the closing week",
-        "d": "Between 13 → 19 July 2026, World Cup final week, every point you earn counts double. The closing stretch decides the podium."
+        "t": "Closing stretch",
+        "d": "In the final World Cup week between 13 and 19 July, every point you score will be doubled. This means you've got a bigger chance of closing the gap on the leaderboard. This is the final push — you can do it!"
       }
     ]
   },
 
   "formula": {
-    "eyebrow": "The Points Formula",
-    "title": "Two ways to climb the leaderboard.",
+    "eyebrow": "How to earn points",
+    "title": "Climb the scoreboard in 2 ways",
     "rewards": [
       {
-        "stat": "+10",
+        "stat": "+500",
         "unit": "pts",
         "per": "per $200 deposited",
-        "desc": "Bigger deposit, bigger head start."
+        "desc": "The bigger the deposit amount, the bigger the lead."
       },
       {
-        "stat": "+5",
+        "stat": "+50",
         "unit": "pts",
         "per": "per closed trade",
-        "desc": "Every closed trade adds points."
+        "desc": "Each trade you close adds more points to your score."
       }
     ],
-    "example_label": "Worked example",
-    "example_caption": "Plug in real numbers, see the points.",
+    "example_label": "Trading example",
+    "example_caption": "Put the real numbers to check your points.",
     "example_inputs": [
       { "value": "$1,000", "label": "deposited" },
       { "value": "10",     "label": "trades closed" }
     ],
-    "example_breakdown": "(1,000 ÷ 200) × 10 = 50 · 10 × 5 = 50",
-    "example_value": "100",
+    "example_breakdown": "(1,000 ÷ 200) × 500 = 2500 · 10 × 50 = 500",
+    "example_value": "3000",
     "example_unit": "Champion Points"
   },
 
@@ -190,34 +194,42 @@
   },
 
   "faq": {
-    "eyebrow": "Frequently asked",
-    "title": "Questions, answered.",
+    "eyebrow": "FAQ",
+    "title": "You ask, we listen.",
     "items": [
       {
-        "t": "Is this gambling or a lottery?",
-        "d": "No. There is no draw and no random selection. The $100 deposit is not a lottery fee — it funds your own account and remains yours to trade. The top three traders at the final standings are the top three on the Champion Points leaderboard. Results, not chance."
+        "t": "Does the Championship follow Islamic-Sharia finance principles?",
+        "d": "Absolutely. The competition has been structured to align with the standards recognised by mainstream contemporary Islamic finance scholars. Your deposit goes directly into your own trading account and stays there — it is yours throughout. Swap-free accounts qualify in full, winners are decided by a clear, skill-based points system rather than any element of chance, and the entire structure has been reviewed and signed off by Warren Bowie & Smith's dedicated Sharia advisory board ahead of launch."
       },
       {
-        "t": "How are Champion Points calculated?",
-        "d": "Two inputs. Every $200 deposited during the window adds 10 points. Every closed trade adds 5 points. The formula is exactly: (Deposits ÷ $200) × 10 + (Closed Trades × 5). During the final week (13–19 July), all points earned count 2×."
+        "t": "Does this qualify as gambling or a lottery?",
+        "d": "No. There is no draw and no random selection. The $200 deposit is not a lottery fee — it funds your own account and remains yours to trade. The top three traders at the final standings are simply the top three on the Champion Points leaderboard. Results, not chance."
       },
       {
-        "t": "Is there a cap on deposits?",
-        "d": "Deposit points are soft-capped at $10,000 deposited (= 500 points). Beyond that, the leaderboard is decided by trading activity. This protects responsible-trading principles and keeps the competition fair."
+        "t": "How is my points score worked out?",
+        "d": "Two inputs. Every $200 deposited during the window adds 500 points. Every closed trade adds 50 points. The formula is exactly: (Deposits ÷ $200) × 500 + (Closed Trades × 50). During the final week (13–19 July), all points earned count 2×."
       },
       {
-        "t": "What about the risk of loss?",
+        "t": "What qualifies as a swap-free account?",
+        "d": "A swap-free (Islamic) account carries no overnight swap or rollover interest on your positions, in line with Sharia principles. If your account is registered as swap-free, it qualifies for the Championship in full — your points are earned exactly the same way, through deposits and closed trades."
+      },
+      {
+        "t": "Is there a maximum deposit limit?",
+        "d": "Deposit points are soft-capped at $10,000 deposited (= 25,000 points). Beyond that, the leaderboard is decided by your trading activity. This keeps the competition fair and supports responsible-trading principles."
+      },
+      {
+        "t": "What happens if I make a loss?",
         "d": "Trading carries risk of loss. The Championship rewards skill and consistency over the campaign window — your deposit funds your own account and is exposed to normal market risk like any trading. Trade within your means and use the risk-management tools on the platform."
       },
       {
-        "t": "When and how are winners announced?",
-        "d": "Final standings lock at 23:59 GST on 19 July 2026 (World Cup Final day). Winners are announced 20 July 2026 on the Warren Bowie & Smith website, by email, and across our social channels. Funded trading accounts are credited per the standard terms."
+        "t": "How and when will winners be notified?",
+        "d": "Final standings lock at 23:59 GST on 19 July 2026 (World Cup Final day). Winners are notified on 20 July 2026 on the Warren Bowie & Smith website, by email, and across our social channels. Funded trading accounts are credited per the standard terms."
       }
     ]
   },
 
   "sticky_cta": {
-    "title": "Deposit $100. Enter the Championship.",
+    "title": "Deposit $200. Enter the Championship.",
     "subtitle": "Skill-based · Compete for $26,000",
     "cd_label": "Ends in",
     "cta": "Start now",
@@ -239,6 +251,11 @@
 
   "formula_calc": {
     "result_label": "Champion Points"
+  },
+
+  "legal": {
+    "website_terms_label": "Terms & Conditions",
+    "website_terms_href": "/terms/wbs-website-terms-en.pdf"
   },
 
   "compliance": "The Warren Bowie & Smith Traders Championship 2026 is a skill-based trading competition. Your deposit funds your own trading account and remains fully yours. Winners are determined by a transparent Champion Points leaderboard, not by chance. KYC, eligibility, and market-specific rules apply. Trading carries risk of loss. Terms & Conditions apply. © 2026 Warren Bowie & Smith."

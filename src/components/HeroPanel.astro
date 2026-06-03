@@ -29,7 +29,8 @@ const u = h.cd_units || { days: 'Days', hours: 'Hours', minutes: 'Minutes', seco
     <!-- LEFT: copy column -->
     <div class="cc-hero__copy">
 <h1 class="cc-headline reveal" style="--reveal-delay: 80ms;">
-        {h.headline_main}
+        <span class="cc-headline__lead">{h.headline_lead}</span>
+        <span class="cc-headline__amt">{h.headline_amount}<sup class="cc-headline__ast">*</sup></span>
       </h1>
 
       <p class="cc-headline-sub reveal" style="--reveal-delay: 140ms;">
@@ -72,6 +73,12 @@ const u = h.cd_units || { days: 'Days', hours: 'Hours', minutes: 'Minutes', seco
           {h.secondary_cta}
         </a>
       </div>
+
+      {h.cta_note && (
+        <a href={`${base}${h.cta_note_href || '/terms'}`} class="cc-hero__cta-note reveal" style="--reveal-delay: 360ms;">
+          {h.cta_note}
+        </a>
+      )}
     </div>
 
     <!-- RIGHT: trophy column (visible asset, not background) -->

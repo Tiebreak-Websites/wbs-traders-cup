@@ -1,0 +1,30 @@
+---
+// Termos e Condições do Torneio — Português (espaço reservado)
+import BaseLayout      from '../../layouts/BaseLayout.astro';
+import ControlsToolbar from '../../components/ControlsToolbar.astro';
+import copy from '../../data/copy.pt.json';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const pageTitle = 'Termos e Condições do Torneio — Campeonato de Traders Warren Bowie & Smith 2026';
+---
+
+<BaseLayout copy={copy} locale="pt" title={pageTitle} description="Termos e condições do torneio do Campeonato de Traders Warren Bowie & Smith 2026.">
+  <div class="bt cc-page">
+    <ControlsToolbar copy={copy} locale="pt" />
+
+    <main class="cc-main">
+      <article class="cc-legal">
+        <span class="cc-legal__eyebrow">Campeonato de Traders · 2026</span>
+        <h1 class="cc-legal__title">Termos e Condições do Torneio</h1>
+        <p class="cc-legal__updated">Última atualização: em breve</p>
+
+        <div class="cc-legal__body">
+          <p>Os termos e condições completos do torneio do Campeonato de Traders Warren Bowie &amp; Smith 2026 estão sendo finalizados e serão publicados aqui em breve.</p>
+          <p>{copy.compliance}</p>
+        </div>
+
+        <a class="cc-legal__back" href={`${base}/pt/`}>← Voltar ao Campeonato</a>
+      </article>
+    </main>
+  </div>
+</BaseLayout>
