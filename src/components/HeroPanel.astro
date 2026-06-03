@@ -12,43 +12,16 @@ const u = h.cd_units || { days: 'Days', hours: 'Hours', minutes: 'Minutes', seco
 ---
 
 <section class="cc-hero" id="main">
-  <!-- Full-bleed hero background: looping stadium video. The stadium image is
-       the poster, so it shows immediately until the video can play (or if the
-       video fails to load). -->
+  <!-- Full-bleed hero background: stadium + ticket on a cash pile.
+       Picture lets the browser pick WebP when available; PNG is the fallback. -->
   <div class="cc-hero__bg-img" aria-hidden="true">
-    <!-- Desktop / tablet: looping video (mp4 only fetched ≥641px). -->
-    <video
-      class="cc-hero__bg-video"
-      autoplay
-      loop
-      muted
-      playsinline
-      preload="auto"
-      poster={`${base}/hero-stadium.png`}
-    >
-      <source src={`${base}/hero.mp4`} type="video/mp4" media="(min-width: 641px)" />
+    <picture>
+      <source srcset={`${base}/hero-stadium.webp`} type="image/webp" />
       <img src={`${base}/hero-stadium.png`} alt="" loading="eager" decoding="async" />
-    </video>
-    <!-- Mobile: looping portrait video (mp4 only fetched ≤640px). The portrait
-         still is the poster — shows until the video plays / if it fails. -->
-    <video
-      class="cc-hero__bg-mobile"
-      autoplay
-      loop
-      muted
-      playsinline
-      preload="auto"
-      poster={`${base}/hero-mobile.png`}
-    >
-      <source src={`${base}/hero-mobile.mp4`} type="video/mp4" media="(max-width: 640px)" />
-      <img src={`${base}/hero-mobile.png`} alt="" loading="eager" decoding="async" />
-    </video>
+    </picture>
   </div>
   <!-- Subtle top scrim for headline legibility over the stands -->
   <div class="cc-hero__bg-fx" aria-hidden="true"></div>
-  <!-- Bottom fade — blends the video into the page colour (anchored to the
-       hero bottom, since the video is clipped there). -->
-  <div class="cc-hero__bg-fade" aria-hidden="true"></div>
 
   <div class="cc-hero__grid">
 
@@ -59,15 +32,14 @@ const u = h.cd_units || { days: 'Days', hours: 'Hours', minutes: 'Minutes', seco
           <span class="cc-headline__amount bt-num" data-countup>{h.headline_amount}</span>
         </h1>
 
-        <p class="cc-subhead reveal" style="--reveal-delay: 160ms;" set:html={subheadHtml}></p>
+        <p class="cc-headline-sub reveal" style="--reveal-delay: 140ms;">
+          {h.headline_sub}
+        </p>
+
+        <p class="cc-subhead reveal" style="--reveal-delay: 200ms;" set:html={subheadHtml}></p>
       </div>
 
       <div class="cc-hero__copy-bottom">
-      <!-- Title for the countdown -->
-      <p class="cc-headline-sub cc-headline-sub--cd reveal" style="--reveal-delay: 240ms;">
-        {h.headline_sub}
-      </p>
-
       <!-- Horizontal countdown STRIP — full-width, segmented -->
       <div class="cc-countdown cc-countdown--strip reveal" style="--reveal-delay: 260ms;" data-countdown data-target={h.target_date}>
         <div class="cc-countdown__row" role="timer" aria-live="polite">

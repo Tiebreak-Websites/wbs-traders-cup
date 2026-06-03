@@ -29,7 +29,7 @@
     "headline_main": "¡Gana",
     "headline_amount": "$26,000!",
     "headline_sub": "¡Participa en el Sorteo y Gana!",
-    "subhead": "Deposita $100 y consigue un boleto.<br class=\"cc-subhead__br\">Un ganador se lleva los $26,000.",
+    "subhead": "Deposita $100 y consigue un boleto. Un ganador se lleva los $26,000.",
     "countdown_label": "Hasta el sorteo",
     "cd_units": {
       "days": "Días",
@@ -64,19 +64,37 @@
   },
 
   "leaderboard": {
-    "title": "Consulta tus boletos",
-    "subtitle": "Ingresa tu ID de cuenta para ver cuántos boletos tienes en el sorteo.",
-    "input_placeholder": "Tu ID de cuenta",
-    "check_cta": "Consultar",
-    "checking": "Consultando…",
-    "not_found": "Este ID aún no tiene boletos.",
-    "not_found_cta": "Deposita $100 para participar",
-    "found_msg": "¡Estás en el sorteo — mucha suerte!",
-    "deposit_label": "Depósito",
-    "tickets_label": "Boletos",
+    "title": "Inscripciones en vivo",
+    "live_chip": "En vivo",
+    "header_eyebrow": "Inscripciones en vivo",
+    "card_title": "Inscripciones en vivo",
+    "card_legend": "Ordenado por boletos · Se actualiza cada 30 seg",
+    "filter_name_placeholder": "Buscar por nombre",
+    "filter_id_placeholder": "Buscar por ID",
+    "no_results": "Ningún participante coincide con tu búsqueda.",
+    "columns": {
+      "rank": "Puesto",
+      "trader": "Participante",
+      "id": "ID",
+      "country": "País",
+      "deposits": "Depósitos",
+      "tickets": "Boletos"
+    },
+    "footer_left": "Actualizado hace 12 seg · se refresca cada 30 seg",
+    "footer_right": "Nombres ocultos por privacidad",
+    "you_label": "TÚ",
+    "loading_state": "Cargando inscripciones…",
+    "empty_state": "Las inscripciones aparecerán aquí cuando abra el sorteo.",
+    "error_state": "No se pudieron cargar las inscripciones. Refresca para reintentar.",
+    "joined_label": "Inscrito",
     "tickets_unit": "boletos",
-    "input_required": "Error: ingresa un ID de cuenta.",
-    "error_state": "No se pudo consultar ahora. Inténtalo de nuevo."
+    "updated_ago_template": "Actualizado hace {time} · se refresca cada 30 seg",
+    "seconds_short": "seg",
+    "minutes_short": "min",
+    "pagination_label": "Paginación de inscripciones",
+    "prev_page_label": "Página anterior",
+    "next_page_label": "Página siguiente",
+    "page_label_template": "Página {n}"
   },
 
   "how_it_works": {

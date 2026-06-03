@@ -420,7 +420,7 @@ input:focus-visible,
 
 /* Leaderboard rows — shared grid template via CSS var keeps header + rows + YOU row aligned */
 :root {
-  --lb-cols: minmax(160px, 1fr) 110px 130px;
+  --lb-cols: 56px minmax(180px, 1fr) 92px 120px 120px;
   --lb-gap: 16px;
   --lb-pad-x: 18px;
 }
@@ -1182,12 +1182,13 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
   .cc-section-title { font-size: 28px; }
   .cc-section-head { margin-bottom: 28px; }
   .bt-lb-row {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 44px 1fr auto;
     gap: 10px;
     padding: 12px 14px;
   }
-  /* Mobile: keep entrant + tickets; hide the country chip (2nd child). */
-  .bt-lb-row > *:nth-child(2) { display: none; }
+  /* Mobile: keep rank + entrant + tickets; hide country (3) and deposits (4). */
+  .bt-lb-row > *:nth-child(3),
+  .bt-lb-row > *:nth-child(4) { display: none; }
   .cc-sticky__inner { padding: 12px 20px; }
   .cc-sticky__t { font-size: 14px; }
   .cc-sticky__d { display: none; }
@@ -2887,30 +2888,11 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   opacity: 1;
 }
 .cc-hero__bg-img picture { display: block; }
-/* Show the video/image at its natural ratio, full width — no crop, no stretch. */
-.cc-hero__bg-img img,
-.cc-hero__bg-img video {
+/* Show the image at its natural ratio, full width — no crop, no stretch. */
+.cc-hero__bg-img img {
   width: 100%;
   height: auto;
   display: block;
-}
-/* Video on desktop/tablet, prepared portrait still on mobile.
-   (Prefixed with .cc-hero__bg-img to outrank the generic img/video rule above.) */
-.cc-hero__bg-img .cc-hero__bg-mobile { display: none; }
-@media (max-width: 640px) {
-  .cc-hero__bg-img .cc-hero__bg-video { display: none; }
-  .cc-hero__bg-img .cc-hero__bg-mobile { display: block; }
-  /* Portrait video (9:16 ≈ 178% of width), with 80px of the empty top sky
-     cropped — the hero is shortened to match so the bottom isn't clipped. */
-  .cc-hero { min-height: calc(178vw - 80px) !important; }
-  .cc-hero__bg-img { top: -80px; }
-  /* Headline + subhead position on mobile. */
-  .cc-hero .cc-hero__copy-top { margin-top: 16px; }
-  /* Break the subhead onto two rows on mobile only.
-     (.cc-hero prefix → 0,2,0 beats the later base `display:none`.) */
-  .cc-hero .cc-subhead__br { display: inline; }
-  /* Keep the CTA inside the page frame (no edge overflow). */
-  .cc-hero .cc-hero__cta--xl { min-width: 0; width: 100%; }
 }
 /* The uploaded image fades to near-black/transparent, not to the site teal,
    so its bottom reads as a dark "cutout". Anchored to the IMAGE's bottom edge
@@ -2940,20 +2922,18 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
     transparent 50%
   );
 }
-/* Bottom fade — blends the (clipped) video into the page colour at the hero's
-   bottom edge so there's no hard seam. */
+/* Little bottom fade — subtle blend of the hero into the page colour. */
 .cc-hero__bg-fade {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 40%;
+  height: 26%;
   z-index: 2;
   pointer-events: none;
   background: linear-gradient(
     180deg,
     rgba(40, 52, 58, 0) 0%,
-    var(--bt-bg-0)      78%,
     var(--bt-bg-0)      100%
   );
 }
@@ -2994,7 +2974,7 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   align-items: center;
   width: 100%;
 }
-.cc-hero__copy-top { gap: 8px; margin-top: clamp(24px, 4vw, 56px); }  /* off the logo */
+.cc-hero__copy-top { gap: 8px; margin-top: clamp(46px, 6vw, 88px); }  /* off the logo */
 .cc-hero__copy-bottom { gap: 18px; }
 .cc-hero .cc-headline {
   font-size: clamp(46px, 5.6vw, 80px) !important;
@@ -3008,18 +2988,13 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   max-width: 760px;
   margin: 0 auto !important;
 }
-/* As the countdown title — pull it a bit closer to the countdown */
-.cc-hero .cc-headline-sub--cd { margin-bottom: -10px !important; }
 .cc-hero .cc-subhead {
   text-align: center !important;
   font-size: 17px !important;
-  line-height: 1.3 !important;   /* tighter — two clean rows */
   max-width: 760px;
   margin-inline: auto;
   color: #FFFFFF !important;   /* white — the muted grey wasn't readable */
 }
-/* Two-row subhead break is mobile-only; desktop keeps it on a single row. */
-.cc-subhead__br { display: none; }
 .cc-hero .cc-hero__cta-row { justify-content: center !important; }
 .cc-hero .cc-countdown.cc-countdown--strip {
   max-width: 720px;
@@ -3047,13 +3022,10 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 }
 .cc-headline__amount {
   display: block;
-  font-size: clamp(76px, 11.8vw, 170px);
+  font-size: clamp(66px, 10vw, 142px);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
-  /* Bigger 3D tilt — as if looking up at it from below. */
-  transform: perspective(440px) rotateX(19deg);
-  transform-origin: 50% 100%;
   /* Vibrant orange (matches the CTA) with a bright sheen band that sweeps
      across — gradient + shimmer, plus a soft drop for depth (not flat). */
   background: linear-gradient(
@@ -3063,17 +3035,15 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
     #FFEFC8 55%, #FFC368 69%, #FF9D33 85%, #FF7A1A 100%
   );
   background-size: 250% 100%;
-  background-position: 150% 0;
+  background-position: 180% 0;
   -webkit-background-clip: text;
           background-clip: text;
   -webkit-text-fill-color: transparent;
           color: transparent;
   filter:
-    drop-shadow(0 2px 0 rgba(140, 64, 6, 0.7))
-    drop-shadow(0 4px 0 rgba(110, 50, 4, 0.55))
-    drop-shadow(0 7px 1px rgba(70, 32, 2, 0.45))
-    drop-shadow(0 18px 34px rgba(255, 138, 28, 0.55));
-  animation: ccAmtSheen 6s ease-in-out infinite;
+    drop-shadow(0 2px 0 rgba(150, 70, 8, 0.55))
+    drop-shadow(0 12px 28px rgba(255, 138, 28, 0.55));
+  animation: ccAmtSheen 4.5s linear infinite;
 }
 @media (prefers-reduced-motion: reduce) { .cc-headline__amount { animation: none; } }
 
@@ -3176,7 +3146,7 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   .cc-prizes__podium { padding: 16px 0 24px !important; }
 }
 @media (max-width: 640px) {
-  .cc-hero .cc-hero__grid { padding: 0 24px; }
+  .cc-hero .cc-hero__grid { padding: 0 18px; }
   .cc-hero__trophy-wrap { max-width: 340px; }
 }
 
@@ -3379,7 +3349,7 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   flex-wrap: wrap;
   padding: 28px 32px;
   margin: 24px auto 32px;
-  max-width: none;
+  max-width: 980px;
   border: 1px solid var(--bt-bg-line);
   border-top: 2px solid var(--bt-accent);
   border-radius: var(--bt-r-xs);
@@ -3460,7 +3430,7 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 18px;
-  max-width: none;
+  max-width: 980px;
   margin: 0 auto;
 }
 .cc-calc__inputs {
@@ -3789,11 +3759,9 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   50%      { background-position: 100% 0; }
 }
 /* Continuous left→right sheen sweep for the hero prize amount. */
-/* Seamless, smooth sheen — the highlight glides across and back with no jump
-   at the loop point (0% == 100%), eased for a soft repeatable shimmer. */
 @keyframes ccAmtSheen {
-  0%, 100% { background-position: 150% 0; }
-  50%      { background-position: -50% 0; }
+  0%   { background-position: 180% 0; }
+  100% { background-position: -80% 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .cc-headline__amount { animation: none !important; background-position: 50% 0 !important; }
