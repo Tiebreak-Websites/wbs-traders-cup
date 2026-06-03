@@ -15,7 +15,7 @@ const s = copy.leaderboard;
       data-empty-text={s.empty_state}
       data-error-text={s.error_state}
       data-no-results-text={s.no_results}
-      data-tickets-unit={s.tickets_unit || 'tickets'}
+      data-pts-unit={s.pts_unit || 'pts'}
       data-updated-template={s.updated_ago_template || 'Updated {time} ago · refreshes every 30 sec'}
       data-seconds-short={s.seconds_short || 'sec'}
       data-minutes-short={s.minutes_short || 'min'}
@@ -48,7 +48,8 @@ const s = copy.leaderboard;
         <span>{s.columns.trader}</span>
         <span class="lb-col--center">{s.columns.country}</span>
         <span class="lb-col--end">{s.columns.deposits}</span>
-        <span class="lb-col--end">{s.columns.tickets}</span>
+        <span class="lb-col--end">{s.columns.trades}</span>
+        <span class="lb-col--end">{s.columns.points}</span>
       </div>
 
       <div class="lb-card__rows" data-lb-body>
@@ -196,28 +197,15 @@ const s = copy.leaderboard;
     letter-spacing: 0.04em;
   }
   .lb-deposit { justify-self: end; color: var(--bt-text); font-weight: 500; font-size: 13px; }
-  .lb-tickets {
-    justify-self: end;
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    color: var(--bt-text-hi);
-    font-weight: 700;
-    font-size: 16px;
-  }
-  .lb-ticket-ico {
-    width: 22px;
-    height: auto;
-    flex: none;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
-  }
-  .lb-tickets__unit {
+  .lb-trades  { justify-self: end; color: var(--bt-text); font-weight: 500; font-size: 13px; }
+  .lb-points  { justify-self: end; color: var(--bt-text-hi); font-weight: 700; font-size: 16px; }
+  .lb-points__unit {
     margin-left: 4px;
     font-size: 11px;
     font-weight: 600;
     color: var(--bt-text-dim);
   }
-  html[dir="rtl"] .lb-tickets__unit { margin-left: 0; margin-right: 4px; }
+  html[dir="rtl"] .lb-points__unit { margin-left: 0; margin-right: 4px; }
 
   @media (max-width: 960px) {
     .lb-card__cols { display: none; }

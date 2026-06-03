@@ -4,7 +4,6 @@ const { copy = enCopy } = Astro.props;
 const p = copy.prizes;
 const tierKey = ['first', 'second', 'third'];
 const revealDelay = [60, 140, 220];
-const isSingle = (p.items?.length ?? 0) === 1;
 ---
 
 <section class="cc-prizes" id="prizes" aria-label={p.title}>
@@ -14,7 +13,7 @@ const isSingle = (p.items?.length ?? 0) === 1;
     <!-- Horizontal prize strip: 1st | 2nd | 3rd as three segments inside a
          single bordered container, hairline-divided. 1st gets a subtle orange
          wash + larger amount. Completely different from the podium layout. -->
-    <div class={`cc-prize-strip${isSingle ? ' cc-prize-strip--single' : ''}`} role="list">
+    <div class="cc-prize-strip" role="list">
       {p.items.map((item, i) => (
         <article
           role="listitem"
@@ -22,7 +21,7 @@ const isSingle = (p.items?.length ?? 0) === 1;
           style={`--reveal-delay: ${revealDelay[i]}ms;`}
           data-place={item.place}
         >
-          <span class="cc-prize-strip__rank">{item.place}{p.place_word ? ` ${p.place_word}` : ''}</span>
+          <span class="cc-prize-strip__rank">{item.place} {p.place_word || 'place'}</span>
           <div class="cc-prize-strip__amt bt-num">
             <span data-countup>{item.amount}</span>
           </div>

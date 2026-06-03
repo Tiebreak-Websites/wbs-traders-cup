@@ -2,35 +2,39 @@
   "_meta": {
     "locale": "en",
     "brand": "Warren Bowie & Smith",
-    "competition": "Prize Draw 2026",
-    "internal_code": "prize_draw_2026",
+    "competition": "Traders Championship 2026",
+    "internal_code": "traders_championship_2026",
     "market": "Global"
   },
 
   "site": {
-    "title": "Warren Bowie & Smith Prize Draw 2026 — Win $26,000",
-    "description": "Deposit $100 to get a ticket. Every $100 = 1 ticket. One winner drawn at random for the $26,000 prize. Entries close 19 July 2026.",
+    "title": "Warren Bowie & Smith Traders Championship 2026 — Compete for $26,000",
+    "description": "Skill-based trading competition. Deposit $100 to qualify. World Cup window: 1 June → 19 July 2026.",
     "og_image_path": "/og-traders-championship.jpg"
   },
 
   "mechanic": {
     "ftd_min_usd": 100,
-    "usd_per_ticket": 100,
+    "points_per_200_deposit": 10,
+    "points_per_closed_trade": 5,
+    "final_week_multiplier": 2,
+    "final_week_start": "2026-07-13",
+    "final_week_end": "2026-07-19",
+    "deposit_points_soft_cap_usd": 10000,
+    "deposit_points_soft_cap_pts": 500,
     "campaign_start": "2026-06-01",
     "campaign_end": "2026-07-19T23:59:00+04:00",
-    "draw_date": "2026-07-20",
     "winners_announced": "2026-07-20",
     "currency": "USD",
     "timezone_label": "GST"
   },
 
   "hero": {
-    "eyebrow": "Prize Draw · 2026",
-    "headline_main": "Win",
-    "headline_amount": "$26,000!",
-    "headline_sub": "Enter the Prize Draw and Win!",
-    "subhead": "Deposit $100, get a ticket. One winner takes the full $26,000.",
-    "countdown_label": "Until the draw",
+    "eyebrow": "Traders Championship · 2026",
+    "headline_main": "Win 26 000$!",
+    "headline_sub": "Enter the Trading Championship!",
+    "subhead": "Deposit $100. Compete for a $26,000 prize pool based on skill, strategy, and consistency. Transparent leaderboard, results decided by performance.",
+    "countdown_label": "Until end of the Championship",
     "cd_units": {
       "days": "Days",
       "hours": "Hours",
@@ -38,60 +42,73 @@
       "seconds": "Seconds"
     },
     "target_date": "2026-07-19T23:59:00+04:00",
-    "cta": "Enter the draw",
-    "cta_href": "https://wbandsmith.com/register?utm_campaign=prize_draw_2026&utm_source=landing",
-    "secondary_cta": "How it works",
+    "cta": "Enter the Championship",
+    "cta_href": "https://wbandsmith.com/register?utm_campaign=traders_championship_2026&utm_source=landing",
+    "secondary_cta": "View rules & scoring",
     "secondary_cta_href": "#how",
-    "trophy_label_top": "26K",
-    "trophy_label_mid": "WINNER",
+    "trophy_label_top": "200",
+    "trophy_label_mid": "CHAMPION",
     "trophy_label_bot": "2026"
   },
 
   "prizes": {
-    "eyebrow": "The prize",
-    "title": "One winner. $26,000.",
-    "subtitle": "Drawn at random from every ticket in the draw.",
-    "champion_label": "Winner",
-    "place_word": "",
+    "eyebrow": "Prize pool",
+    "title": "Three funded trading accounts.",
+    "subtitle": "Winners decided by the final Champion Points leaderboard.",
+    "champion_label": "Champion",
+    "place_word": "place",
     "items": [
       {
-        "place": "Grand prize",
+        "place": "1st",
         "amount": "$26,000",
-        "label": "The 2026 Winner",
+        "label": "The 2026 Champion",
         "color": "var(--bt-trophy-deep)"
+      },
+      {
+        "place": "2nd",
+        "amount": "$14,000",
+        "label": "Funded account",
+        "color": "var(--bt-silver-deep)"
+      },
+      {
+        "place": "3rd",
+        "amount": "$7,000",
+        "label": "Funded account",
+        "color": "var(--bt-bronze-deep)"
       }
     ]
   },
 
   "leaderboard": {
-    "title": "Live entries",
+    "title": "Live Champion Points",
     "live_chip": "Live",
-    "header_eyebrow": "Live entries",
-    "card_title": "Live entries",
-    "card_legend": "Sorted by tickets · Updates every 30 sec",
+    "header_eyebrow": "Live standings",
+    "card_title": "Live standings",
+    "card_legend": "Sorted by Champion Points · Updates every 30 sec",
     "filter_name_placeholder": "Search by name",
     "filter_id_placeholder": "Search by ID",
-    "no_results": "No entrants match your search.",
+    "no_results": "No traders match your search.",
     "columns": {
       "rank": "Rank",
-      "trader": "Entrant",
+      "trader": "Trader",
       "id": "ID",
       "country": "Country",
       "deposits": "Deposits",
-      "tickets": "Tickets"
+      "trades": "Trades",
+      "points": "Points"
     },
     "footer_left": "Updated 12 sec ago · refreshes every 30 sec",
     "footer_right": "Names masked for privacy",
     "you_label": "YOU",
-    "loading_state": "Loading entries…",
-    "empty_state": "Entries will appear here once the draw opens.",
-    "error_state": "Couldn't load entries. Refresh to try again.",
+    "loading_state": "Loading leaderboard…",
+    "empty_state": "The leaderboard will appear here once the championship begins.",
+    "error_state": "Couldn't load the leaderboard. Refresh to try again.",
     "joined_label": "Joined",
-    "tickets_unit": "tickets",
+    "pts_unit": "pts",
     "updated_ago_template": "Updated {time} ago · refreshes every 30 sec",
     "seconds_short": "sec",
     "minutes_short": "min",
-    "pagination_label": "Entries pagination",
+    "pagination_label": "Leaderboard pagination",
     "prev_page_label": "Previous page",
     "next_page_label": "Next page",
     "page_label_template": "Page {n}"
@@ -99,58 +116,65 @@
 
   "how_it_works": {
     "eyebrow": "How it works",
-    "title": "How you enter the $26,000 draw in four steps",
+    "title": "This is how you win the $26,000 in four steps",
     "steps": [
       {
         "n": "01",
         "stat": "$100",
-        "stat_label": "= 1 ticket",
-        "t": "Deposit to enter",
-        "d": "An initial deposit of $100 puts your first ticket in the draw. One entry opens per KYC-verified account, and the deposit funds your own trading account."
+        "stat_label": "Initial deposit",
+        "t": "Deposit to qualify",
+        "d": "An initial deposit of $100 or more opens your spot in the Championship. One qualification per KYC-verified account."
       },
       {
         "n": "02",
-        "stat": "+1",
-        "stat_label": "ticket / $100",
-        "t": "More deposits, more tickets",
-        "d": "Every additional $100 you fund adds another ticket. Deposit $1,000 and you hold 10 tickets in the draw."
+        "stat": "+10",
+        "stat_label": "pts / $200",
+        "t": "Climb with every deposit",
+        "d": "Every $200 you fund adds 10 Champion Points — a bigger deposit, a bigger head start. Example: $1,000 → 50 points before your first trade."
       },
       {
         "n": "03",
-        "stat": "↑",
-        "stat_label": "better odds",
-        "t": "Stack your odds",
-        "d": "There's no cap. The more tickets you hold, the better your chance when the draw is made — every ticket counts equally."
+        "stat": "+5",
+        "stat_label": "pts / trade",
+        "t": "Trade your way up",
+        "d": "Each closed trade during the championship window adds 5 points. One metric. No lot multipliers, no parallel scoring."
       },
       {
         "n": "04",
-        "stat": "1",
-        "stat_label": "winner",
-        "t": "Draw day",
-        "d": "When the countdown ends on 19 July 2026, one ticket is drawn at random. That holder wins the full $26,000."
+        "stat": "2×",
+        "stat_label": "final week",
+        "t": "Sprint the closing week",
+        "d": "Between 13 → 19 July 2026, World Cup final week, every point you earn counts double. The closing stretch decides the podium."
       }
     ]
   },
 
   "formula": {
-    "eyebrow": "Your tickets",
-    "title": "Your tickets, simple math.",
+    "eyebrow": "The Points Formula",
+    "title": "Two ways to climb the leaderboard.",
     "rewards": [
       {
-        "stat": "+1",
-        "unit": "ticket",
-        "per": "per $100 deposited",
-        "desc": "More tickets, better odds."
+        "stat": "+10",
+        "unit": "pts",
+        "per": "per $200 deposited",
+        "desc": "Bigger deposit, bigger head start."
+      },
+      {
+        "stat": "+5",
+        "unit": "pts",
+        "per": "per closed trade",
+        "desc": "Every closed trade adds points."
       }
     ],
     "example_label": "Worked example",
-    "example_caption": "Plug in a deposit, see your tickets.",
+    "example_caption": "Plug in real numbers, see the points.",
     "example_inputs": [
-      { "value": "$1,000", "label": "deposited" }
+      { "value": "$1,000", "label": "deposited" },
+      { "value": "10",     "label": "trades closed" }
     ],
-    "example_breakdown": "$1,000 ÷ $100 = 10",
-    "example_value": "10",
-    "example_unit": "Tickets"
+    "example_breakdown": "(1,000 ÷ 200) × 10 = 50 · 10 × 5 = 50",
+    "example_value": "100",
+    "example_unit": "Champion Points"
   },
 
   "eligibility": {
@@ -158,9 +182,10 @@
     "title": "Open, transparent, and rule-clean.",
     "items": [
       "Open to all KYC-verified Warren Bowie & Smith clients in eligible jurisdictions.",
-      "Tickets are earned only from the client's own deposits — one ticket per $100 funded.",
+      "Trading must use the client's own funds and follow standard risk-management rules.",
+      "Wash trading, hedging-only patterns, and other artificial-volume tactics → disqualification.",
       "One account per client. Multi-account abuse → disqualification.",
-      "Entries lock at 23:59 GST on 19 July 2026. The winner is drawn at random and announced 20 July 2026."
+      "Standings lock at 23:59 GST on 19 July 2026. Winners announced 20 July 2026."
     ]
   },
 
@@ -169,34 +194,34 @@
     "title": "Questions, answered.",
     "items": [
       {
-        "t": "How does the prize draw work?",
-        "d": "It's a random prize draw. Every $100 you deposit during the campaign window earns one ticket, and a single ticket is drawn at random for the $26,000 prize. There's no skill scoring and no leaderboard ranking that decides the winner — every ticket has an equal chance."
+        "t": "Is this gambling or a lottery?",
+        "d": "No. There is no draw and no random selection. The $100 deposit is not a lottery fee — it funds your own account and remains yours to trade. The top three traders at the final standings are the top three on the Champion Points leaderboard. Results, not chance."
       },
       {
-        "t": "How do I get tickets?",
-        "d": "Deposit. $100 = 1 ticket, $500 = 5 tickets, $1,000 = 10 tickets, and so on. There's no upper limit, so the more you deposit, the more tickets you hold and the better your odds in the draw."
+        "t": "How are Champion Points calculated?",
+        "d": "Two inputs. Every $200 deposited during the window adds 10 points. Every closed trade adds 5 points. The formula is exactly: (Deposits ÷ $200) × 10 + (Closed Trades × 5). During the final week (13–19 July), all points earned count 2×."
       },
       {
-        "t": "What happens to my $100 deposit?",
-        "d": "It funds your own trading account and remains yours. The deposit is what earns your tickets — it is not a separate entry fee, and you can trade with it under the platform's normal conditions. Trading carries risk of loss; trade within your means."
+        "t": "Is there a cap on deposits?",
+        "d": "Deposit points are soft-capped at $10,000 deposited (= 500 points). Beyond that, the leaderboard is decided by trading activity. This protects responsible-trading principles and keeps the competition fair."
       },
       {
-        "t": "When and how is the winner drawn?",
-        "d": "Entries lock at 23:59 GST on 19 July 2026. One ticket is then drawn at random and the winner is announced on 20 July 2026 on the Warren Bowie & Smith website, by email, and across our social channels."
+        "t": "What about the risk of loss?",
+        "d": "Trading carries risk of loss. The Championship rewards skill and consistency over the campaign window — your deposit funds your own account and is exposed to normal market risk like any trading. Trade within your means and use the risk-management tools on the platform."
       },
       {
-        "t": "Who can enter?",
-        "d": "All KYC-verified Warren Bowie & Smith clients in eligible jurisdictions. One account per client; multi-account abuse leads to disqualification."
+        "t": "When and how are winners announced?",
+        "d": "Final standings lock at 23:59 GST on 19 July 2026 (World Cup Final day). Winners are announced 20 July 2026 on the Warren Bowie & Smith website, by email, and across our social channels. Funded trading accounts are credited per the standard terms."
       }
     ]
   },
 
   "sticky_cta": {
-    "title": "Deposit $100. Get your tickets.",
-    "subtitle": "Random draw · Win $26,000",
-    "cd_label": "Draw in",
-    "cta": "Enter now",
-    "cta_href": "https://wbandsmith.com/register?utm_campaign=prize_draw_2026&utm_source=sticky_bar"
+    "title": "Deposit $100. Enter the Championship.",
+    "subtitle": "Skill-based · Compete for $26,000",
+    "cd_label": "Ends in",
+    "cta": "Start now",
+    "cta_href": "https://wbandsmith.com/register?utm_campaign=traders_championship_2026&utm_source=sticky_bar"
   },
 
   "controls": {
@@ -213,8 +238,8 @@
   },
 
   "formula_calc": {
-    "result_label": "Tickets"
+    "result_label": "Champion Points"
   },
 
-  "compliance": "The Warren Bowie & Smith Prize Draw 2026 is a promotional random draw. Every $100 deposited during the campaign window earns one ticket; one ticket is drawn at random for the $26,000 prize. Your deposit funds your own trading account and remains fully yours. KYC, eligibility, and market-specific rules apply. Trading carries risk of loss. Terms & Conditions apply. © 2026 Warren Bowie & Smith."
+  "compliance": "The Warren Bowie & Smith Traders Championship 2026 is a skill-based trading competition. Your deposit funds your own trading account and remains fully yours. Winners are determined by a transparent Champion Points leaderboard, not by chance. KYC, eligibility, and market-specific rules apply. Trading carries risk of loss. Terms & Conditions apply. © 2026 Warren Bowie & Smith."
 }

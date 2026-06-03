@@ -12,36 +12,35 @@ const u = h.cd_units || { days: 'Days', hours: 'Hours', minutes: 'Minutes', seco
 ---
 
 <section class="cc-hero" id="main">
-  <!-- Full-bleed hero background: stadium + ticket on a cash pile.
-       Picture lets the browser pick WebP when available; PNG is the fallback. -->
+  <!-- Section background image (candlestick stage). Picture lets the browser
+       pick WebP when available; PNG is the fallback. -->
   <div class="cc-hero__bg-img" aria-hidden="true">
     <picture>
-      <source srcset={`${base}/hero-stadium.webp`} type="image/webp" />
-      <img src={`${base}/hero-stadium.png`} alt="" loading="eager" decoding="async" />
+      <source srcset={`${base}/hero-bg.webp`} type="image/webp" />
+      <img src={`${base}/hero-bg.png`} alt="" loading="eager" decoding="async" />
     </picture>
   </div>
-  <!-- Subtle top scrim for headline legibility over the stands -->
+  <!-- Soft accent gradients on top of the image (orange spots) -->
   <div class="cc-hero__bg-fx" aria-hidden="true"></div>
+  <!-- Smooth bottom fade — blends the bg image into the page colour -->
+  <div class="cc-hero__bg-fade" aria-hidden="true"></div>
 
   <div class="cc-hero__grid">
-
-    <!-- Top: $26,000! + sub + subhead.  Bottom: countdown + CTA (below the money). -->
+    <!-- LEFT: copy column -->
     <div class="cc-hero__copy">
-      <div class="cc-hero__copy-top">
-        <h1 class="cc-headline cc-headline--prize reveal" style="--reveal-delay: 80ms;">
-          <span class="cc-headline__amount bt-num" data-countup>{h.headline_amount}</span>
-        </h1>
+<h1 class="cc-headline reveal" style="--reveal-delay: 80ms;">
+        {h.headline_main}
+      </h1>
 
-        <p class="cc-headline-sub reveal" style="--reveal-delay: 140ms;">
-          {h.headline_sub}
-        </p>
+      <p class="cc-headline-sub reveal" style="--reveal-delay: 140ms;">
+        {h.headline_sub}
+      </p>
 
-        <p class="cc-subhead reveal" style="--reveal-delay: 200ms;" set:html={subheadHtml}></p>
-      </div>
+      <p class="cc-subhead reveal" style="--reveal-delay: 200ms;" set:html={subheadHtml}></p>
 
-      <div class="cc-hero__copy-bottom">
       <!-- Horizontal countdown STRIP — full-width, segmented -->
       <div class="cc-countdown cc-countdown--strip reveal" style="--reveal-delay: 260ms;" data-countdown data-target={h.target_date}>
+        <span class="cc-countdown__lbl-strip">{h.countdown_label}</span>
         <div class="cc-countdown__row" role="timer" aria-live="polite">
           <div class="bt-cd">
             <span class="bt-cd-num bt-num" data-d>00</span>
@@ -66,10 +65,29 @@ const u = h.cd_units || { days: 'Days', hours: 'Hours', minutes: 'Minutes', seco
       </div>
 
       <div class="cc-hero__cta-row reveal" style="--reveal-delay: 320ms;">
-        <a href={h.cta_href} class="bt-btn bt-btn-primary cc-hero__cta cc-hero__cta--xl" data-magnetic target="_blank" rel="noopener noreferrer">
-          {h.cta}
+        <a href={h.cta_href} class="bt-btn bt-btn-primary cc-hero__cta" data-magnetic target="_blank" rel="noopener noreferrer">
+          {h.cta} <span aria-hidden="true">→</span>
+        </a>
+        <a href={h.secondary_cta_href} class="cc-hero__rules">
+          {h.secondary_cta}
         </a>
       </div>
+    </div>
+
+    <!-- RIGHT: trophy column (visible asset, not background) -->
+    <div class="cc-hero__visual reveal" style="--reveal-delay: 120ms;">
+      <div class="cc-hero__trophy-wrap">
+        <span class="cc-hero__aura" aria-hidden="true"></span>
+        <picture>
+          <source srcset={`${base}/hero-trophy.webp`} type="image/webp" />
+          <img class="cc-hero__trophy-img"
+               src={`${base}/hero-trophy.png`}
+               alt="Championship trophy"
+               width="668"
+               height="834"
+               loading="eager"
+               decoding="async" />
+        </picture>
       </div>
     </div>
   </div>

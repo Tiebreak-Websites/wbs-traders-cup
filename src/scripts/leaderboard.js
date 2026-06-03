@@ -21,12 +21,9 @@ const fmt = {
 };
 
 const state = { data: null, timer: null, filters: { name: '', id: '' } };
-// Tickets are earned from deposits: one ticket per $100 funded.
-const USD_PER_TICKET = 100;
-const ticketsFor = (r) => Math.floor((r.deposits_usd || 0) / USD_PER_TICKET);
-// Phase 2: remember each account's previous ticket count so we can flash rows
-// whose entry changed between polls. Keyed by account_id → last known tickets.
-const prevTickets = new Map();
+// Phase 2: remember each account's previous points so we can flash rows whose
+// score changed between polls. Keyed by account_id → last known points value.
+const prevPoints = new Map();
 let firstRender = true;
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -37,8 +34,7 @@ function rowHtml(r, isMe, index) {
   const rankCls = r.rank <= 3 ? `bt-rank bt-rank-${r.rank}` : 'bt-rank';
   const code = (r.country || '').toLowerCase();
   const youLabel = t('youLabel', 'YOU');
-  const ticketsUnit = t('ticketsUnit', 'tickets');
-  const tickets = ticketsFor(r);
+  const ptsUnit = t('ptsUnit', 'pts');
   // Each row gets its own animation delay (stagger), capped so late rows still feel snappy.
   const delay = Math.min((index || 0) * 60, 700);
   return `
@@ -53,7 +49,8 @@ function rowHtml(r, isMe, index) {
         <span class="lb-country__code">${r.country}</span>
       </span>
       <span class="lb-deposit bt-num">${fmt.usd(r.deposits_usd)}</span>
-      <span class="lb-tickets bt-num"><img class="lb-ticket-ico" src="${BASE_URL}/ticket.png" alt="" width="22" height="13" loading="lazy" />${fmt.num(tickets)}<span class="lb-tickets__unit">${ticketsUnit}</span></span>
+      <span class="lb-trades bt-num">${fmt.num(r.trades)}</span>
+      <span class="lb-points bt-num">${fmt.num(r.points)}<span class="lb-points__unit">${ptsUnit}</span></span>
     </div>
   `;
 }
@@ -189,21 +186,20 @@ function bindPagination(body, total) {
   });
 }
 
-// Phase 2: compare each row's ticket count to the previous snapshot. Rows whose
-// entry moved get .is-updated for 1.4s (CSS plays the orange left-rule flash).
+// Phase 2: compare each row's points to the previous snapshot. Rows whose
+// points moved get .is-updated for 1.4s (CSS plays the orange left-rule flash).
 function flashChangedRows(body) {
   if (!state.data || !state.data.leaderboard) return;
   // Skip the very first render — every row is "new" on initial paint, so a
   // page-load flash would be a distraction, not a signal.
   if (firstRender) {
-    state.data.leaderboard.forEach((r) => prevTickets.set(r.account_id, ticketsFor(r)));
+    state.data.leaderboard.forEach((r) => prevPoints.set(r.account_id, r.points));
     firstRender = false;
     return;
   }
   state.data.leaderboard.forEach((r) => {
-    const prev = prevTickets.get(r.account_id);
-    const now = ticketsFor(r);
-    if (prev !== undefined && prev !== now) {
+    const prev = prevPoints.get(r.account_id);
+    if (prev !== undefined && prev !== r.points) {
       const el = body.querySelector(`[data-account-id="${r.account_id}"]`);
       if (el) {
         el.classList.remove('is-updated');
@@ -213,7 +209,7 @@ function flashChangedRows(body) {
         setTimeout(() => el.classList.remove('is-updated'), 1500);
       }
     }
-    prevTickets.set(r.account_id, now);
+    prevPoints.set(r.account_id, r.points);
   });
 }
 
