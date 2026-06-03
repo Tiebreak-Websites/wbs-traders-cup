@@ -36,7 +36,6 @@ const logoSrc = `${base}/wbs-white.svg`;
 
     <div class="cc-faq__footer">
       <img class="cc-faq__logo reveal" src={logoSrc} alt="Warren Bowie & Smith" width="188" height="56" loading="lazy" />
-      <p class="cc-faq__compliance reveal">{compliance}</p>
       {legal?.website_terms_href && (
         <p class="cc-faq__legal reveal">
           <a class="cc-faq__legal-link" href={`${base}${legal.website_terms_href}`} target="_blank" rel="noopener noreferrer">
@@ -44,6 +43,7 @@ const logoSrc = `${base}/wbs-white.svg`;
           </a>
         </p>
       )}
+      <p class="cc-faq__compliance reveal">{compliance}</p>
     </div>
   </div>
 </section>

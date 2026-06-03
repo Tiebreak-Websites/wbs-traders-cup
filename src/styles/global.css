@@ -741,9 +741,9 @@ html[dir="rtl"] .cc-headline-sub { font-family: var(--bt-font); letter-spacing: 
 }
 .cc-legal__back:hover { text-decoration: underline; }
 
-/* Footer legal link — website Terms & Conditions (PDF) */
+/* Footer legal link — website Terms & Conditions (PDF), above the disclaimer */
 .cc-faq__legal {
-  margin: 14px auto 0;
+  margin: 0 auto 16px;
   text-align: center;
 }
 .cc-faq__legal-link {
@@ -1156,7 +1156,7 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
 .cc-faq__panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows .28s ease;
+  transition: grid-template-rows .42s cubic-bezier(.22, .61, .36, 1);
 }
 .cc-faq__item.is-open .cc-faq__panel { grid-template-rows: 1fr; }
 .cc-faq__body {
@@ -1164,8 +1164,22 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
   padding: 0 24px;
   font-size: 15px; line-height: 1.65;
   color: var(--bt-text-mid);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity .3s ease,
+    transform .42s cubic-bezier(.22, .61, .36, 1),
+    padding .42s cubic-bezier(.22, .61, .36, 1);
 }
-.cc-faq__item.is-open .cc-faq__body { padding: 0 24px 22px; }
+.cc-faq__item.is-open .cc-faq__body {
+  padding: 0 24px 22px;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity .4s ease .12s,
+    transform .45s cubic-bezier(.22, .61, .36, 1) .08s,
+    padding .42s cubic-bezier(.22, .61, .36, 1);
+}
 
 /* Sticky bottom CTA bar */
 .cc-sticky {
@@ -3143,7 +3157,8 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 @media (max-width: 1024px) {
   .cc-hero .cc-hero__grid { grid-template-columns: 1fr; gap: 24px; padding: 0 24px; align-items: stretch; }
   .cc-prizes__podium { padding: 16px 0 24px !important; }
-  .cc-hero__visual { min-height: 420px; order: 2; }
+  .cc-hero__visual { min-height: 420px; order: -1; }
+  .cc-hero__copy { order: 2; }
   .cc-hero__trophy-img { max-height: 480px; }
   .cc-hero__copy { align-items: center; text-align: center; }
   .cc-hero .cc-headline,
@@ -3792,6 +3807,8 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   .cc-prize-strip__tier {
     border-right: 0;
     border-bottom: 1px solid var(--bt-bg-line);
+    align-items: center;
+    text-align: center;
   }
   .cc-prize-strip__tier:last-child { border-bottom: 0; }
   .cc-prize-strip__tier--first { border-left: 0; border-top: 1px solid var(--bt-accent-100); }
