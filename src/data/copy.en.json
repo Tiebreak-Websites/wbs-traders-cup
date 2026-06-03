@@ -14,7 +14,7 @@
   },
 
   "mechanic": {
-    "ftd_min_usd": 200,
+    "ftd_min_usd": 100,
     "points_per_200_deposit": 500,
     "points_per_closed_trade": 50,
     "final_week_multiplier": 2,
@@ -35,7 +35,7 @@
     "headline_amount": "$26,000!",
     "headline_main": "Trade for 26 000$!",
     "headline_sub": "Are you the next trading Champion?",
-    "subhead": "Get ready to enter the most exciting trading competition this Summer! See how you rank against other traders and get the chance to win $26,000 in credits during the World Cup with as little as a $200 deposit!",
+    "subhead": "Get ready to enter the most exciting trading competition this Summer! See how you rank against other traders and get the chance to win $26,000 in credits during the World Cup with as little as a $100 deposit!",
     "countdown_label": "Until end of the Championship",
     "cd_units": {
       "days": "Days",
@@ -125,10 +125,10 @@
     "steps": [
       {
         "n": "01",
-        "stat": "$200",
+        "stat": "$100",
         "stat_label": "deposit",
         "t": "Enter the competition",
-        "d": "You need a minimum first-time deposit of $200 or more to secure your spot in the competition. Keep in mind you only have 1 qualification per account, which has to be KYC-verified."
+        "d": "You need a minimum first-time deposit of $100 or more to secure your spot in the competition. Keep in mind you only have 1 qualification per account, which has to be KYC-verified."
       },
       {
         "n": "02",
@@ -222,7 +222,7 @@
   },
 
   "sticky_cta": {
-    "title": "Deposit $200. Enter the Championship.",
+    "title": "Deposit $100. Enter the Championship.",
     "subtitle": "Skill-based · Compete for $26,000",
     "cd_label": "Ends in",
     "cta": "Start now",

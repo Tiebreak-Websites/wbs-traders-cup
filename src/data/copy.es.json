@@ -14,7 +14,7 @@
   },
 
   "mechanic": {
-    "ftd_min_usd": 200,
+    "ftd_min_usd": 100,
     "points_per_200_deposit": 500,
     "points_per_closed_trade": 50,
     "final_week_multiplier": 2,
@@ -35,7 +35,7 @@
     "headline_amount": "$26,000!",
     "headline_main": "¡Opera por 26 000$!",
     "headline_sub": "¿Eres el próximo Campeón del trading?",
-    "subhead": "¡Prepárate para entrar en la competencia de trading más emocionante de este verano! Mira cómo te posicionas frente a otros traders y ten la oportunidad de ganar $26,000 en créditos durante el Mundial con tan solo un depósito de $200.",
+    "subhead": "¡Prepárate para entrar en la competencia de trading más emocionante de este verano! Mira cómo te posicionas frente a otros traders y ten la oportunidad de ganar $26,000 en créditos durante el Mundial con tan solo un depósito de $100.",
     "countdown_label": "Hasta el cierre del Campeonato",
     "cd_units": {
       "days": "Días",
@@ -125,10 +125,10 @@
     "steps": [
       {
         "n": "01",
-        "stat": "$200",
+        "stat": "$100",
         "stat_label": "depósito",
         "t": "Entra en la competencia",
-        "d": "Necesitas un primer depósito mínimo de $200 o más para asegurar tu lugar en la competencia. Ten en cuenta que solo tienes 1 calificación por cuenta, que debe estar verificada por KYC."
+        "d": "Necesitas un primer depósito mínimo de $100 o más para asegurar tu lugar en la competencia. Ten en cuenta que solo tienes 1 calificación por cuenta, que debe estar verificada por KYC."
       },
       {
         "n": "02",
@@ -223,7 +223,7 @@
   },
 
   "sticky_cta": {
-    "title": "Deposita $200. Entra al Campeonato.",
+    "title": "Deposita $100. Entra al Campeonato.",
     "subtitle": "Basado en habilidad · Compite por $26,000",
     "cd_label": "Cierra en",
     "cta": "Empieza ahora",

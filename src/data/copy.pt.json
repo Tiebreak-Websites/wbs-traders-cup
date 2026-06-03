@@ -12,7 +12,7 @@
     "og_image_path": "/og-traders-championship.jpg"
   },
   "mechanic": {
-    "ftd_min_usd": 200,
+    "ftd_min_usd": 100,
     "points_per_200_deposit": 500,
     "points_per_closed_trade": 50,
     "final_week_multiplier": 2,
@@ -32,7 +32,7 @@
     "headline_amount": "$26,000!",
     "headline_main": "Opere por 26 000$!",
     "headline_sub": "Você é o próximo Campeão do trading?",
-    "subhead": "Prepare-se para entrar na competição de trading mais empolgante deste verão! Veja como você se posiciona em relação a outros traders e tenha a chance de ganhar $26.000 em créditos durante a Copa com um depósito de apenas $200.",
+    "subhead": "Prepare-se para entrar na competição de trading mais empolgante deste verão! Veja como você se posiciona em relação a outros traders e tenha a chance de ganhar $26.000 em créditos durante a Copa com um depósito de apenas $100.",
     "countdown_label": "Até o fim do Campeonato",
     "cd_units": {
       "days": "Dias",
@@ -119,10 +119,10 @@
     "steps": [
       {
         "n": "01",
-        "stat": "$200",
+        "stat": "$100",
         "stat_label": "depósito",
         "t": "Entre na competição",
-        "d": "Você precisa de um primeiro depósito mínimo de $200 ou mais para garantir sua vaga na competição. Lembre-se de que você tem apenas 1 qualificação por conta, que precisa ser verificada por KYC."
+        "d": "Você precisa de um primeiro depósito mínimo de $100 ou mais para garantir sua vaga na competição. Lembre-se de que você tem apenas 1 qualificação por conta, que precisa ser verificada por KYC."
       },
       {
         "n": "02",
@@ -219,7 +219,7 @@
     ]
   },
   "sticky_cta": {
-    "title": "Deposite $200. Entre no Campeonato.",
+    "title": "Deposite $100. Entre no Campeonato.",
     "subtitle": "Baseado em habilidade · Concorra a $26.000",
     "cd_label": "Encerra em",
     "cta": "Começar agora",
