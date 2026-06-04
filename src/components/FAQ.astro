@@ -6,6 +6,7 @@ const compliance = copy.compliance;
 const legal = copy.legal;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const logoSrc = `${base}/wbs-white.svg`;
+const items = f.items || [];
 ---
 
 <section class="cc-faq">
@@ -15,23 +16,37 @@ const logoSrc = `${base}/wbs-white.svg`;
       <h2 class="cc-section-title">{f.title}</h2>
     </div>
 
-    <div class="cc-faq__list" data-faq-list>
-      {f.items.map((item, i) => (
-        <div class={`cc-faq__item reveal${i === 0 ? ' is-open' : ''}`} style={`--reveal-delay: ${i * 60}ms;`} data-faq-item>
-          <button class="cc-faq__head" data-faq-toggle aria-expanded={i === 0 ? 'true' : 'false'}>
-            <span class="cc-faq__index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-            <span class="cc-faq__q">{item.t}</span>
-            <span class="cc-faq__icon" aria-hidden="true">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 6 l4 4 l4 -4" />
-              </svg>
-            </span>
+    <!-- Two-pane help center: question list (left) + answer panel (right) -->
+    <div class="cc-faq2 reveal" data-faq2>
+      <div class="cc-faq2__list" role="tablist" aria-label={f.title}>
+        {items.map((item, i) => (
+          <button
+            type="button"
+            class={`cc-faq2__q${i === 0 ? ' is-active' : ''}`}
+            role="tab"
+            id={`faq2-q-${i}`}
+            aria-controls="faq2-panel"
+            aria-selected={i === 0 ? 'true' : 'false'}
+            data-faq2-q={i}
+          >
+            <span class="cc-faq2__q-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span class="cc-faq2__q-text">{item.t}</span>
+            <svg class="cc-faq2__q-arrow" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 3 l5 5 l-5 5" />
+            </svg>
           </button>
-          <div class="cc-faq__panel">
-            <div class="cc-faq__body">{item.d}</div>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
+      <div class="cc-faq2__panel" id="faq2-panel" role="tabpanel" aria-live="polite">
+        {items.map((item, i) => (
+          <article class={`cc-faq2__answer${i === 0 ? ' is-active' : ''}`} data-faq2-a={i} aria-labelledby={`faq2-q-${i}`}>
+            <span class="cc-faq2__answer-tag" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="cc-faq2__answer-q">{item.t}</h3>
+            <p class="cc-faq2__answer-d">{item.d}</p>
+          </article>
+        ))}
+      </div>
     </div>
 
     <div class="cc-faq__footer">
@@ -49,22 +64,34 @@ const logoSrc = `${base}/wbs-white.svg`;
 </section>
 
 <script>
-  // Single-open accordion behaviour (matches the design prototype).
-  const items = document.querySelectorAll('[data-faq-item]');
-  items.forEach((item) => {
-    const btn = item.querySelector('[data-faq-toggle]');
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-      const isOpen = item.classList.contains('is-open');
-      items.forEach((el) => {
-        el.classList.remove('is-open');
-        const b = el.querySelector('[data-faq-toggle]');
-        if (b) b.setAttribute('aria-expanded', 'false');
+  // Two-pane help center: selecting a question shows its answer in the panel.
+  const root = document.querySelector('[data-faq2]');
+  if (root) {
+    const questions = Array.from(root.querySelectorAll('[data-faq2-q]'));
+    const answers = Array.from(root.querySelectorAll('[data-faq2-a]'));
+    const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
+
+    function select(idx) {
+      questions.forEach((q) => {
+        const on = q.getAttribute('data-faq2-q') === String(idx);
+        q.classList.toggle('is-active', on);
+        q.setAttribute('aria-selected', on ? 'true' : 'false');
       });
-      if (!isOpen) {
-        item.classList.add('is-open');
-        btn.setAttribute('aria-expanded', 'true');
-      }
+      answers.forEach((a) => {
+        a.classList.toggle('is-active', a.getAttribute('data-faq2-a') === String(idx));
+      });
+    }
+
+    questions.forEach((q) => {
+      q.addEventListener('click', () => {
+        const idx = q.getAttribute('data-faq2-q');
+        select(idx);
+        // On mobile the panel sits below the list — bring the answer into view.
+        if (isMobile()) {
+          const ans = root.querySelector(`[data-faq2-a="${idx}"]`);
+          if (ans) ans.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
     });
-  });
+  }
 </script>

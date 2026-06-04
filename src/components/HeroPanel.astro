@@ -11,96 +11,63 @@ const subheadHtml = h.subhead.replace(
 const u = h.cd_units || { days: 'Days', hours: 'Hours', minutes: 'Minutes', seconds: 'Seconds' };
 ---
 
-<section class="cc-hero" id="main">
-  <!-- Section background image (candlestick stage). Picture lets the browser
-       pick WebP when available; PNG is the fallback. -->
+<section class="cc-hero cc-hero--center" id="main">
+  <!-- Section background image (candlestick arena). -->
   <div class="cc-hero__bg-img" aria-hidden="true">
     <picture>
-      <!-- Mobile portrait crop -->
       <source media="(max-width: 640px)" srcset={`${base}/hero-bg-mobile.webp`} type="image/webp" />
       <source media="(max-width: 640px)" srcset={`${base}/hero-bg-mobile.png`} type="image/png" />
-      <!-- Desktop / tablet -->
       <source srcset={`${base}/hero-bg.webp`} type="image/webp" />
       <img src={`${base}/hero-bg.png`} alt="" loading="eager" decoding="async" />
     </picture>
   </div>
-  <!-- Soft accent gradients on top of the image (orange spots) -->
   <div class="cc-hero__bg-fx" aria-hidden="true"></div>
-  <!-- Smooth bottom fade — blends the bg image into the page colour -->
   <div class="cc-hero__bg-fade" aria-hidden="true"></div>
 
-  <div class="cc-hero__grid">
-    <!-- LEFT: copy column -->
-    <div class="cc-hero__copy">
-<h1 class="cc-headline reveal" style="--reveal-delay: 80ms;">
-        <span class="cc-headline__lead">{h.headline_lead}</span>
-        <span class="cc-headline__amt">{h.headline_amount}<sup class="cc-headline__ast">*</sup></span>
-      </h1>
+  <div class="cc-hero__center">
+    <h1 class="cc-headline reveal" style="--reveal-delay: 120ms;">
+      <span class="cc-headline__lead">{h.headline_lead}</span>
+      <span class="cc-headline__amt">{h.headline_amount}<sup class="cc-headline__ast">*</sup></span>
+    </h1>
 
-      <p class="cc-headline-sub reveal" style="--reveal-delay: 140ms;">
-        {h.headline_sub}
-      </p>
+    <p class="cc-headline-sub reveal" style="--reveal-delay: 180ms;">{h.headline_sub}</p>
 
-      <p class="cc-subhead reveal" style="--reveal-delay: 200ms;" set:html={subheadHtml}></p>
+    <p class="cc-subhead reveal" style="--reveal-delay: 220ms;" set:html={subheadHtml}></p>
 
-      <!-- Horizontal countdown STRIP — full-width, segmented -->
-      <div class="cc-countdown cc-countdown--strip reveal" style="--reveal-delay: 260ms;" data-countdown data-target={h.target_date}>
-        <span class="cc-countdown__lbl-strip">{h.countdown_label}</span>
-        <div class="cc-countdown__row" role="timer" aria-live="polite">
-          <div class="bt-cd">
-            <span class="bt-cd-num bt-num" data-d>00</span>
-            <span class="bt-cd-lbl">{u.days}</span>
-          </div>
-          <span class="bt-cd-sep" aria-hidden="true"></span>
-          <div class="bt-cd">
-            <span class="bt-cd-num bt-num" data-h>00</span>
-            <span class="bt-cd-lbl">{u.hours}</span>
-          </div>
-          <span class="bt-cd-sep" aria-hidden="true"></span>
-          <div class="bt-cd">
-            <span class="bt-cd-num bt-num" data-m>00</span>
-            <span class="bt-cd-lbl">{u.minutes}</span>
-          </div>
-          <span class="bt-cd-sep" aria-hidden="true"></span>
-          <div class="bt-cd">
-            <span class="bt-cd-num bt-num" data-s>00</span>
-            <span class="bt-cd-lbl">{u.seconds}</span>
-          </div>
+    <!-- Countdown — bold centered tiles -->
+    <div class="cc-cd2 reveal" style="--reveal-delay: 280ms;" data-countdown data-target={h.target_date}>
+      <span class="cc-cd2__label">{h.countdown_label}</span>
+      <div class="cc-cd2__tiles" role="timer" aria-live="polite">
+        <div class="cc-cd2__tile">
+          <span class="cc-cd2__num bt-num" data-d>00</span>
+          <span class="cc-cd2__unit">{u.days}</span>
+        </div>
+        <div class="cc-cd2__tile">
+          <span class="cc-cd2__num bt-num" data-h>00</span>
+          <span class="cc-cd2__unit">{u.hours}</span>
+        </div>
+        <div class="cc-cd2__tile">
+          <span class="cc-cd2__num bt-num" data-m>00</span>
+          <span class="cc-cd2__unit">{u.minutes}</span>
+        </div>
+        <div class="cc-cd2__tile">
+          <span class="cc-cd2__num bt-num" data-s>00</span>
+          <span class="cc-cd2__unit">{u.seconds}</span>
         </div>
       </div>
-
-      <div class="cc-hero__cta-row reveal" style="--reveal-delay: 320ms;">
-        <a href={h.cta_href} class="bt-btn bt-btn-primary cc-hero__cta" data-magnetic data-cta-track="landing" target="_blank" rel="noopener noreferrer">
-          {h.cta} <span aria-hidden="true">→</span>
-        </a>
-        <a href={h.secondary_cta_href} class="cc-hero__rules">
-          {h.secondary_cta}
-        </a>
-      </div>
-
-      {h.cta_note && (
-        <a href={`${base}${h.cta_note_href || '/terms'}`} class="cc-hero__cta-note reveal" style="--reveal-delay: 360ms;">
-          {h.cta_note}
-        </a>
-      )}
     </div>
 
-    <!-- RIGHT: trophy column (visible asset, not background) -->
-    <div class="cc-hero__visual reveal" style="--reveal-delay: 120ms;">
-      <div class="cc-hero__trophy-wrap">
-        <span class="cc-hero__aura" aria-hidden="true"></span>
-        <picture>
-          <source srcset={`${base}/hero-trophy.webp`} type="image/webp" />
-          <img class="cc-hero__trophy-img"
-               src={`${base}/hero-trophy.png`}
-               alt="Championship trophy"
-               width="668"
-               height="834"
-               loading="eager"
-               decoding="async" />
-        </picture>
-      </div>
+    <div class="cc-hero__cta-row reveal" style="--reveal-delay: 340ms;">
+      <a href={h.cta_href} class="bt-btn bt-btn-primary cc-hero__cta" data-magnetic data-cta-track="landing" target="_blank" rel="noopener noreferrer">
+        {h.cta}
+      </a>
     </div>
+
+    {h.cta_note && (
+      <a href={`${base}${h.cta_note_href || '/terms'}`} class="cc-hero__cta-note reveal" style="--reveal-delay: 380ms;">
+        {h.cta_note}
+      </a>
+    )}
   </div>
 </section>
 

@@ -24,7 +24,7 @@ function feedUrl() {
 // Full country name (EN/ES/PT variants) → ISO-3166 alpha-2 (matches /flags/*.svg).
 const COUNTRY_CODE = {
   argentina: 'ar', brazil: 'br', brasil: 'br', chile: 'cl', colombia: 'co',
-  mexico: 'mx', peru: 'pe', uruguay: 'uy', venezuela: 've',
+  mexico: 'mx', peru: 'pe', uruguay: 'uy', venezuela: 've', ecuador: 'ec',
   spain: 'es', espana: 'es', portugal: 'pt',
   'united kingdom': 'gb', uk: 'gb', 'great britain': 'gb', england: 'gb',
   ireland: 'ie', france: 'fr', francia: 'fr', franca: 'fr',
@@ -48,18 +48,15 @@ const escapeHtml = (s) => String(s == null ? '' : s)
   .replace(/"/g, '&quot;');
 
 // Map the n8n webhook rows (a flat array) → the internal leaderboard shape.
-// Sort by points desc and assign competition ranks (ties share the lower rank).
+// Sort by points desc and assign sequential positions (1, 2, 3, … N) so each
+// row is a distinct place and pages read 1–10, 11–20, etc.
 function transform(rows) {
   const list = Array.isArray(rows) ? rows.slice() : [];
   list.sort((a, b) => (Number(b.Points) || 0) - (Number(a.Points) || 0));
-  let lastPoints = null;
-  let lastRank = 0;
   let lastUpdated = 0;
   const leaderboard = list.map((r, i) => {
     const points = Number(r.Points) || 0;
-    const rank = points === lastPoints ? lastRank : i + 1;
-    lastPoints = points;
-    lastRank = rank;
+    const rank = i + 1;
     const ts = Date.parse(r.updatedAt || r.createdAt || '');
     if (ts && ts > lastUpdated) lastUpdated = ts;
     return {
@@ -222,18 +219,32 @@ function paginationBlockHtml(page, total) {
   const paginationLbl = t('paginationLabel', 'Leaderboard pagination');
   const prevLbl = t('prevPageLabel', 'Previous page');
   const nextLbl = t('nextPageLabel', 'Next page');
-  const pageBtns = pages.map((p) => {
-    if (p === '…') return `<span class="lb-page__ellipsis" aria-hidden="true">…</span>`;
-    const active = p === page ? ' is-active' : '';
-    const ariaLbl = pageTpl.replace('{n}', String(p + 1));
-    return `<button class="lb-page${active}" data-lb-page="${p}" aria-label="${ariaLbl}" aria-current="${active ? 'page' : 'false'}">${p + 1}</button>`;
-  }).join('');
+  // With more than 6 pages the numbered list gets unwieldy — switch to a
+  // compact "jump to page" input ( [ n ] / total ) instead.
+  let middle;
+  if (total > 6) {
+    const ofLbl = t('pageOfLabel', 'of');
+    middle = `
+      <div class="lb-pagination__jump">
+        <input class="lb-page__input bt-num" type="number" inputmode="numeric" min="1" max="${total}"
+               value="${page + 1}" data-lb-page-input aria-label="${pageTpl.replace('{n}', '')}" />
+        <span class="lb-page__of">${ofLbl} ${total}</span>
+      </div>`;
+  } else {
+    const pageBtns = pages.map((p) => {
+      if (p === '…') return `<span class="lb-page__ellipsis" aria-hidden="true">…</span>`;
+      const active = p === page ? ' is-active' : '';
+      const ariaLbl = pageTpl.replace('{n}', String(p + 1));
+      return `<button class="lb-page${active}" data-lb-page="${p}" aria-label="${ariaLbl}" aria-current="${active ? 'page' : 'false'}">${p + 1}</button>`;
+    }).join('');
+    middle = `<div class="lb-pagination__pages">${pageBtns}</div>`;
+  }
   return `
     <nav class="lb-pagination" aria-label="${paginationLbl}">
       <button class="lb-page lb-page--nav" data-lb-page-prev ${prevDisabled ? 'disabled' : ''} aria-label="${prevLbl}">
         <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4 L6 8 L10 12"/></svg>
       </button>
-      <div class="lb-pagination__pages">${pageBtns}</div>
+      ${middle}
       <button class="lb-page lb-page--nav" data-lb-page-next ${nextDisabled ? 'disabled' : ''} aria-label="${nextLbl}">
         <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4 L10 8 L6 12"/></svg>
       </button>
@@ -256,6 +267,21 @@ function bindPagination(body, total) {
   if (next) next.addEventListener('click', () => {
     if (currentPage < total - 1) { currentPage++; renderRows(); }
   });
+  // Jump-to-page input (shown when total > 6)
+  const input = body.querySelector('[data-lb-page-input]');
+  if (input) {
+    const go = () => {
+      let v = parseInt(input.value, 10);
+      if (!Number.isFinite(v)) { input.value = currentPage + 1; return; }
+      v = Math.min(total, Math.max(1, v)) - 1;
+      if (v !== currentPage) { currentPage = v; renderRows(); }
+      else input.value = currentPage + 1;
+    };
+    input.addEventListener('change', go);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); go(); }
+    });
+  }
 }
 
 // Phase 2: compare each row's points to the previous snapshot. Rows whose

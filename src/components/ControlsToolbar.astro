@@ -4,55 +4,10 @@ const { copy = enCopy } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const homeHref = `${base}/`;
 const logoSrc = `${base}/wbs-white.svg`;
-const h = copy.hero || {};
 ---
 
-<header class="cc-topbar" data-topbar aria-label="Site header">
-  <div class="cc-topbar__inner">
-    <a href={homeHref} class="cc-topbar__brand" aria-label="Warren Bowie & Smith">
-      <img class="cc-topbar__logo" src={logoSrc} alt="Warren Bowie & Smith" width="160" height="48" />
-    </a>
-
-    <div class="cc-topbar__controls">
-      {h.target_date && (
-        <div class="cc-mini-cd" data-countdown data-target={h.target_date} aria-label="Time remaining">
-          <span class="cc-mini-cd__live" aria-hidden="true"></span>
-          <span class="cc-mini-cd__bracket" aria-hidden="true">[</span>
-          <span class="cc-mini-cd__cell"><span data-d>00</span><i>d</i></span>
-          <span class="cc-mini-cd__sep" aria-hidden="true">:</span>
-          <span class="cc-mini-cd__cell"><span data-h>00</span><i>h</i></span>
-          <span class="cc-mini-cd__sep" aria-hidden="true">:</span>
-          <span class="cc-mini-cd__cell"><span data-m>00</span><i>m</i></span>
-          <span class="cc-mini-cd__sep" aria-hidden="true">:</span>
-          <span class="cc-mini-cd__cell"><span data-s>00</span><i>s</i></span>
-          <span class="cc-mini-cd__bracket" aria-hidden="true">]</span>
-        </div>
-      )}
-    </div>
-  </div>
+<header class="cc-topbar cc-topbar--static" aria-label="Site header">
+  <a href={homeHref} class="cc-topbar__brand" aria-label="Warren Bowie & Smith">
+    <img class="cc-topbar__logo" src={logoSrc} alt="Warren Bowie & Smith" width="172" height="52" />
+  </a>
 </header>
-
-<script>
-  (function () {
-    // Topbar scroll state
-    const bar = document.querySelector('[data-topbar]');
-    if (!bar) return;
-    let scheduled = false;
-    let lastScrolled = null;
-    const check = () => {
-      scheduled = false;
-      const scrolled = (window.scrollY || document.documentElement.scrollTop || 0) > 8;
-      if (scrolled === lastScrolled) return;
-      lastScrolled = scrolled;
-      bar.classList.toggle('is-scrolled', scrolled);
-    };
-    const schedule = () => {
-      if (scheduled) return;
-      scheduled = true;
-      setTimeout(check, 16);
-    };
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule);
-    check();
-  })();
-</script>

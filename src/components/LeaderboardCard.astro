@@ -2,14 +2,38 @@
 import enCopy from '../data/copy.en.json';
 const { copy = enCopy } = Astro.props;
 const s = copy.leaderboard;
+const p = copy.prizes;
+const tierKey = ['first', 'second', 'third'];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="cc-leaderboard" id="leaderboard" aria-label={s.title}>
   <div class="cc-wrap">
     <h2 class="sr-only">{s.title}</h2>
-    <div
+
+    <div class="cc-lb-layout">
+      <!-- LEFT: vertical prize rail (1st / 2nd / 3rd) -->
+      <aside class="cc-prize-rail reveal" style="--reveal-delay: 80ms;" aria-label={p.title}>
+        <div class="cc-prize-rail__cup" aria-hidden="true">
+          <span class="cc-prize-rail__aura"></span>
+          <picture>
+            <source srcset={`${base}/hero-trophy.webp`} type="image/webp" />
+            <img src={`${base}/hero-trophy.png`} alt="" width="668" height="834" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+        {p.items.map((item, i) => (
+          <div class={`cc-prize-rail__tier cc-prize-rail__tier--${tierKey[i]}`} data-place={item.place}>
+            <span class="cc-prize-rail__tag">{item.place} {p.place_word || 'place'}</span>
+            <div class="cc-prize-rail__amt bt-num"><span data-countup>{item.amount}</span></div>
+            {item.label && <span class="cc-prize-rail__lbl">{item.label}</span>}
+          </div>
+        ))}
+      </aside>
+
+      <!-- RIGHT: leaderboard table -->
+      <div
       class="bt-card lb-card reveal"
-      style="--reveal-delay: 120ms;"
+      style="--reveal-delay: 160ms;"
       data-you-label={s.you_label}
       data-loading-text={s.loading_state}
       data-empty-text={s.empty_state}
@@ -48,6 +72,7 @@ const s = copy.leaderboard;
 
       <div class="lb-card__rows" data-lb-body>
         <div class="lb-card__loading">{s.loading_state}</div>
+      </div>
       </div>
     </div>
   </div>
@@ -208,4 +233,5 @@ const s = copy.leaderboard;
 
 <script>
   import '../scripts/leaderboard.js';
+  import '../scripts/count-up.js';
 </script>

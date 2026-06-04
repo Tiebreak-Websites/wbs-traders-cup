@@ -1,0 +1,764 @@
+/* ============================================================
+   REDESIGN v2 — WB&S Traders Cup
+   Restructures layout, section rhythm and the key sections so the
+   page reads as a distinct site from the 200invest sibling. Brand
+   tokens, colours, fonts, leaderboard + FAQ mechanics, the countdown
+   and CTA tracking are all preserved — only the visual structure
+   changes. Loaded after global.css, so it overrides selected rules.
+   ============================================================ */
+
+/* ---- Unified site content width — every section aligns to this grid ---- */
+.cc-page .cc-wrap { max-width: 1350px; padding: 0 clamp(20px, 5vw, 56px); }
+
+/* ---- Section heads: larger, more air ---- */
+.cc-page .cc-section-title { font-size: clamp(30px, 3.4vw, 50px); letter-spacing: -0.03em; }
+.cc-page .cc-section-head { margin-bottom: clamp(28px, 4vw, 52px); gap: 14px; }
+
+/* ============================================================
+   HEADER — static, logo only (no sticky navigation)
+   ============================================================ */
+.cc-topbar.cc-topbar--static {
+  position: absolute !important;   /* overlay the hero so its bg fills the top */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  background: transparent !important;
+  border-bottom: 0 !important;
+  -webkit-backdrop-filter: none !important;
+          backdrop-filter: none !important;
+  padding: clamp(18px, 2.6vw, 30px) clamp(20px, 5vw, 56px) 0 !important;
+  display: flex;
+  justify-content: center;
+}
+.cc-topbar--static .cc-topbar__brand { display: inline-flex; align-items: center; }
+.cc-topbar--static .cc-topbar__logo { height: clamp(26px, 3vw, 36px); width: auto; }
+
+/* ============================================================
+   HERO — centered "poster": cup centerpiece + bold countdown
+   ============================================================ */
+.cc-hero.cc-hero--center {
+  display: flex !important;
+  justify-content: center;
+  min-height: 0 !important;
+  /* top padding clears the absolutely-positioned logo */
+  padding: clamp(74px, 8vw, 108px) clamp(20px, 5vw, 56px) clamp(48px, 7vw, 96px) !important;
+}
+.cc-hero--center .cc-hero__center {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(14px, 2vw, 22px);
+}
+
+/* Cup centerpiece + rotating aura */
+.cc-hero--center .cc-hero__cup {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: clamp(2px, 1vw, 10px);
+}
+.cc-hero--center .cc-hero__trophy-img {
+  position: relative;
+  z-index: 1;
+  width: auto !important;
+  height: auto !important;
+  max-height: clamp(260px, 36vw, 460px);
+  max-width: 100%;
+  display: block;
+  /* The cup's .reveal wrapper handles the entrance; neutralise the legacy
+     per-image reveal rule (it only un-hid inside the old .cc-hero__visual). */
+  opacity: 1 !important;
+  transform: none !important;
+  filter: drop-shadow(0 18px 38px rgba(0, 0, 0, 0.45));
+}
+.cc-hero--center .cc-hero__aura {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 118%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg,
+    rgba(255,134,28,0) 0deg, rgba(255,134,28,0.45) 50deg,
+    rgba(255,175,60,0.45) 90deg, rgba(255,175,60,0) 140deg,
+    rgba(255,158,71,0.40) 200deg, rgba(255,175,60,0.38) 240deg,
+    rgba(255,175,60,0) 280deg, rgba(255,134,28,0.38) 330deg,
+    rgba(255,134,28,0) 360deg);
+  -webkit-mask: radial-gradient(closest-side, #000 16%, rgba(0,0,0,0.55) 46%, transparent 78%);
+          mask: radial-gradient(closest-side, #000 16%, rgba(0,0,0,0.55) 46%, transparent 78%);
+  filter: blur(14px);
+  opacity: 0.6;
+  pointer-events: none;
+  animation: ccTrophyAuraBg 30s linear infinite;
+}
+
+/* Headline + copy centered */
+.cc-hero--center .cc-headline { align-items: center; max-width: none; margin: 0; }
+/* "Trade for" — regular weight (not bold) */
+.cc-hero--center .cc-headline__lead { font-weight: 400 !important; }
+/* "$26,000!" — bigger, golden-orange gradient with glow + slow shimmer */
+.cc-hero--center .cc-headline__amt {
+  font-size: clamp(64px, 11vw, 132px) !important;
+  font-weight: 800;
+  line-height: 1.02;
+  background: linear-gradient(180deg, #FFE7A6 0%, #FFC061 32%, #FF9A2E 60%, #F07E1B 82%, #D96A12 100%);
+  background-size: 100% 220%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 4px 14px rgba(255, 134, 28, 0.35)) drop-shadow(0 10px 34px rgba(255, 134, 28, 0.28));
+  animation: ccAmtShimmer 6.5s ease-in-out infinite;
+}
+.cc-hero--center .cc-headline__ast {
+  -webkit-text-fill-color: var(--bt-accent);
+          color: var(--bt-accent);
+  filter: none;
+}
+@keyframes ccAmtShimmer {
+  0%, 100% { background-position: 50% 0%; }
+  50%      { background-position: 50% 100%; }
+}
+.cc-hero--center .cc-headline-sub { text-align: center !important; margin: 0 !important; max-width: 720px; }
+.cc-hero--center .cc-subhead { text-align: center !important; max-width: 760px; margin: 0 auto; }
+.cc-hero--center .cc-hero__cta-row { justify-content: center !important; margin-top: clamp(6px, 1.2vw, 12px); }
+/* Sole CTA — big, prominent, dark text on orange */
+.cc-hero--center .cc-hero__cta-row .cc-hero__cta.bt-btn {
+  height: 68px;
+  padding: 0 56px;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--bt-accent-ink) !important;   /* dark text */
+}
+.cc-hero--center .cc-hero__cta-row .cc-hero__cta.bt-btn:hover { color: var(--bt-accent-ink) !important; }
+.cc-hero--center .cc-hero__cta-note { margin-top: 4px; }
+
+/* Centered hero background — arena centred under the cup */
+.cc-hero--center .cc-hero__bg-fx {
+  background: radial-gradient(55% 45% at 50% 12%, rgba(255, 134, 28, 0.12), transparent 62%);
+}
+@media (min-width: 641px) {
+  .cc-hero--center .cc-hero__bg-img img,
+  .cc-hero--center .cc-hero__bg-img picture { object-position: center 28% !important; }
+}
+
+/* Countdown — bold centered tiles (drives [data-countdown] via countdown.js) */
+.cc-cd2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(10px, 1.4vw, 16px);
+  margin-top: clamp(4px, 1vw, 10px);
+}
+.cc-cd2__label {
+  font-family: var(--bt-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--bt-text-mid);
+}
+.cc-cd2__tiles { display: flex; gap: clamp(8px, 1.1vw, 14px); }
+.cc-cd2__tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: clamp(80px, 8vw, 108px);   /* fixed width — numbers don't shift */
+  padding: clamp(14px, 1.5vw, 20px) 8px clamp(10px, 1.2vw, 14px);
+  border-radius: var(--bt-r-md);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: linear-gradient(180deg, rgba(66, 82, 90, 0.62) 0%, rgba(26, 36, 41, 0.88) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 18px 38px -20px rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+}
+/* Glowing orange accent line across the top of each tile */
+.cc-cd2__tile::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 16%;
+  right: 16%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--bt-accent), transparent);
+  box-shadow: 0 0 10px 1px rgba(255, 134, 28, 0.6);
+}
+.cc-cd2__num {
+  display: inline-block;
+  font-size: clamp(34px, 4.4vw, 56px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--bt-text-hi);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+/* Smooth roll-in when a digit changes (countdown.js toggles .is-tick) */
+.cc-cd2__num.is-tick { animation: ccNumRoll .5s cubic-bezier(.2, .8, .3, 1); }
+@keyframes ccNumRoll {
+  0%   { transform: translateY(-42%); opacity: 0; }
+  55%  { opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.cc-cd2__unit {
+  font-family: var(--bt-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bt-text-dim);
+}
+
+@media (max-width: 640px) {
+  /* Render the whole centered hero immediately on mobile so no element
+     (cup, countdown, CTA) can get stuck in a pre-reveal hidden state. */
+  .cc-hero--center .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .cc-cd2__tiles { gap: 8px; width: 100%; max-width: 380px; }
+  .cc-cd2__tile { width: auto; flex: 1 1 0; }
+}
+
+/* ============================================================
+   LEADERBOARD — prize rail (left) + tighter table (right)
+   ============================================================ */
+.cc-page .cc-leaderboard { padding: clamp(4px, 1vw, 14px) 0 0; }
+
+.cc-lb-layout {
+  display: grid;
+  grid-template-columns: minmax(440px, 520px) minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 56px);
+  align-items: start;
+  width: 100%;           /* fills the unified site grid (.cc-wrap) */
+}
+/* Tighter row columns so the table doesn't leave dead space mid-row */
+.cc-lb-layout .lb-card {
+  width: 100%;
+  --lb-cols: 40px minmax(90px, 1fr) 64px 78px;
+  --lb-gap: 10px;
+  padding: clamp(16px, 1.6vw, 22px);
+}
+
+/* Table restyle — spaced rounded "card rows" instead of a flat hairline
+   list (distinct from the 200invest table). */
+.cc-lb-layout .lb-card__rows { display: flex; flex-direction: column; gap: 7px; }
+.cc-lb-layout .bt-lb-row,
+.cc-lb-layout .bt-lb-row + .bt-lb-row {
+  border: 1px solid var(--bt-bg-line);
+  border-radius: var(--bt-r-md);
+  padding: 13px var(--lb-pad-x);
+  background: rgba(255, 255, 255, 0.018);
+  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+}
+.cc-lb-layout .bt-lb-row:hover {
+  background: var(--bt-bg-2);
+  border-color: var(--bt-bg-line-2);
+  transform: translateX(3px);
+}
+/* Top-3 keep a tinted card + coloured border (override base + global :has) */
+.cc-lb-layout .bt-lb-row:has(.bt-rank-1) {
+  background: linear-gradient(90deg, rgba(255, 134, 28, 0.20), rgba(255, 134, 28, 0.05) 62%, rgba(255, 255, 255, 0.018));
+  border: 1px solid var(--bt-accent);
+  padding-left: var(--lb-pad-x);
+}
+.cc-lb-layout .bt-lb-row:has(.bt-rank-2) {
+  background: linear-gradient(90deg, rgba(224, 220, 211, 0.14), rgba(255, 255, 255, 0.018) 62%);
+  border: 1px solid var(--bt-bg-line-2);
+  padding-left: var(--lb-pad-x);
+}
+.cc-lb-layout .bt-lb-row:has(.bt-rank-3) {
+  background: linear-gradient(90deg, rgba(230, 160, 90, 0.14), rgba(255, 255, 255, 0.018) 62%);
+  border: 1px solid var(--bt-bg-line-2);
+  padding-left: var(--lb-pad-x);
+}
+/* Rank cells redesigned — circular metallic medals for the top 3 (distinct
+   from the 200invest square badges), plain circle for the rest. */
+.cc-lb-layout .bt-rank {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-family: var(--bt-mono);
+  font-size: 13px;
+  background: var(--bt-bg-3);
+  border: 1px solid var(--bt-bg-line-2);
+  color: var(--bt-text-mid);
+}
+.cc-lb-layout .bt-rank-1 {
+  background: radial-gradient(circle at 50% 30%, #FFEFB0 0%, #F1C964 46%, #C99A3F 100%);
+  color: #3A2A0A;
+  border: 0;
+  box-shadow: 0 0 0 2px rgba(255, 206, 102, 0.30), 0 5px 14px -3px rgba(241, 201, 100, 0.75);
+}
+.cc-lb-layout .bt-rank-2 {
+  background: radial-gradient(circle at 50% 30%, #F6F8FB 0%, #CBCFD9 46%, #9CA2B0 100%);
+  color: #1A1B2A;
+  border: 0;
+  box-shadow: 0 0 0 2px rgba(201, 205, 215, 0.28), 0 5px 12px -3px rgba(201, 205, 215, 0.55);
+}
+.cc-lb-layout .bt-rank-3 {
+  background: radial-gradient(circle at 50% 30%, #F2CCA1 0%, #CE9461 46%, #A66C3C 100%);
+  color: #2A1707;
+  border: 0;
+  box-shadow: 0 0 0 2px rgba(206, 148, 97, 0.28), 0 5px 12px -3px rgba(206, 148, 97, 0.55);
+}
+
+/* Nicer search field */
+.cc-lb-layout .lb-filter {
+  height: 42px;
+  padding: 0 16px;
+  gap: 10px;
+  border-radius: var(--bt-r-pill);
+  background: var(--bt-bg-0);
+  border: 1px solid var(--bt-bg-line-2);
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+/* On focus the WHOLE field lights up with the orange gradient, not just the
+   inner typing area. */
+.cc-lb-layout .lb-filter:focus-within {
+  border-color: var(--bt-accent);
+  background: linear-gradient(90deg,
+    rgba(255, 134, 28, 0.24) 0%,
+    rgba(255, 134, 28, 0.08) 55%,
+    rgba(255, 134, 28, 0.02) 100%);
+  box-shadow: 0 0 0 3px rgba(255, 134, 28, 0.18);
+}
+.cc-lb-layout .lb-filter__icon { width: 16px; height: 16px; color: var(--bt-accent); }
+.cc-lb-layout .lb-filter:focus-within .lb-filter__input { color: var(--bt-text-hi); }
+.cc-lb-layout .lb-filter:focus-within .lb-filter__input::placeholder { color: rgba(255, 255, 255, 0.65); }
+.cc-lb-layout .lb-filter__input { font-size: 14px; width: 190px; max-width: 42vw; }
+
+/* Pagination — jump-to-page input (shown when > 6 pages) */
+.lb-pagination__jump { display: inline-flex; align-items: center; gap: 9px; }
+.lb-page__input {
+  width: 56px;
+  height: 36px;
+  text-align: center;
+  border-radius: var(--bt-r-sm);
+  border: 1px solid var(--bt-bg-line-2);
+  background: var(--bt-bg-0);
+  color: var(--bt-text-hi);
+  font: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  -moz-appearance: textfield;
+}
+.lb-page__input::-webkit-outer-spin-button,
+.lb-page__input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.lb-page__input:focus {
+  outline: none;
+  border-color: var(--bt-accent);
+  box-shadow: 0 0 0 3px rgba(255, 134, 28, 0.18);
+}
+.lb-page__of {
+  font-family: var(--bt-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--bt-text-dim);
+}
+
+/* Vertical prize rail */
+.cc-prize-rail { display: flex; flex-direction: column; gap: 12px; }
+/* Trophy sits atop the rail, above the 1st-place card */
+.cc-prize-rail__cup {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 0 0 4px;
+  isolation: isolate;
+}
+.cc-prize-rail__cup img {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  height: auto;
+  max-height: 480px;
+  max-width: 100%;
+  display: block;
+  filter: drop-shadow(0 22px 44px rgba(0, 0, 0, 0.55));
+}
+/* Rotating orange "light rays" aura behind the TOP (cup) of the trophy,
+   with a soft pulsing glow halo underneath it. */
+.cc-prize-rail__aura {
+  position: absolute;
+  left: 50%;
+  top: 26%;                 /* sits behind the cup at the top of the trophy */
+  width: 80%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+/* Soft pulsing orange glow halo */
+.cc-prize-rail__aura::before {
+  content: "";
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(255, 142, 32, 0.62) 0%,
+    rgba(255, 134, 28, 0.24) 40%,
+    transparent 72%);
+  filter: blur(16px);
+  animation: ccAuraPulse 3.6s ease-in-out infinite;
+}
+/* Rotating sunburst of orange light rays */
+.cc-prize-rail__aura::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg,
+    rgba(255, 180, 74, 0) 0deg 9deg,
+    rgba(255, 180, 74, 0.6) 11deg 15deg,
+    rgba(255, 180, 74, 0) 17deg 30deg);
+  -webkit-mask: radial-gradient(circle, #000 13%, rgba(0, 0, 0, 0.55) 42%, transparent 75%);
+          mask: radial-gradient(circle, #000 13%, rgba(0, 0, 0, 0.55) 42%, transparent 75%);
+  filter: blur(5px);
+  opacity: 0.78;
+  animation: ccAuraSpin 16s linear infinite;
+}
+@keyframes ccAuraSpin { to { transform: rotate(360deg); } }
+@keyframes ccAuraPulse {
+  0%, 100% { opacity: 0.6; transform: scale(0.95); }
+  50%      { opacity: 1;   transform: scale(1.07); }
+}
+.cc-prize-rail__tier {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: clamp(20px, 2vw, 26px) clamp(20px, 2vw, 26px);
+  border-radius: var(--bt-r-md);
+  border: 1px solid var(--bt-bg-line);
+  background: linear-gradient(180deg, var(--bt-bg-1), var(--bt-bg-2));
+  overflow: hidden;
+}
+.cc-prize-rail__tier--first {
+  border-color: var(--bt-accent);
+  background:
+    radial-gradient(130% 120% at 100% 0%, rgba(255, 158, 71, 0.18) 0%, transparent 60%),
+    linear-gradient(150deg, rgba(255, 134, 28, 0.14) 0%, rgba(255, 134, 28, 0.03) 100%),
+    linear-gradient(180deg, var(--bt-bg-1), var(--bt-bg-2));
+  box-shadow: 0 18px 44px -22px rgba(255, 134, 28, 0.5);
+}
+.cc-prize-rail__tier--first::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--bt-accent), #FFD37A, var(--bt-accent), transparent);
+}
+.cc-prize-rail__tag {
+  font-family: var(--bt-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bt-text-dim);
+}
+.cc-prize-rail__tier--first .cc-prize-rail__tag { color: var(--bt-accent); }
+.cc-prize-rail__tier--second .cc-prize-rail__tag { color: #C8C5BD; }
+.cc-prize-rail__tier--third .cc-prize-rail__tag { color: #C68A55; }
+.cc-prize-rail__amt {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--bt-text-hi);
+}
+.cc-prize-rail__tier--first .cc-prize-rail__amt {
+  font-size: 56px;
+  background: linear-gradient(120deg, #E0701A, #FF861C 45%, #FFD37A);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.cc-prize-rail__lbl { font-size: 13px; font-weight: 600; color: var(--bt-text-mid); }
+
+@media (max-width: 900px) {
+  .cc-lb-layout { grid-template-columns: 1fr; gap: 16px; max-width: 640px; }
+  .cc-prize-rail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .cc-prize-rail__cup { display: none; }   /* hero already shows the cup */
+  .cc-prize-rail__amt { font-size: 22px; }
+  .cc-prize-rail__tier--first .cc-prize-rail__amt { font-size: 26px; }
+  .cc-prize-rail__lbl { display: none; }
+}
+@media (max-width: 460px) {
+  .cc-prize-rail { grid-template-columns: 1fr; }
+  .cc-prize-rail__amt,
+  .cc-prize-rail__tier--first .cc-prize-rail__amt { font-size: 28px; }
+}
+
+/* ============================================================
+   HOW IT WORKS — reverted to the original stacked 4-step design
+   (no timeline override here; global.css .cc-how__steps applies)
+   ============================================================ */
+/* Points formula: widen the equation + calc to fill the section grid
+   (was capped at 980px, narrower than every other section). */
+.cc-formula__equation,
+.cc-formula__calc { max-width: 100% !important; }
+
+/* ============================================================
+   PRIZES (legacy featured-champion block — section removed from the
+   page; rules kept harmless/unused)
+   ============================================================ */
+.cc-prizes { padding: clamp(56px, 7vw, 96px) 0 clamp(40px, 5vw, 64px) !important; position: relative; }
+
+.cc-podium2 {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: clamp(14px, 1.6vw, 20px);
+  align-items: stretch;
+}
+.cc-podium2__champ {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  padding: clamp(28px, 4vw, 56px);
+  border-radius: var(--bt-r-md);
+  border: 1px solid var(--bt-accent);
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(130% 120% at 100% 0%, rgba(255, 158, 71, 0.20) 0%, transparent 55%),
+    linear-gradient(150deg, rgba(255, 134, 28, 0.16) 0%, rgba(255, 134, 28, 0.03) 100%),
+    linear-gradient(180deg, var(--bt-bg-1), var(--bt-bg-2));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 28px 70px -28px rgba(255, 134, 28, 0.45);
+}
+.cc-podium2__champ::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--bt-accent) 40%, #FFD37A 50%, var(--bt-accent) 60%, transparent);
+  box-shadow: 0 0 16px 1px rgba(255, 134, 28, 0.55);
+  z-index: 2;
+}
+.cc-podium2__champ::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.08) 45%, rgba(255, 215, 122, 0.10) 50%, rgba(255, 255, 255, 0.08) 55%, transparent 70%);
+  background-size: 250% 100%;
+  background-position: 150% 0;
+  pointer-events: none;
+  animation: ccPrizeShine 6.5s ease-in-out infinite;
+  z-index: 0;
+}
+.cc-podium2__rest {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: clamp(14px, 1.6vw, 20px);
+}
+.cc-podium2__row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: clamp(20px, 2.4vw, 32px);
+  border-radius: var(--bt-r-md);
+  border: 1px solid var(--bt-bg-line);
+  background: linear-gradient(180deg, var(--bt-bg-1), var(--bt-bg-2));
+  transition: border-color .25s ease, transform .25s ease;
+}
+.cc-podium2__row:hover { border-color: var(--bt-bg-line-2); transform: translateY(-2px); }
+
+.cc-podium2 .cc-podium2__tag {
+  font-family: var(--bt-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bt-text-dim);
+  position: relative;
+  z-index: 2;
+}
+.cc-podium2__champ .cc-podium2__tag { color: var(--bt-accent); }
+.cc-podium2__row--second .cc-podium2__tag { color: #C8C5BD; }
+.cc-podium2__row--third .cc-podium2__tag { color: #C68A55; }
+
+.cc-podium2 .cc-podium2__amt {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, #FFFFFF 0%, #C8CBD0 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.cc-podium2__champ .cc-podium2__amt {
+  font-size: clamp(56px, 7vw, 108px);
+  background: linear-gradient(120deg, #E0701A 0%, #FF861C 45%, #FFD37A 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 8px 24px rgba(255, 134, 28, 0.28));
+}
+.cc-podium2__row .cc-podium2__amt { font-size: clamp(34px, 4vw, 56px); }
+
+.cc-podium2 .cc-podium2__lbl {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--bt-text-mid);
+  position: relative;
+  z-index: 2;
+}
+.cc-podium2__champ .cc-podium2__lbl { color: var(--bt-text-hi); font-size: 14px; }
+
+@media (max-width: 860px) {
+  .cc-podium2 { grid-template-columns: 1fr; }
+  .cc-podium2__rest { grid-template-columns: 1fr 1fr; grid-template-rows: none; }
+}
+@media (max-width: 520px) {
+  .cc-podium2__rest { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   FAQ — two-pane help center (question list + answer panel)
+   ============================================================ */
+.cc-faq { padding: clamp(56px, 7vw, 96px) 0 clamp(48px, 6vw, 72px) !important; }
+.cc-page .cc-faq__wrap { max-width: 1350px; }
+
+.cc-faq2 {
+  display: grid;
+  grid-template-columns: minmax(300px, 400px) 1fr;
+  gap: clamp(18px, 2.4vw, 40px);
+  align-items: start;
+}
+
+/* Left: question list */
+.cc-faq2__list { display: flex; flex-direction: column; gap: 8px; }
+.cc-faq2__q {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  padding: 16px 18px;
+  border: 1px solid var(--bt-bg-line);
+  border-radius: var(--bt-r-md);
+  background: var(--bt-bg-1);
+  color: var(--bt-text-mid);
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease, color .18s ease;
+}
+.cc-faq2__q:hover { border-color: var(--bt-bg-line-2); color: var(--bt-text-hi); }
+.cc-faq2__q.is-active {
+  border-color: var(--bt-accent);
+  color: var(--bt-text-hi);
+  /* orange gradient "light" sweep, no drop shadow */
+  background: linear-gradient(90deg,
+    rgba(255, 134, 28, 0.30) 0%,
+    rgba(255, 134, 28, 0.12) 45%,
+    rgba(255, 134, 28, 0.02) 100%);
+  box-shadow: none;
+}
+.cc-faq2__q-index {
+  font-family: var(--bt-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--bt-text-dim);
+  flex: none;
+}
+.cc-faq2__q.is-active .cc-faq2__q-index { color: var(--bt-accent); }
+.cc-faq2__q-text { flex: 1; }
+.cc-faq2__q-arrow {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  color: var(--bt-accent);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity .18s ease, transform .18s ease;
+}
+.cc-faq2__q.is-active .cc-faq2__q-arrow { opacity: 1; transform: translateX(0); }
+
+/* Right: answer panel */
+.cc-faq2__panel {
+  position: relative;
+  padding: clamp(26px, 3vw, 44px);
+  border: 1px solid var(--bt-bg-line);
+  border-radius: var(--bt-r-md);
+  background: linear-gradient(180deg, var(--bt-bg-1), var(--bt-bg-2));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  min-height: 100%;
+  overflow: hidden;
+}
+.cc-faq2__panel::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--bt-accent), transparent);
+}
+.cc-faq2__answer { display: none; }
+.cc-faq2__answer.is-active { display: block; animation: ccFaqFade .35s ease; }
+.cc-faq2__answer-tag {
+  display: inline-block;
+  font-family: var(--bt-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--bt-accent);
+  margin-bottom: 10px;
+}
+.cc-faq2 .cc-faq2__answer-q {
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--bt-text-hi);
+  margin: 0 0 14px;
+}
+.cc-faq2 .cc-faq2__answer-d {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--bt-text-mid);
+  margin: 0;
+  max-width: 720px;
+}
+@keyframes ccFaqFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 760px) {
+  .cc-faq2 { grid-template-columns: 1fr; gap: 14px; }
+  .cc-faq2__panel { min-height: 0; }
+}
+
+/* Footer — centered, with breathing room between the T&C link + disclaimer.
+   Needs .cc-page prefix to beat the `.bt p { margin: 0 }` reset (0,1,1). */
+.cc-page .cc-faq__footer { margin-top: clamp(48px, 6vw, 80px); text-align: center; }
+.cc-page .cc-faq__legal { margin: 0 auto 26px; }
+.cc-page .cc-faq__compliance { margin: 18px auto 0; max-width: 760px; }
