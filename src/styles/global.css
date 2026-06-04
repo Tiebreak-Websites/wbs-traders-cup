@@ -1323,12 +1323,12 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
 /* Keep the (wide) Poppins headline from clipping on narrow phones */
 @media (max-width: 600px) {
   .cc-headline__lead { font-size: 22px; }
-  .cc-headline__amt { font-size: 52px; }
+  .cc-headline__amt { font-size: 66px; }
   .cc-headline-sub { font-size: 20px; }
 }
 @media (max-width: 400px) {
   .cc-headline__lead { font-size: 20px; }
-  .cc-headline__amt { font-size: 44px; }
+  .cc-headline__amt { font-size: 56px; }
 }
 
 /* ============================================================
@@ -2912,10 +2912,27 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 .cc-fab-card__cta-arrow svg { width: 100%; height: 100%; }
 
 @media (max-width: 640px) {
-  .cc-fab-card { right: 12px; bottom: 12px; width: calc(100% - 24px); max-width: 320px; }
-  .cc-fab-card__cd { padding: 12px 14px 10px; }
+  /* Full-width bar pinned to the bottom edge of the viewport */
+  .cc-fab-card {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: none;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .cc-fab-card.is-hidden { transform: translateY(100%); }
+  /* Center the countdown (label + timer) within the full-width bar */
+  .cc-fab-card__cd { padding: 12px 16px 10px; justify-content: center; gap: 10px; }
+  .cc-fab-card__cd-row { width: auto; }
   .cc-fab-card__cd-cell span { font-size: 16px; }
-  .cc-fab-card__cta { padding: 12px 16px; font-size: 12px; }
+  /* Center the CTA label and drop the arrow */
+  .cc-fab-card__cta { padding: 14px 16px; font-size: 12px; justify-content: center; }
+  .cc-fab-card__cta-lbl { flex: none; }
+  .cc-fab-card__cta-arrow { display: none; }
 }
 
 /* Retired old SVG-ring FAB (kept rules below for legacy class compatibility) */
@@ -3009,6 +3026,13 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
      left of the source image stays behind the copy column. */
   object-position: 70% center;
   display: block;
+}
+/* Mobile uses a dedicated portrait background — fit the whole image
+   (no zoom/crop), anchored to the top. The dark page bg continues
+   seamlessly below the image's dark floor. */
+@media (max-width: 640px) {
+  .cc-hero__bg-img picture,
+  .cc-hero__bg-img img { object-fit: contain; object-position: top center; }
 }
 /* Soft orange accents over the bg image */
 .cc-hero__bg-fx {
@@ -3168,6 +3192,36 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   .cc-hero .cc-hero__grid { padding: 0 18px; }
   .cc-hero__visual { min-height: 320px; }
   .cc-hero__trophy-img { max-height: 360px; }
+
+  /* "Are you the next trading Champion?" stays on one row */
+  .cc-hero .cc-headline-sub {
+    white-space: nowrap !important;
+    font-size: clamp(13px, 4.3vw, 18px) !important;
+  }
+
+  /* Show the timer + CTA immediately (no reveal animation) so they're
+     never stuck invisible above the fold on mobile */
+  .cc-hero .cc-countdown.reveal,
+  .cc-hero .cc-hero__cta-row.reveal,
+  .cc-hero .cc-hero__cta-note.reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Center the "UNTIL END OF THE CHAMPIONSHIP" label + countdown */
+  .cc-hero .cc-countdown.cc-countdown--strip { align-items: center; }
+  .cc-hero .cc-countdown__lbl-strip { text-align: center; }
+
+  /* Bigger primary CTA on mobile */
+  .cc-hero__cta-row .cc-hero__cta.bt-btn {
+    height: 56px;
+    padding: 0 34px;
+    font-size: 16px;
+  }
+
+  /* Tighten the gap between the hero (credit T&C note) and the prizes */
+  .cc-hero__copy { margin-bottom: 20px; }
 }
 
 /* ---- Prize cards: drop big numerals + section chrome ------ */

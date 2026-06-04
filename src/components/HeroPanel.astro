@@ -16,6 +16,10 @@ const u = h.cd_units || { days: 'Days', hours: 'Hours', minutes: 'Minutes', seco
        pick WebP when available; PNG is the fallback. -->
   <div class="cc-hero__bg-img" aria-hidden="true">
     <picture>
+      <!-- Mobile portrait crop -->
+      <source media="(max-width: 640px)" srcset={`${base}/hero-bg-mobile.webp`} type="image/webp" />
+      <source media="(max-width: 640px)" srcset={`${base}/hero-bg-mobile.png`} type="image/png" />
+      <!-- Desktop / tablet -->
       <source srcset={`${base}/hero-bg.webp`} type="image/webp" />
       <img src={`${base}/hero-bg.png`} alt="" loading="eager" decoding="async" />
     </picture>
