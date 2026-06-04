@@ -1,15 +1,82 @@
 // Champion Points leaderboard — single flat board sorted by points.
-// Reads from public/data/leaderboard-default.json. Polls every 30s.
-// Names are masked server-side ("Ahmed A***i"). Never expose raw PII.
-// If the current_user is outside the top N visible rows, render a
-// divider + their pinned row below so they always see where they stand.
+// Data comes from the Plexop n8n webhook (brand=wb_s, lang=<page lang>).
+// Names arrive already masked to initials ("E.C."). Never expose raw PII.
+// Polls every 30s.
 
 const BASE_URL = import.meta.env.BASE_URL.replace(/\/$/, '');
-const BASE = `${BASE_URL}/data`;
 const FLAGS = `${BASE_URL}/flags`;
-const FEED = 'leaderboard-default.json';
+const FEED_URL = 'https://n8n.plexop.dev/webhook/traders-cup';
+const BRAND = 'wb_s';
 const POLL_MS = 30 * 1000;
 const TOP_N = 10;            // rows per page
+
+// The lang query param mirrors the current page's <html lang> (hreflang).
+function feedUrl() {
+  const lang = (document.documentElement.getAttribute('lang') || 'en')
+    .toLowerCase()
+    .split('-')[0];
+  const u = new URL(FEED_URL);
+  u.searchParams.set('brand', BRAND);
+  u.searchParams.set('lang', lang);
+  return u.toString();
+}
+
+// Full country name (EN/ES/PT variants) → ISO-3166 alpha-2 (matches /flags/*.svg).
+const COUNTRY_CODE = {
+  argentina: 'ar', brazil: 'br', brasil: 'br', chile: 'cl', colombia: 'co',
+  mexico: 'mx', peru: 'pe', uruguay: 'uy', venezuela: 've',
+  spain: 'es', espana: 'es', portugal: 'pt',
+  'united kingdom': 'gb', uk: 'gb', 'great britain': 'gb', england: 'gb',
+  ireland: 'ie', france: 'fr', francia: 'fr', franca: 'fr',
+  germany: 'de', alemania: 'de', alemanha: 'de', italy: 'it', italia: 'it',
+  'united arab emirates': 'ae', uae: 'ae', bahrain: 'bh',
+  egypt: 'eg', egipto: 'eg', egito: 'eg', jordan: 'jo', kuwait: 'kw',
+  lebanon: 'lb', libano: 'lb', oman: 'om', qatar: 'qa',
+  'saudi arabia': 'sa', 'arabia saudita': 'sa',
+};
+const DIACRITICS = new RegExp('[\\u0300-\\u036f]', 'g');
+const normalizeName = (s) => String(s || '')
+  .trim()
+  .toLowerCase()
+  .normalize('NFD')
+  .replace(DIACRITICS, '');
+const countryCode = (name) => COUNTRY_CODE[normalizeName(name)] || '';
+const escapeHtml = (s) => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;');
+
+// Map the n8n webhook rows (a flat array) → the internal leaderboard shape.
+// Sort by points desc and assign competition ranks (ties share the lower rank).
+function transform(rows) {
+  const list = Array.isArray(rows) ? rows.slice() : [];
+  list.sort((a, b) => (Number(b.Points) || 0) - (Number(a.Points) || 0));
+  let lastPoints = null;
+  let lastRank = 0;
+  let lastUpdated = 0;
+  const leaderboard = list.map((r, i) => {
+    const points = Number(r.Points) || 0;
+    const rank = points === lastPoints ? lastRank : i + 1;
+    lastPoints = points;
+    lastRank = rank;
+    const ts = Date.parse(r.updatedAt || r.createdAt || '');
+    if (ts && ts > lastUpdated) lastUpdated = ts;
+    return {
+      rank,
+      account_id: String(r.Client_ID || r.LeadId || ''),
+      name_masked: r.Client_Name || '',
+      country_name: r.Country || '',
+      country: countryCode(r.Country),   // ISO code → flag + pill label
+      points,
+    };
+  });
+  return {
+    leaderboard,
+    current_user: null,
+    updated_at: lastUpdated ? new Date(lastUpdated).toISOString() : null,
+  };
+}
 
 // Pagination state — page index is 0-based, starts at the top of the board.
 let currentPage = 0;
@@ -22,14 +89,6 @@ const fmt = {
 
 const state = { data: null, timer: null, filters: { q: '' } };
 
-// Reduce a masked name ("Mateo G***z") to initials only ("M.G.").
-const initials = (name) =>
-  String(name || '')
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((w) => w[0].toUpperCase() + '.')
-    .join('');
 // Phase 2: remember each account's previous points so we can flash rows whose
 // score changed between polls. Keyed by account_id → last known points value.
 const prevPoints = new Map();
@@ -46,16 +105,20 @@ function rowHtml(r, isMe, index) {
   const ptsUnit = t('ptsUnit', 'pts');
   // Each row gets its own animation delay (stagger), capped so late rows still feel snappy.
   const delay = Math.min((index || 0) * 60, 700);
+  // Names arrive pre-masked to initials; show them as-is (escaped).
+  const flagImg = code
+    ? `<img class="lb-country__flag" src="${FLAGS}/${code}.svg" alt="" width="20" height="14" loading="lazy" onerror="this.remove()" />`
+    : '';
+  const countryLabel = code ? code.toUpperCase() : escapeHtml(r.country_name || '');
   return `
     <div class="bt-lb-row reveal lb-row-anim${isMe ? ' is-you' : ''}" data-account-id="${r.account_id || ''}" style="--reveal-delay: ${delay}ms;">
       <span class="${rankCls}">${r.rank}</span>
       <div class="lb-trader-stack">
-        <span class="lb-trader">${initials(r.name_masked)}${isMe ? `<span class="lb-you">${youLabel}</span>` : ''}</span>
-        <span class="lb-trader-id">#${r.account_id || '—'}</span>
+        <span class="lb-trader">${escapeHtml(r.name_masked)}${isMe ? `<span class="lb-you">${youLabel}</span>` : ''}</span>
+        <span class="lb-trader-id">#${escapeHtml(r.account_id) || '—'}</span>
       </div>
       <span class="lb-country">
-        <img class="lb-country__flag" src="${FLAGS}/${code}.svg" alt="" width="20" height="14" loading="lazy" />
-        <span class="lb-country__code">${r.country}</span>
+        ${flagImg}<span class="lb-country__code">${countryLabel}</span>
       </span>
       <span class="lb-points bt-num">${fmt.num(r.points)}<span class="lb-points__unit">${ptsUnit}</span></span>
     </div>
@@ -90,16 +153,16 @@ function renderRows() {
   const me = state.data.current_user || null;
   const isMeRow = (r) => !!(me && r.account_id === me.account_id && r.rank === me.rank);
 
-  // Combined search — matches by name (masked name or initials) or by ID.
+  // Combined search — matches by masked name, country, or account ID.
   const q = (state.filters.q || '').trim().toLowerCase();
 
   if (q) {
     const qDigits = q.replace(/\D/g, '');
     const matches = all.filter((r) => {
       const name = (r.name_masked || '').toLowerCase();
-      const ini = initials(r.name_masked).toLowerCase();
+      const country = (r.country_name || '').toLowerCase();
       const id = String(r.account_id || '');
-      return name.includes(q) || ini.includes(q) || (!!qDigits && id.includes(qDigits));
+      return name.includes(q) || country.includes(q) || (!!qDigits && id.includes(qDigits));
     });
 
     if (!matches.length) {
@@ -229,9 +292,12 @@ function renderError() {
 
 async function load() {
   try {
-    const res = await fetch(`${BASE}/${FEED}`, { cache: 'no-store' });
+    const res = await fetch(feedUrl(), { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    state.data = await res.json();
+    // An empty body is a valid "no entries yet" response — show the empty
+    // state rather than an error.
+    const text = (await res.text()).trim();
+    state.data = transform(text ? JSON.parse(text) : []);
     renderRows();
   } catch (err) {
     console.error('[leaderboard] load failed', err);
