@@ -154,6 +154,11 @@ const skipLabel = copy?.a11y?.skip_to_content || 'Skip to content';
       })();
     </script>
 
+    <!-- Forward incoming tracking params (utm_*, gclid, fbclid, …) onto CTAs -->
+    <script>
+      import '../scripts/cta-params.js';
+    </script>
+
     <style is:global>
       .skip-link {
         position: absolute;
