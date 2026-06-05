@@ -372,6 +372,10 @@
 .cc-lb-layout .lb-filter:focus-within .lb-filter__input { color: var(--bt-text-hi); }
 .cc-lb-layout .lb-filter:focus-within .lb-filter__input::placeholder { color: rgba(255, 255, 255, 0.65); }
 .cc-lb-layout .lb-filter__input { font-size: 14px; width: 190px; max-width: 42vw; }
+/* The wrapper (.lb-filter:focus-within) is already the focus indicator, so
+   kill the input's own focus outline to avoid a second inner box. */
+.cc-lb-layout .lb-filter__input:focus,
+.cc-lb-layout .lb-filter__input:focus-visible { outline: none; box-shadow: none; }
 
 /* Pagination — jump-to-page input (shown when > 6 pages) */
 .lb-pagination__jump { display: inline-flex; align-items: center; gap: 9px; }
