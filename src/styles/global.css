@@ -784,6 +784,16 @@ html[dir="rtl"] .cc-headline-sub { font-family: var(--bt-font); letter-spacing: 
   color: var(--bt-text-hi) !important;
   letter-spacing: 0.04em;
 }
+/* Inline document links (Client Agreement, Risk Disclosure, Privacy Policy) */
+.cc-legal__body a {
+  color: var(--bt-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+.cc-legal__body a:hover { color: var(--bt-accent-soft); }
 .cc-legal__back {
   display: inline-block;
   margin-top: 32px;
