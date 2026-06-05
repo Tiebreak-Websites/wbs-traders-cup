@@ -2815,6 +2815,10 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   .cc-fab-card__cta { padding: 20px 16px; font-size: 16px; justify-content: center; }
   .cc-fab-card__cta-lbl { flex: none; }
   .cc-fab-card__cta-arrow { display: none; }
+
+  /* The full-width bar is ~110px tall on phones — reserve more bottom space so
+     it never covers the compliance disclaimer (plus the iOS home-indicator). */
+  .cc-page { padding-bottom: calc(150px + env(safe-area-inset-bottom, 0px)); }
 }
 
 /* Retired old SVG-ring FAB (kept rules below for legacy class compatibility) */
