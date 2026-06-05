@@ -31,8 +31,8 @@
     "headline_lead": "Opere por",
     "headline_amount": "$26,000!",
     "headline_main": "Opere por 26 000$!",
-    "headline_sub": "Você é o próximo Campeão do trading?",
-    "subhead": "Prepare-se para entrar na competição de trading mais empolgante deste verão! Veja como você se posiciona em relação a outros traders e tenha a chance de ganhar $26.000 em créditos durante a Copa com um depósito de apenas $100.",
+    "headline_sub": "Você é o próximo Campeão?",
+    "subhead": "Prepare-se para entrar na competição mais empolgante deste verão! Veja como você se posiciona em relação a outros traders e tenha a chance de ganhar $26.000 em créditos durante a Copa com um depósito de apenas $100.",
     "countdown_label": "Até o fim do Campeonato",
     "cd_units": {
       "days": "Dias",
@@ -79,10 +79,10 @@
     ]
   },
   "leaderboard": {
-    "title": "Ranking do Campeonato",
+    "title": "Tabela de Classificação da Cup",
     "live_chip": "Ao vivo",
     "header_eyebrow": "Ranking ao vivo",
-    "card_title": "Ranking do Campeonato",
+    "card_title": "Tabela de Classificação da Cup",
     "card_legend": "Ordenado por Pontos de Campeão · Atualiza a cada 30 seg",
     "filter_placeholder": "Buscar",
     "filter_name_placeholder": "Buscar por nome",
@@ -101,7 +101,7 @@
     "footer_right": "Nomes ocultos por privacidade",
     "you_label": "VOCÊ",
     "loading_state": "Carregando o ranking…",
-    "empty_state": "O ranking aparecerá aqui quando o campeonato começar.",
+    "empty_state": "A Tabela de Classificação aparecerá aqui quando a Cup começar.",
     "error_state": "Não foi possível carregar o ranking. Atualize para tentar novamente.",
     "joined_label": "Inscrito",
     "pts_unit": "pts",
@@ -121,15 +121,15 @@
         "n": "01",
         "stat": "$100",
         "stat_label": "depósito",
-        "t": "Entre na competição",
-        "d": "Você precisa de um primeiro depósito mínimo de $100 ou mais para garantir sua vaga na competição. Lembre-se de que você tem apenas 1 qualificação por conta, que precisa ser verificada por KYC."
+        "t": "Entre na Cup",
+        "d": "Você precisa de um depósito mínimo de $100 ou mais para garantir sua vaga na Cup. Lembre-se de que você tem apenas 1 qualificação por conta, que precisa ser verificada por KYC."
       },
       {
         "n": "02",
         "stat": "+500",
         "stat_label": "pts / $100",
         "t": "Cresça a cada depósito",
-        "d": "Você ganha 500 Pontos de Campeão a cada $100 que deposita. Assim você tem uma chance maior de vencer a competição. Um exemplo: se você depositar $1.000, ganha 5.000 pontos antes mesmo de fazer sua primeira operação."
+        "d": "Você ganha 500 Pontos da Cup a cada $100 que deposita. Assim você tem uma chance maior de vencer a Cup. Um exemplo: se você depositar $1.000, ganha 5.000 pontos antes mesmo de fazer sua primeira operação."
       },
       {
         "n": "03",
@@ -143,7 +143,7 @@
         "stat": "2×",
         "stat_label": "semana final",
         "t": "Reta final",
-        "d": "Na semana final da Copa, entre 13 e 19 de julho, cada ponto que você conquistar será dobrado. Isso significa que você tem uma chance maior de diminuir a diferença no ranking. Este é o empurrão final — você consegue!"
+        "d": "Na semana final da Copa, entre 13 e 19 de julho, cada ponto que você conquistar será dobrado. Isso significa que você tem uma chance maior de diminuir a diferença na Tabela de Classificação. Este é o empurrão final — você consegue!"
       }
     ]
   },
@@ -198,23 +198,23 @@
     "items": [
       {
         "t": "Como minha pontuação é calculada?",
-        "d": "Seus Pontos de Campeão são calculados com base no seu desempenho de trading durante o período da competição. Você ganha 500 e 50 por cada pontos por cada depósito e O ranking é atualizado em tempo real para que você possa acompanhar sua posição ao longo do Campeonato."
+        "d": "Seus Pontos são calculados com base no seu desempenho de trading durante o período da Cup. Você ganha 500 e 50 por cada pontos por cada depósito e A Tabela de Classificação é atualizada em tempo real para que você possa acompanhar sua posição ao longo do Campeonato."
       },
       {
         "t": "Quais tipos de conta são elegíveis para participar?",
-        "d": "Todas as contas de trading ativas registradas na plataforma são elegíveis para entrar no Campeonato - incluindo contas padrão, profissionais e quaisquer tipos de conta especializados disponíveis na sua região. Sua conta só precisa estar verificada, financiada e em situação regular antes de a competição abrir. Se você não tiver certeza se o seu tipo de conta específico se qualifica, entre em contato com nossa equipe de suporte antes do início do Campeonato e confirmaremos sua elegibilidade."
+        "d": "Todas as contas de trading ativas registradas na plataforma são elegíveis para entrar na Cup — incluindo contas padrão, profissionais e quaisquer tipos de conta especializados disponíveis na sua região. Sua conta só precisa estar verificada, financiada e em situação regular antes de a competição abrir. Se você não tiver certeza se o seu tipo de conta específico se qualifica, entre em contato com nossa equipe de suporte antes do início da Cup e confirmaremos sua elegibilidade."
       },
       {
         "t": "Existe um limite máximo de depósito?",
-        "d": "Não há um teto máximo para o seu depósito. Você pode financiar sua conta no nível que melhor se adequa à sua abordagem de trading. Lembre-se de que os Pontos de Campeão são calculados como um retorno percentual sobre o seu saldo - por isso a competição recompensa habilidade e consistência, não apenas o tamanho do seu depósito."
+        "d": "Não há um teto máximo para o seu depósito. Você pode financiar sua conta no nível que melhor se adequa à sua abordagem de trading. Lembre-se de que os Pontos são calculados como um retorno percentual sobre o seu saldo — por isso a competição recompensa habilidade e consistência, não apenas o tamanho do seu depósito."
       },
       {
         "t": "O que acontece se eu tiver uma perda?",
-        "d": "Seu depósito financia sua própria conta de trading pessoal e continua sendo seu durante toda a competição. Se você tiver uma perda em uma operação, essa perda afeta o saldo da sua conta da forma normal - como aconteceria fora do Campeonato. A competição não garante contra perdas, e o trading sempre envolve risco. Recomendamos fortemente operar apenas com recursos que você esteja preparado para arriscar."
+        "d": "Seu depósito financia sua própria conta de trading pessoal e continua sendo seu durante toda a competição. Se você tiver uma perda em uma operação, essa perda afeta o saldo da sua conta da forma normal — como aconteceria fora da Cup. A competição não garante contra perdas, e o trading sempre envolve risco. Recomendamos fortemente operar apenas com recursos que você esteja preparado para arriscar."
       },
       {
         "t": "Como e quando os vencedores serão notificados?",
-        "d": "Os vencedores serão contatados diretamente pelo endereço de e-mail registrado em sua conta de trading dentro de um período definido após o encerramento do Campeonato. As posições finais serão confirmadas assim que todas as operações forem liquidadas e o ranking for verificado. Todos os detalhes sobre o cronograma de anúncio estão disponíveis nos Termos e Condições."
+        "d": "Os vencedores serão contatados diretamente pelo endereço de e-mail registrado em sua conta de trading dentro de um período definido após o encerramento do Campeonato. As posições finais serão confirmadas assim que todas as operações forem liquidadas e o ranking for verificado. Todos os detalhes sobre o cronograma de anúncio estão disponíveis nos <a href=\"/pt/terms\">Termos e Condições</a>."
       }
     ]
   },
@@ -258,5 +258,5 @@
     "website_terms_label": "Termos e Condições",
     "website_terms_href": "/terms/wbs-website-terms-en.pdf"
   },
-  "compliance": "O Campeonato de Traders Warren Bowie & Smith 2026 é uma competição de trading baseada em habilidade. Seu depósito financia sua própria conta de trading e continua totalmente seu. Os vencedores são determinados por um ranking transparente de Pontos de Campeão, não por sorte. Aplicam-se KYC, elegibilidade e regras específicas do mercado. O trading envolve risco de perda. Aplicam-se os Termos e Condições. © 2026 Warren Bowie & Smith."
+  "compliance": "A Traders Cup de Warren Bowie & Smith 2026 é uma competição de trading baseada em habilidade. Seu depósito financia sua própria conta de trading e continua totalmente seu. Os vencedores são determinados por uma Tabela de Classificação transparente de Pontos da Cup, não por sorte. Aplicam-se KYC, elegibilidade e regras específicas do mercado. O trading envolve risco de perda. Aplicam-se os <a href=\"/terms/wbs-website-terms-en.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">Termos e Condições</a>. © 2026 Warren Bowie & Smith."
 }
