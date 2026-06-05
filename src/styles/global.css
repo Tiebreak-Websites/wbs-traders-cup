@@ -1234,95 +1234,6 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
     padding .42s cubic-bezier(.22, .61, .36, 1);
 }
 
-/* Sticky bottom CTA bar */
-.cc-sticky {
-  position: fixed; left: 0; right: 0; bottom: 0;
-  background: var(--bt-accent);
-  color: #FFFFFF;
-  z-index: 50;
-  border-top: 1px solid rgba(0,0,0,0.05);
-  box-shadow: 0 -10px 30px -10px rgba(255, 134, 28, 0.35);
-  transform: translateY(0);
-  transition: transform .28s ease;
-}
-.cc-sticky.is-hidden { transform: translateY(110%); }
-.cc-sticky__inner {
-  max-width: 1240px; margin: 0 auto;
-  padding: 14px 56px;
-  display: flex; align-items: center; justify-content: space-between; gap: 20px;
-}
-.cc-sticky__lead { display: flex; align-items: center; gap: 14px; min-width: 0; }
-.cc-sticky__actions { display: flex; align-items: center; gap: 18px; }
-.cc-sticky__copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-
-/* Sticky-bar countdown — appears on desktop (moved here from the topbar) */
-.cc-sticky-cd {
-  display: none;
-  align-items: baseline;
-  gap: 5px;
-  color: #FFFFFF;
-  font-family: var(--bt-num);
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1;
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-}
-.cc-sticky-cd__cell { display: inline-flex; align-items: baseline; gap: 1px; }
-.cc-sticky-cd__cell span { font-size: 23px; font-weight: 800; }
-.cc-sticky-cd__sep { opacity: 0.5; margin: 0 3px; font-size: 18px; }
-@media (min-width: 961px) {
-  .cc-sticky-cd { display: inline-flex; }
-  .cc-topbar .cc-mini-cd { display: none; }
-}
-.cc-sticky__t {
-  font-size: 16px; font-weight: 700; letter-spacing: -0.005em;
-}
-.cc-sticky__d {
-  font-size: 12.5px; opacity: 0.85;
-}
-
-/* Animated trophy icon before the copy */
-.cc-sticky__icon {
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.16);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
-  color: #FFFFFF;
-}
-.cc-sticky__icon svg {
-  width: 22px;
-  height: 22px;
-  display: block;
-  transform-origin: 50% 85%;
-  animation: ccTrophyBob 2.6s ease-in-out infinite;
-}
-@keyframes ccTrophyBob {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  20%      { transform: translateY(-3px) rotate(-5deg); }
-  50%      { transform: translateY(-1px) rotate(0deg); }
-  80%      { transform: translateY(-3px) rotate(5deg); }
-}
-
-/* Attention: the sticky CTA expands fast in width, then settles — eye-catching but brief */
-.cc-sticky__cta {
-  transform-origin: center;
-  padding-left: 42px;   /* ~25% wider button */
-  padding-right: 42px;
-  animation: ccCtaExpand 2.4s ease-in-out infinite;
-}
-.cc-sticky__cta:hover { animation: none; }
-@keyframes ccCtaExpand {
-  0%, 58%, 100% { transform: scaleX(1); }
-  68%           { transform: scaleX(1.09); }  /* quick widen */
-  80%           { transform: scaleX(0.99); }  /* slight settle */
-}
 
 /* Tighten on smaller viewports */
 @media (max-height: 940px) {
@@ -1365,13 +1276,6 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
     padding: 12px 14px;
   }
   .bt-lb-row > *:nth-child(3) { display: none; }
-  .cc-sticky__inner { padding: 12px 20px; }
-  .cc-sticky__t { font-size: 14px; }
-  .cc-sticky__d { display: none; }
-  .cc-sticky__lead { gap: 10px; }
-  .cc-sticky__icon { width: 34px; height: 34px; }
-  .cc-sticky__icon svg { width: 19px; height: 19px; }
-  .cc-sticky .bt-btn { height: 50px; padding: 0 28px; font-size: 14px; }
 }
 /* Keep the (wide) Poppins headline from clipping on narrow phones */
 @media (max-width: 600px) {
@@ -1420,21 +1324,6 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
 }
 .cc-controls.is-visible { opacity: 1; transform: translateY(0); }
 
-/* Space between the "Until end…" label and the timer row so they aren't glued */
-.cc-countdown__lbl { margin-bottom: 16px; }
-
-/* Countdown digit cells — staggered transition, triggered when the parent
-   .cc-countdown reveals into view. */
-.cc-countdown .bt-cd {
-  opacity: 0;
-  transform: translateY(10px) scale(.96);
-  transition: opacity .55s cubic-bezier(.2,.7,.3,1), transform .55s cubic-bezier(.2,.7,.3,1);
-}
-.cc-countdown.is-visible .bt-cd { opacity: 1; transform: translateY(0) scale(1); }
-.cc-countdown.is-visible .bt-cd:nth-of-type(1) { transition-delay: 50ms; }
-.cc-countdown.is-visible .bt-cd:nth-of-type(2) { transition-delay: 130ms; }
-.cc-countdown.is-visible .bt-cd:nth-of-type(3) { transition-delay: 210ms; }
-.cc-countdown.is-visible .bt-cd:nth-of-type(4) { transition-delay: 290ms; }
 
 /* ============================================================
    Inner-content stagger inside cards — children stay invisible
@@ -1446,8 +1335,6 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
 .cc-formula__card > *,
 .lb-card__head,
 .lb-card__cols,
-.cc-sticky__copy,
-.cc-sticky .bt-btn,
 .cc-faq__item > * {
   opacity: 0;
   transform: translateY(8px);
@@ -1485,10 +1372,6 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
 .cc-faq__item.is-visible > *:nth-child(1) { transition-delay: 100ms; }
 .cc-faq__item.is-visible > *:nth-child(2) { transition-delay: 180ms; }
 
-/* Sticky CTA inner stagger — bar itself slides up via .is-hidden toggle, so
-   inner copy/button just need to show without delay once visible. */
-.cc-sticky:not(.is-hidden) .cc-sticky__copy   { opacity: 1; transform: translateY(0); transition-delay: 120ms; }
-.cc-sticky:not(.is-hidden) .bt-btn            { opacity: 1; transform: translateY(0); transition-delay: 200ms; }
 
 /* Leaderboard rows — opt-in via .lb-row-anim added by JS. Each row stays
    hidden until the parent .lb-card has .is-visible, then transitions in
@@ -1981,33 +1864,6 @@ html[dir="rtl"] .bt-lb-row.is-updated {
   color: var(--bt-text-mid) !important;
 }
 
-/* ---- Hero countdown cells: sharp slate panels ------------- */
-.cc-countdown .bt-cd {
-  background: var(--bt-bg-1) !important;
-  border: 1px solid var(--bt-bg-line) !important;
-  border-top: 2px solid var(--bt-accent) !important;
-  border-radius: var(--bt-r-xs) !important;
-  padding: 16px 22px 12px !important;
-  min-width: 92px !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 6px 18px -10px rgba(0, 0, 0, 0.55) !important;
-}
-.cc-countdown .bt-cd-num {
-  color: var(--bt-text-hi) !important;
-  font-size: 52px !important;
-  font-weight: 800 !important;
-}
-.cc-countdown .bt-cd-lbl {
-  margin-top: 8px !important;
-  color: var(--bt-text-dim) !important;
-  letter-spacing: 0.20em !important;
-  font-size: 10px !important;
-}
-.cc-countdown .bt-cd-sep {
-  color: var(--bt-accent) !important;
-  font-size: 32px !important;
-  opacity: 0.4;
-  font-family: var(--bt-mono);
-}
 
 /* ---- CTA button: flat solid orange, sharp ----------------- */
 .bt-btn.cc-hero__cta {
@@ -2087,23 +1943,6 @@ html[dir="rtl"] .bt-lb-row.is-updated {
   font-weight: 700 !important;
 }
 
-/* ---- Sticky CTA bar: sharper, denser ---------------------- */
-.cc-sticky {
-  border-top: 1px solid rgba(255, 255, 255, 0.10);
-  background: var(--bt-accent) !important;
-}
-.cc-sticky .bt-btn {
-  background: #FFFFFF !important;
-  color: var(--bt-accent-deep) !important;
-  border-radius: var(--bt-r-xs) !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.04em !important;
-  text-transform: uppercase !important;
-}
-.cc-sticky .bt-btn:hover {
-  background: var(--bt-brand-slate) !important;
-  color: #FFFFFF !important;
-}
 
 /* ---- Prize cards: typography-driven rank ------------------ */
 .bt-prize {
@@ -2501,57 +2340,6 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   max-width: 640px;
 }
 
-/* Countdown — horizontal STRIP layout (full-width with separators) */
-.cc-countdown.cc-countdown--strip {
-  width: 100%;
-  max-width: 720px;
-  margin-top: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-}
-.cc-countdown__lbl-strip {
-  font-family: var(--bt-mono);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--bt-text);
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-}
-.cc-countdown__lbl-strip::before,
-.cc-countdown__lbl-strip::after { content: none; }
-.cc-countdown.cc-countdown--strip .cc-countdown__row {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  gap: 0 !important;
-  width: 100%;
-  background: rgba(30, 40, 45, 0.55);
-  border: 1px solid var(--bt-bg-line);
-  border-radius: var(--bt-r-xs);
-  overflow: hidden;
-  padding: 0;
-}
-.cc-countdown.cc-countdown--strip .bt-cd {
-  background: transparent !important;
-  border: 0 !important;
-  border-top: 2px solid var(--bt-accent) !important;
-  border-right: 1px solid var(--bt-bg-line) !important;
-  border-radius: 0 !important;
-  flex: 1 1 0;
-  padding: 20px 12px 16px !important;
-  min-width: 0 !important;
-  box-shadow: none !important;
-}
-.cc-countdown.cc-countdown--strip .bt-cd:last-child { border-right: 0 !important; }
-.cc-countdown.cc-countdown--strip .bt-cd-num {
-  font-size: clamp(36px, 5vw, 56px) !important;
-}
-.cc-countdown.cc-countdown--strip .bt-cd-sep { display: none !important; }
 
 /* Hero CTA row */
 .cc-hero__cta-row {
@@ -2579,7 +2367,6 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 }
 @media (max-width: 640px) {
   .cc-hero__content { padding: 96px 18px 64px; gap: 14px; }
-  .cc-countdown.cc-countdown--strip .bt-cd { padding: 14px 6px 10px !important; }
 }
 
 /* ---- Prize cards: real podium with varying heights -------- */
@@ -2876,7 +2663,6 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 .lb-rows-rest { display: block; }
 
 /* ---- Sticky CTA → floating bottom-right button ------------ */
-.cc-sticky { display: none !important; }   /* legacy bar retired */
 
 /* Sticky compact card — countdown strip + CTA button */
 .cc-fab-card {
@@ -3208,12 +2994,6 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   max-width: 560px;
 }
 .cc-hero .cc-hero__cta-row { justify-content: flex-start !important; }
-.cc-hero .cc-countdown.cc-countdown--strip {
-  max-width: 600px;
-  margin-top: 8px;
-  align-items: flex-start;
-}
-.cc-hero .cc-countdown__lbl-strip::before { display: none; }
 
 /* Eyebrow sits on top of the copy column */
 .cc-hero__eyebrow { align-self: flex-start; }
@@ -3308,7 +3088,6 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
 
   /* Show the timer + CTA immediately (no reveal animation) so they're
      never stuck invisible above the fold on mobile */
-  .cc-hero .cc-countdown.reveal,
   .cc-hero .cc-hero__cta-row.reveal,
   .cc-hero .cc-hero__cta-note.reveal {
     opacity: 1 !important;
@@ -3316,9 +3095,6 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
     transition: none !important;
   }
 
-  /* Center the "UNTIL END OF THE CHAMPIONSHIP" label + countdown */
-  .cc-hero .cc-countdown.cc-countdown--strip { align-items: center; }
-  .cc-hero .cc-countdown__lbl-strip { text-align: center; }
 
   /* Bigger primary CTA on mobile */
   .cc-hero__cta-row .cc-hero__cta.bt-btn {
