@@ -1,0 +1,75 @@
+# Disable CI trigger (on push)
+trigger:
+  branches:
+    include:
+      - main
+
+# Disable PR trigger
+pr: none
+
+# Empty schedules to explicitly disable scheduled runs
+schedules: []
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: aws-s3-prompt-coding
+  - name: S3_BUCKET_NAME
+    value: "websites-static-mkt"
+  - name: S3_SUBFOLDER
+    value: "wbandsmith.com/worldcup2026/"
+  - name: RESOURCE_URL
+    value: "preg.wbandsmith.com"
+
+stages:
+  - stage: BuildAndDeploy
+    jobs:
+      - job: SetupDependencies
+        displayName: "Install Global Dependencies"
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: "18.x"
+            displayName: "Install Node.js"
+
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: "3.x"
+            displayName: "Install Python"
+
+          - script: |
+              pip install awscli
+            displayName: "Install AWS CLI"
+
+          - script: |
+              echo "Verifying AWS configuration..."
+              echo "AWS_DEFAULT_REGION: $AWS_REGION"
+              aws sts get-caller-identity --query "Account" --output text
+            displayName: "Verify AWS Configuration (Safe)"
+            env:
+              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+              AWS_DEFAULT_REGION: $(AWS_REGION)
+
+      - job: Deploy
+        dependsOn: SetupDependencies
+        steps:
+          - script: |
+              echo "S3_SUBFOLDER: $(S3_SUBFOLDER)"
+            displayName: "Deploy Info"
+
+          - script: |
+              npm install
+              npm run build
+            displayName: "Build Astro Project"
+            env:
+              RESOURCE_URL: $(RESOURCE_URL)
+
+          - script: |
+              aws s3 sync ./dist s3://$(S3_BUCKET_NAME)/$(S3_SUBFOLDER) --delete
+            displayName: "Deploy to S3 Subfolder"
+            env:
+              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+              AWS_DEFAULT_REGION: $(AWS_REGION)
