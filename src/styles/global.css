@@ -2881,9 +2881,12 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   .cc-fab-days { font-size: 9.5px; padding: 2px 6px; bottom: -4px; right: -6px; }
 }
 
-/* The .cc-page used to reserve space for the sticky bar at the bottom. The
-   floating button doesn't need it. */
-.cc-page { padding-bottom: 0 !important; }
+/* On desktop the CTA is a small floating bottom-right card, so the page
+   needs no reserved space. On mobile it's a full-width bottom bar, so the
+   mobile rule above keeps bottom clearance for the disclaimer. */
+@media (min-width: 641px) {
+  .cc-page { padding-bottom: 0 !important; }
+}
 
 /* ============================================================
    WB&S Phase 5 — Targeted layout corrections
