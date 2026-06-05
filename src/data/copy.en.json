@@ -8,8 +8,8 @@
   },
 
   "site": {
-    "title": "Warren Bowie & Smith Traders Championship 2026 — Compete for $26,000",
-    "description": "Skill-based trading competition. Deposit $100 to qualify and compete for $26,000 in credits during the World Cup. 1 June → 19 July 2026.",
+    "title": "Warren Bowie & Smith Traders Championship 2026 — Compete for $20,000",
+    "description": "Skill-based trading competition. Deposit $100 to qualify and compete for $20,000 in credits during the World Cup. 1 June → 19 July 2026.",
     "og_image_path": "/og-traders-championship.jpg"
   },
 
@@ -32,10 +32,10 @@
   "hero": {
     "eyebrow": "Traders Championship · 2026",
     "headline_lead": "Trade for",
-    "headline_amount": "$26,000!",
-    "headline_main": "Trade for 26 000$!",
+    "headline_amount": "$20,000!",
+    "headline_main": "Trade for 20 000$!",
     "headline_sub": "Are you the next Champion?",
-    "subhead": "Get ready to enter the most exciting competition this Summer! See how you rank against other traders and get the chance to win $26,000 in credits during the World Cup with as little as a $100 deposit!",
+    "subhead": "Get ready to enter the most exciting competition this Summer! See how you rank against other traders and get the chance to win $20,000 in credits during the World Cup with as little as a $100 deposit!",
     "countdown_label": "Until end of the Championship",
     "cd_units": {
       "days": "Days",
@@ -64,19 +64,19 @@
     "items": [
       {
         "place": "1st",
-        "amount": "$26,000",
+        "amount": "$20,000",
         "label": "The Undisputed Champion",
         "color": "var(--bt-trophy-deep)"
       },
       {
         "place": "2nd",
-        "amount": "$14,000",
+        "amount": "$12,000",
         "label": "Get a Funded account",
         "color": "var(--bt-silver-deep)"
       },
       {
         "place": "3rd",
-        "amount": "$7,000",
+        "amount": "$6,000",
         "label": "Get a Funded account",
         "color": "var(--bt-bronze-deep)"
       }
@@ -121,7 +121,7 @@
 
   "how_it_works": {
     "eyebrow": "Let's break it down",
-    "title": "How to win the $26,000 in 4 simple steps",
+    "title": "How to win the $20,000 in 4 simple steps",
     "steps": [
       {
         "n": "01",
@@ -223,7 +223,7 @@
 
   "sticky_cta": {
     "title": "Deposit $100. Enter the Championship.",
-    "subtitle": "Skill-based · Compete for $26,000",
+    "subtitle": "Skill-based · Compete for $20,000",
     "cd_label": "Ends in",
     "cta": "Start now",
     "cta_href": "https://wbandsmith.com/register?utm_campaign=traders_championship_2026&utm_source=sticky_bar"

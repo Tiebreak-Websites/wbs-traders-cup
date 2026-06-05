@@ -7,8 +7,8 @@
     "market": "LATAM"
   },
   "site": {
-    "title": "Campeonato de Traders Warren Bowie & Smith 2026 — Concorra a $26.000",
-    "description": "Competição de trading baseada em habilidade. Deposite $100 para se qualificar e concorra a $26.000 em créditos durante a Copa. 1 de junho → 19 de julho de 2026.",
+    "title": "Campeonato de Traders Warren Bowie & Smith 2026 — Concorra a $20.000",
+    "description": "Competição de trading baseada em habilidade. Deposite $100 para se qualificar e concorra a $20.000 em créditos durante a Copa. 1 de junho → 19 de julho de 2026.",
     "og_image_path": "/og-traders-championship.jpg"
   },
   "mechanic": {
@@ -29,10 +29,10 @@
   "hero": {
     "eyebrow": "Campeonato de Traders · 2026",
     "headline_lead": "Opere por",
-    "headline_amount": "$26,000!",
-    "headline_main": "Opere por 26 000$!",
+    "headline_amount": "$20,000!",
+    "headline_main": "Opere por 20 000$!",
     "headline_sub": "Você é o próximo Campeão?",
-    "subhead": "Prepare-se para entrar na competição mais empolgante deste verão! Veja como você se posiciona em relação a outros traders e tenha a chance de ganhar $26.000 em créditos durante a Copa com um depósito de apenas $100.",
+    "subhead": "Prepare-se para entrar na competição mais empolgante deste verão! Veja como você se posiciona em relação a outros traders e tenha a chance de ganhar $20.000 em créditos durante a Copa com um depósito de apenas $100.",
     "countdown_label": "Até o fim do Campeonato",
     "cd_units": {
       "days": "Dias",
@@ -60,19 +60,19 @@
     "items": [
       {
         "place": "1.º",
-        "amount": "$26,000",
+        "amount": "$20,000",
         "label": "O Campeão Absoluto",
         "color": "var(--bt-trophy-deep)"
       },
       {
         "place": "2.º",
-        "amount": "$14,000",
+        "amount": "$12,000",
         "label": "Garanta uma conta financiada",
         "color": "var(--bt-silver-deep)"
       },
       {
         "place": "3.º",
-        "amount": "$7,000",
+        "amount": "$6,000",
         "label": "Garanta uma conta financiada",
         "color": "var(--bt-bronze-deep)"
       }
@@ -115,7 +115,7 @@
   },
   "how_it_works": {
     "eyebrow": "Vamos detalhar",
-    "title": "Como ganhar os $26.000 em 4 passos simples",
+    "title": "Como ganhar os $20.000 em 4 passos simples",
     "steps": [
       {
         "n": "01",
@@ -220,7 +220,7 @@
   },
   "sticky_cta": {
     "title": "Deposite $100. Entre no Campeonato.",
-    "subtitle": "Baseado em habilidade · Concorra a $26.000",
+    "subtitle": "Baseado em habilidade · Concorra a $20.000",
     "cd_label": "Encerra em",
     "cta": "Começar agora",
     "cta_href": "https://wbandsmith.com/register?utm_campaign=traders_championship_2026&utm_source=sticky_bar&lang=pt"
