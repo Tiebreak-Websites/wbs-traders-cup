@@ -1,29 +1,28 @@
 ---
-// Tournament Terms & Conditions — English (placeholder)
+// Tournament Terms & Conditions — English
+// Body content sourced verbatim from the official
+// "Terms and Conditions - Traders Cup 2026.docx" (do not edit the text).
 import BaseLayout      from '../layouts/BaseLayout.astro';
 import ControlsToolbar from '../components/ControlsToolbar.astro';
 import copy from '../data/copy.en.json';
+import termsBody from '../content/terms-en.html?raw';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const pageTitle = 'Tournament Terms & Conditions — Warren Bowie & Smith Traders Championship 2026';
+const pageTitle = 'Warren Bowie & Smith Traders Cup Summer 2026 Terms and Conditions';
 ---
 
-<BaseLayout copy={copy} locale="en" title={pageTitle} description="Tournament terms and conditions for the Warren Bowie & Smith Traders Championship 2026.">
+<BaseLayout copy={copy} locale="en" title={pageTitle} description="Official terms and conditions for the Warren Bowie & Smith Traders Cup Summer 2026.">
   <div class="bt cc-page">
     <ControlsToolbar copy={copy} locale="en" />
 
     <main class="cc-main">
       <article class="cc-legal">
-        <span class="cc-legal__eyebrow">Traders Championship · 2026</span>
-        <h1 class="cc-legal__title">Tournament Terms &amp; Conditions</h1>
-        <p class="cc-legal__updated">Last updated: coming soon</p>
+        <span class="cc-legal__eyebrow">Traders Cup · Summer 2026</span>
+        <h1 class="cc-legal__title">Warren Bowie &amp; Smith Traders Cup Summer 2026 Terms and Conditions</h1>
 
-        <div class="cc-legal__body">
-          <p>The full tournament terms and conditions for the Warren Bowie &amp; Smith Traders Championship 2026 are being finalised and will be published here shortly.</p>
-          <p>{copy.compliance}</p>
-        </div>
+        <div class="cc-legal__body" set:html={termsBody}></div>
 
-        <a class="cc-legal__back" href={`${base}/`}>← Back to the Championship</a>
+        <a class="cc-legal__back" href={`${base}/`}>← Back to the Cup</a>
       </article>
     </main>
   </div>

@@ -168,7 +168,7 @@
   font-weight: 700;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--bt-text-mid);
+  color: var(--bt-text);
 }
 .cc-cd2__tiles { display: flex; gap: clamp(8px, 1.1vw, 14px); }
 .cc-cd2__tile {
@@ -221,7 +221,7 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--bt-text-dim);
+  color: var(--bt-text);
 }
 
 @media (max-width: 640px) {
@@ -234,6 +234,33 @@
   }
   .cc-cd2__tiles { gap: 8px; width: 100%; max-width: 380px; }
   .cc-cd2__tile { width: auto; flex: 1 1 0; }
+
+  /* --- Legibility + sizing tweaks over the brighter portrait bg --- */
+  /* "$26,000!" hero title — slightly larger than the old default, but not huge */
+  .cc-hero--center .cc-headline__amt {
+    font-size: clamp(66px, 18vw, 98px) !important;
+  }
+  .cc-hero--center .cc-headline__lead {
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+  }
+  /* Brighten + add shadow so the sub-headline and subtext read clearly */
+  .cc-hero--center .cc-headline-sub {
+    color: var(--bt-text-hi) !important;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  }
+  .cc-hero--center .cc-subhead {
+    color: var(--bt-text) !important;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6);
+  }
+  /* Countdown label ("starts in") + unit labels (Days/Hours/…) were too dim */
+  .cc-cd2__label { color: var(--bt-text) !important; }
+  .cc-cd2__unit  { color: var(--bt-text) !important; }
+  /* Terms & conditions link under the CTA */
+  .cc-hero__cta-note {
+    color: var(--bt-text) !important;
+    text-decoration-color: rgba(255, 255, 255, 0.55) !important;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.55);
+  }
 }
 
 /* ============================================================
@@ -274,8 +301,8 @@
 }
 /* Top-3 keep a tinted card + coloured border (override base + global :has) */
 .cc-lb-layout .bt-lb-row:has(.bt-rank-1) {
-  background: linear-gradient(90deg, rgba(255, 134, 28, 0.20), rgba(255, 134, 28, 0.05) 62%, rgba(255, 255, 255, 0.018));
-  border: 1px solid var(--bt-accent);
+  background: linear-gradient(90deg, rgba(255, 165, 44, 0.20), rgba(255, 165, 44, 0.05) 62%, rgba(255, 255, 255, 0.018));
+  border: 1px solid rgba(255, 165, 44, 0.60);
   padding-left: var(--lb-pad-x);
 }
 .cc-lb-layout .bt-lb-row:has(.bt-rank-2) {
@@ -284,8 +311,8 @@
   padding-left: var(--lb-pad-x);
 }
 .cc-lb-layout .bt-lb-row:has(.bt-rank-3) {
-  background: linear-gradient(90deg, rgba(230, 160, 90, 0.14), rgba(255, 255, 255, 0.018) 62%);
-  border: 1px solid var(--bt-bg-line-2);
+  background: linear-gradient(90deg, rgba(146, 96, 47, 0.18), rgba(255, 255, 255, 0.018) 62%);
+  border: 1px solid rgba(146, 96, 47, 0.55);
   padding-left: var(--lb-pad-x);
 }
 /* Rank cells redesigned — circular metallic medals for the top 3 (distinct
@@ -300,11 +327,13 @@
   border: 1px solid var(--bt-bg-line-2);
   color: var(--bt-text-mid);
 }
+/* Top-3 medals. 1st = bright warm gold-orange (the brand accent, made to
+   pop), 2nd = silver, 3rd = a deeper/darker bronze. */
 .cc-lb-layout .bt-rank-1 {
-  background: radial-gradient(circle at 50% 30%, #FFEFB0 0%, #F1C964 46%, #C99A3F 100%);
-  color: #3A2A0A;
+  background: radial-gradient(circle at 50% 30%, #FFD988 0%, #FFA52C 46%, #E07A12 100%);
+  color: #3A2406;
   border: 0;
-  box-shadow: 0 0 0 2px rgba(255, 206, 102, 0.30), 0 5px 14px -3px rgba(241, 201, 100, 0.75);
+  box-shadow: 0 0 0 2px rgba(255, 165, 44, 0.35), 0 5px 14px -3px rgba(255, 165, 44, 0.70);
 }
 .cc-lb-layout .bt-rank-2 {
   background: radial-gradient(circle at 50% 30%, #F6F8FB 0%, #CBCFD9 46%, #9CA2B0 100%);
@@ -313,10 +342,10 @@
   box-shadow: 0 0 0 2px rgba(201, 205, 215, 0.28), 0 5px 12px -3px rgba(201, 205, 215, 0.55);
 }
 .cc-lb-layout .bt-rank-3 {
-  background: radial-gradient(circle at 50% 30%, #F2CCA1 0%, #CE9461 46%, #A66C3C 100%);
-  color: #2A1707;
+  background: radial-gradient(circle at 50% 30%, #C28A55 0%, #92602F 46%, #5C3A18 100%);
+  color: #F5E6D6;
   border: 0;
-  box-shadow: 0 0 0 2px rgba(206, 148, 97, 0.28), 0 5px 12px -3px rgba(206, 148, 97, 0.55);
+  box-shadow: 0 0 0 2px rgba(146, 96, 47, 0.30), 0 5px 12px -3px rgba(92, 58, 24, 0.65);
 }
 
 /* Nicer search field */
@@ -488,24 +517,59 @@
 }
 .cc-prize-rail__tier--first .cc-prize-rail__amt {
   font-size: 56px;
-  background: linear-gradient(120deg, #E0701A, #FF861C 45%, #FFD37A);
+  background: linear-gradient(110deg,
+    #E0701A 0%,
+    #FF861C 30%,
+    #FFD37A 45%,
+    #FFF3D6 50%,
+    #FFD37A 55%,
+    #FF861C 70%,
+    #E0701A 100%);
+  background-size: 250% 100%;
+  background-position: 0% 0;
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
+  filter: drop-shadow(0 0 0 rgba(255, 211, 122, 0));
+  animation:
+    ccPrizeShimmer 3.6s ease-in-out infinite,
+    ccPrizeGlow 3.6s ease-in-out infinite;
+}
+@keyframes ccPrizeShimmer {
+  0%   { background-position: 130% 0; }
+  100% { background-position: -30% 0; }
+}
+@keyframes ccPrizeGlow {
+  0%, 100% { filter: drop-shadow(0 2px 10px rgba(255, 134, 28, 0.20)); }
+  50%      { filter: drop-shadow(0 2px 18px rgba(255, 211, 122, 0.45)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cc-prize-rail__tier--first .cc-prize-rail__amt { animation: none; }
 }
 .cc-prize-rail__lbl { font-size: 13px; font-weight: 600; color: var(--bt-text-mid); }
 
 @media (max-width: 900px) {
   .cc-lb-layout { grid-template-columns: 1fr; gap: 16px; max-width: 640px; }
-  .cc-prize-rail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .cc-prize-rail__cup { display: none; }   /* hero already shows the cup */
-  .cc-prize-rail__amt { font-size: 22px; }
-  .cc-prize-rail__tier--first .cc-prize-rail__amt { font-size: 26px; }
-  .cc-prize-rail__lbl { display: none; }
+  /* Stacked + centered prize rail with a small cup atop the 1st-place card
+     (mirrors the desktop layout, just a smaller trophy). */
+  .cc-prize-rail { display: flex; flex-direction: column; gap: 12px; }
+  /* Bigger cup, pulled down with a negative margin so its base sits right on
+     top of the 1st-place card ("glued"). */
+  .cc-prize-rail__cup { display: flex; max-width: 360px; margin: 0 auto -26px; }
+  .cc-prize-rail__cup img { max-height: 340px; }
+  .cc-prize-rail__tier {
+    align-items: center;
+    text-align: center;
+    padding: 18px 20px;
+  }
+  .cc-prize-rail__amt { font-size: 36px; }
+  .cc-prize-rail__tier--first .cc-prize-rail__amt { font-size: 48px; }
+  .cc-prize-rail__lbl { display: block; }
 }
 @media (max-width: 460px) {
-  .cc-prize-rail { grid-template-columns: 1fr; }
-  .cc-prize-rail__amt,
-  .cc-prize-rail__tier--first .cc-prize-rail__amt { font-size: 28px; }
+  .cc-prize-rail__cup { max-width: 310px; margin-bottom: -24px; }
+  .cc-prize-rail__cup img { max-height: 300px; }
+  .cc-prize-rail__amt { font-size: 32px; }
+  .cc-prize-rail__tier--first .cc-prize-rail__amt { font-size: 42px; }
 }
 
 /* ============================================================
@@ -747,14 +811,40 @@
   margin: 0;
   max-width: 720px;
 }
+.cc-faq2__answer-d a,
+.cc-faq__compliance a {
+  color: var(--bt-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 600;
+}
+.cc-faq2__answer-d a:hover,
+.cc-faq__compliance a:hover { color: var(--bt-accent-soft); }
 @keyframes ccFaqFade {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 760px) {
-  .cc-faq2 { grid-template-columns: 1fr; gap: 14px; }
-  .cc-faq2__panel { min-height: 0; }
+  /* Accordion: questions stack and each answer opens inline beneath its own
+     question (the answers are relocated here by FAQ.astro's script). */
+  .cc-faq2 { display: block; }
+  .cc-faq2__panel { display: none; }
+  .cc-faq2__list { gap: 10px; }
+  .cc-faq2__q.is-active { border-radius: var(--bt-r-md) var(--bt-r-md) 0 0; }
+  .cc-faq2__answer {
+    margin-top: -10px;               /* cancel the list gap — glue to its Q */
+    border: 1px solid var(--bt-accent);
+    border-top: 0;
+    border-radius: 0 0 var(--bt-r-md) var(--bt-r-md);
+    padding: 14px 18px 16px;
+    background: linear-gradient(180deg, rgba(255, 134, 28, 0.05), var(--bt-bg-2));
+  }
+  /* The question text is already shown on the button above — drop the
+     repeated heading/tag inside the inline answer. */
+  .cc-faq2__answer-tag,
+  .cc-faq2 .cc-faq2__answer-q { display: none; }
+  .cc-faq2 .cc-faq2__answer-d { font-size: 14.5px; line-height: 1.7; color: var(--bt-text); }
 }
 
 /* Footer — centered, with breathing room between the T&C link + disclaimer.

@@ -447,9 +447,11 @@ input:focus-visible,
   color: var(--bt-text-mid);
   border: 1px solid var(--bt-bg-line);
 }
-.bt-rank-1 { background: linear-gradient(180deg, var(--bt-trophy-100), var(--bt-trophy-deep)); color:#3A2A0A; border-color: rgba(201, 163, 90, 0.45); }
+/* Top-3 rank badges. 1st = bright gold-orange (brand accent),
+   2nd = silver, 3rd = deep bronze. */
+.bt-rank-1 { background: linear-gradient(180deg, #FFC85E, #E07A12); color:#3A2406; border-color: rgba(255, 165, 44, 0.55); }
 .bt-rank-2 { background: linear-gradient(180deg, var(--bt-silver-100), var(--bt-silver-deep)); color:#1A1B33; border-color: rgba(169, 174, 188, 0.45); }
-.bt-rank-3 { background: linear-gradient(180deg, var(--bt-bronze-100), var(--bt-bronze-deep)); color:#2A1707; border-color: rgba(177, 119, 70, 0.45); }
+.bt-rank-3 { background: linear-gradient(180deg, #B07C48, #5C3A18); color:#F5E6D6; border-color: rgba(146, 96, 47, 0.50); }
 
 /* Prize card (replaces tier card) */
 .bt-prize {
@@ -639,7 +641,7 @@ html[dir="rtl"] .cc-headline-sub { font-family: var(--bt-font); letter-spacing: 
 .cc-subhead {
   font-size: 18px;
   line-height: 1.55;
-  color: var(--bt-text-mid);
+  color: var(--bt-text);
   margin: 0 0 4px;
   max-width: 720px;
 }
@@ -656,14 +658,14 @@ html[dir="rtl"] .cc-headline-sub { font-family: var(--bt-font); letter-spacing: 
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.01em;
-  color: var(--bt-text-dim);
+  color: var(--bt-text);
   text-decoration: underline;
   text-underline-offset: 2px;
-  text-decoration-color: rgba(255, 255, 255, 0.25);
+  text-decoration-color: rgba(255, 255, 255, 0.5);
   transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
 .cc-hero__cta-note:hover {
-  color: var(--bt-text-mid);
+  color: var(--bt-text-hi);
   text-decoration-color: var(--bt-accent);
 }
 
@@ -730,6 +732,57 @@ html[dir="rtl"] .cc-headline-sub { font-family: var(--bt-font); letter-spacing: 
   font-size: 16px;
   line-height: 1.7;
   color: var(--bt-text-mid);
+}
+.cc-legal__h2 {
+  margin: 36px 0 14px;
+  font-family: var(--bt-font);
+  font-weight: 700;
+  font-size: clamp(19px, 2.4vw, 24px);
+  letter-spacing: 0.01em;
+  color: var(--bt-text-hi);
+  scroll-margin-top: 90px;
+}
+.cc-legal__h2::after {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 2px;
+  margin-top: 10px;
+  background: var(--bt-accent);
+}
+.cc-legal__prizes {
+  margin: 0 0 18px;
+  padding: 18px 22px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid var(--bt-bg-line);
+  border-radius: var(--bt-r-md);
+  background: linear-gradient(180deg, var(--bt-bg-1), var(--bt-bg-2));
+}
+.cc-legal__prizes li {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--bt-text);
+  font-weight: 600;
+  padding-left: 16px;
+  position: relative;
+}
+.cc-legal__prizes li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bt-accent);
+}
+.cc-legal__risk-h {
+  margin-top: 36px !important;
+  color: var(--bt-text-hi) !important;
+  letter-spacing: 0.04em;
 }
 .cc-legal__back {
   display: inline-block;
@@ -1318,7 +1371,7 @@ html[dir="rtl"] .cc-formula__result { margin-left: 0; margin-right: 4px; }
   .cc-sticky__lead { gap: 10px; }
   .cc-sticky__icon { width: 34px; height: 34px; }
   .cc-sticky__icon svg { width: 19px; height: 19px; }
-  .cc-sticky .bt-btn { height: 40px; padding: 0 26px; font-size: 13px; }
+  .cc-sticky .bt-btn { height: 50px; padding: 0 28px; font-size: 14px; }
 }
 /* Keep the (wide) Poppins headline from clipping on narrow phones */
 @media (max-width: 600px) {
@@ -1958,6 +2011,9 @@ html[dir="rtl"] .bt-lb-row.is-updated {
 
 /* ---- CTA button: flat solid orange, sharp ----------------- */
 .bt-btn.cc-hero__cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   background: var(--bt-accent) !important;
   background-image: none !important;
   background-size: auto !important;
@@ -1975,16 +2031,53 @@ html[dir="rtl"] .bt-lb-row.is-updated {
     0 0 0 0 rgba(255, 134, 28, 0.20) !important;
   transition:
     background .25s ease,
+    border-color .25s ease,
     color .25s ease,
     box-shadow .25s ease,
     transform .35s cubic-bezier(.2, .8, .25, 1) !important;
 }
+/* keep label/icon above the sheen overlay */
+.bt-btn.cc-hero__cta > * { position: relative; z-index: 2; }
+/* diagonal light sweep that fires on hover */
+.bt-btn.cc-hero__cta::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -135%;
+  width: 65%;
+  height: 100%;
+  background: linear-gradient(100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.50) 50%,
+    transparent 100%);
+  transform: skewX(-18deg);
+  pointer-events: none;
+  z-index: 1;
+}
 .bt-btn.cc-hero__cta:hover {
-  background: transparent !important;
-  color: var(--bt-accent) !important;
+  /* stays a solid, brighter button — lifts, glows, and stays clearly visible */
+  background: var(--bt-accent-deep) !important;
+  border-color: var(--bt-accent-soft) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-2px) scale(1.03);
   box-shadow:
-    0 0 0 4px rgba(255, 134, 28, 0.10),
-    0 14px 30px -12px rgba(255, 134, 28, 0.40) !important;
+    0 1px 0 rgba(255, 255, 255, 0.30) inset,
+    0 20px 40px -10px rgba(255, 134, 28, 0.70),
+    0 0 0 5px rgba(255, 134, 28, 0.16) !important;
+}
+.bt-btn.cc-hero__cta:hover::after {
+  animation: ccCtaSheen .85s cubic-bezier(.2, .7, .3, 1);
+}
+.bt-btn.cc-hero__cta:active {
+  transform: translateY(0) scale(.99);
+}
+@keyframes ccCtaSheen {
+  from { left: -135%; }
+  to   { left: 135%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bt-btn.cc-hero__cta:hover::after { animation: none; }
+  .bt-btn.cc-hero__cta:hover { transform: none; }
 }
 
 /* Generic primary buttons (sticky CTA "Start now", etc.) — also sharper */
@@ -2926,11 +3019,14 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   }
   .cc-fab-card.is-hidden { transform: translateY(100%); }
   /* Center the countdown (label + timer) within the full-width bar */
-  .cc-fab-card__cd { padding: 12px 16px 10px; justify-content: center; gap: 10px; }
+  .cc-fab-card__cd { padding: 14px 16px 12px; justify-content: center; gap: 12px; }
   .cc-fab-card__cd-row { width: auto; }
-  .cc-fab-card__cd-cell span { font-size: 16px; }
-  /* Center the CTA label and drop the arrow */
-  .cc-fab-card__cta { padding: 14px 16px; font-size: 12px; justify-content: center; }
+  .cc-fab-card__cd-lbl { font-size: 12px; }
+  .cc-fab-card__cd-cell span { font-size: 21px; }
+  .cc-fab-card__cd-cell i { font-size: 13px; }
+  .cc-fab-card__cd-sep { font-size: 19px; }
+  /* Center the CTA label, drop the arrow, and make the button taller + bolder */
+  .cc-fab-card__cta { padding: 20px 16px; font-size: 16px; justify-content: center; }
   .cc-fab-card__cta-lbl { flex: none; }
   .cc-fab-card__cta-arrow { display: none; }
 }
@@ -3027,12 +3123,23 @@ html[dir="rtl"] .cc-reward__desc { text-align: right !important; }
   object-position: 70% center;
   display: block;
 }
-/* Mobile uses a dedicated portrait background — fit the whole image
-   (no zoom/crop), anchored to the top. The dark page bg continues
-   seamlessly below the image's dark floor. */
+/* Mobile uses a dedicated portrait background — fill the full device width
+   (cover, so there's no letterboxing / "cropped" look), anchored to the top
+   so the stadium bowl + candlesticks stay visible behind the copy. */
 @media (max-width: 640px) {
   .cc-hero__bg-img picture,
-  .cc-hero__bg-img img { object-fit: contain; object-position: top center; }
+  .cc-hero__bg-img img { object-fit: cover; object-position: center top; }
+  /* Darkening veil so the white headline / subtext / countdown labels stay
+     legible over the brighter portrait image. */
+  .cc-hero__bg-fx {
+    background:
+      linear-gradient(180deg,
+        rgba(18, 26, 30, 0.58) 0%,
+        rgba(18, 26, 30, 0.34) 38%,
+        rgba(24, 33, 38, 0.62) 78%,
+        var(--bt-bg-0) 100%),
+      radial-gradient(60% 50% at 50% 16%, rgba(255, 134, 28, 0.12), transparent 64%) !important;
+  }
 }
 /* Soft orange accents over the bg image */
 .cc-hero__bg-fx {

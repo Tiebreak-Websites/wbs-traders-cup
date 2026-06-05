@@ -43,7 +43,7 @@ const items = f.items || [];
           <article class={`cc-faq2__answer${i === 0 ? ' is-active' : ''}`} data-faq2-a={i} aria-labelledby={`faq2-q-${i}`}>
             <span class="cc-faq2__answer-tag" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <h3 class="cc-faq2__answer-q">{item.t}</h3>
-            <p class="cc-faq2__answer-d">{item.d}</p>
+            <p class="cc-faq2__answer-d" set:html={item.d}></p>
           </article>
         ))}
       </div>
@@ -58,20 +58,29 @@ const items = f.items || [];
           </a>
         </p>
       )}
-      <p class="cc-faq__compliance reveal">{compliance}</p>
+      <p class="cc-faq__compliance reveal" set:html={compliance}></p>
     </div>
   </div>
 </section>
 
 <script>
-  // Two-pane help center: selecting a question shows its answer in the panel.
+  // Desktop: two-pane help center (question list + single answer panel).
+  // Mobile: a true accordion — each answer is relocated to sit directly
+  // beneath its own question, so opening one no longer dumps the answer at
+  // the bottom of the whole list.
   const root = document.querySelector('[data-faq2]');
   if (root) {
+    const list = root.querySelector('.cc-faq2__list');
+    const panel = root.querySelector('.cc-faq2__panel');
     const questions = Array.from(root.querySelectorAll('[data-faq2-q]'));
     const answers = Array.from(root.querySelectorAll('[data-faq2-a]'));
-    const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
+    const mq = window.matchMedia('(max-width: 760px)');
+    const answerFor = (idx) =>
+      answers.find((a) => a.getAttribute('data-faq2-a') === String(idx));
 
-    function select(idx) {
+    let mobileLayout = null;
+
+    function setActive(idx) {
       questions.forEach((q) => {
         const on = q.getAttribute('data-faq2-q') === String(idx);
         q.classList.toggle('is-active', on);
@@ -82,16 +91,40 @@ const items = f.items || [];
       });
     }
 
+    function applyLayout() {
+      const mobile = mq.matches;
+      if (mobile === mobileLayout) return;
+      mobileLayout = mobile;
+      if (mobile) {
+        // Move each answer directly after its question (accordion).
+        questions.forEach((q) => {
+          const ans = answerFor(q.getAttribute('data-faq2-q'));
+          if (ans) q.insertAdjacentElement('afterend', ans);
+        });
+      } else {
+        // Restore: all answers back into the side panel, in order.
+        answers.forEach((a) => panel.appendChild(a));
+        if (!answers.some((a) => a.classList.contains('is-active'))) setActive(0);
+      }
+    }
+
     questions.forEach((q) => {
       q.addEventListener('click', () => {
         const idx = q.getAttribute('data-faq2-q');
-        select(idx);
-        // On mobile the panel sits below the list — bring the answer into view.
-        if (isMobile()) {
-          const ans = root.querySelector(`[data-faq2-a="${idx}"]`);
+        // On mobile, tapping the open question collapses it.
+        if (mq.matches && q.classList.contains('is-active')) {
+          setActive(-1);
+          return;
+        }
+        setActive(idx);
+        if (mq.matches) {
+          const ans = answerFor(idx);
           if (ans) ans.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
       });
     });
+
+    applyLayout();
+    mq.addEventListener('change', applyLayout);
   }
 </script>

@@ -13,3 +13,8 @@ Thumbs.db
 # Editors
 .idea/
 .vscode/
+
+# Local backups / temp artifacts (never ship)
+.backup-assets/
+*.bak
+scripts-tmp-*.mjs

@@ -34,8 +34,8 @@
     "headline_lead": "Trade for",
     "headline_amount": "$26,000!",
     "headline_main": "Trade for 26 000$!",
-    "headline_sub": "Are you the next trading Champion?",
-    "subhead": "Get ready to enter the most exciting trading competition this Summer! See how you rank against other traders and get the chance to win $26,000 in credits during the World Cup with as little as a $100 deposit!",
+    "headline_sub": "Are you the next Champion?",
+    "subhead": "Get ready to enter the most exciting competition this Summer! See how you rank against other traders and get the chance to win $26,000 in credits during the World Cup with as little as a $100 deposit!",
     "countdown_label": "Until end of the Championship",
     "cd_units": {
       "days": "Days",
@@ -84,10 +84,10 @@
   },
 
   "leaderboard": {
-    "title": "Championship Leaderboard",
+    "title": "Cup Ranking Table",
     "live_chip": "Live",
     "header_eyebrow": "Live standings",
-    "card_title": "Championship Leaderboard",
+    "card_title": "Cup Ranking Table",
     "card_legend": "Sorted by Champion Points · Updates every 30 sec",
     "filter_placeholder": "Search",
     "filter_name_placeholder": "Search by name",
@@ -106,7 +106,7 @@
     "footer_right": "Names masked for privacy",
     "you_label": "YOU",
     "loading_state": "Loading leaderboard…",
-    "empty_state": "The leaderboard will appear here once the championship begins.",
+    "empty_state": "The Ranking Table will appear here once the cup begins.",
     "error_state": "Couldn't load the leaderboard. Refresh to try again.",
     "joined_label": "Joined",
     "pts_unit": "pts",
@@ -127,15 +127,15 @@
         "n": "01",
         "stat": "$100",
         "stat_label": "deposit",
-        "t": "Enter the competition",
-        "d": "You need a minimum first-time deposit of $100 or more to secure your spot in the competition. Keep in mind you only have 1 qualification per account, which has to be KYC-verified."
+        "t": "Enter the Cup",
+        "d": "You need a minimum deposit of $100 or more to secure your spot in the Cup. Keep in mind you only have 1 qualification per account, which has to be KYC-verified."
       },
       {
         "n": "02",
         "stat": "+500",
         "stat_label": "pts / $100",
         "t": "Grow with every deposit",
-        "d": "You get 500 Championship Points for every $100 you fund. This way you get a bigger chance of winning the competition. Here's an example: if you deposit $1,000 you get 5,000 points before ever placing your first trade."
+        "d": "You get 500 Cup Points for every $100 you fund. This way you get a bigger chance of winning the Cup. Here's an example: if you deposit $1,000 you get 5,000 points before ever placing your first trade."
       },
       {
         "n": "03",
@@ -149,7 +149,7 @@
         "stat": "2×",
         "stat_label": "final week",
         "t": "Closing stretch",
-        "d": "In the final World Cup week between 13 and 19 July, every point you score will be doubled. This means you've got a bigger chance of closing the gap on the leaderboard. This is the final push — you can do it!"
+        "d": "In the final World Cup week between 13 and 19 July, every point you score will be doubled. This means you've got a bigger chance of closing the gap on the Ranking Table. This is the final push — you can do it!"
       }
     ]
   },
@@ -200,23 +200,23 @@
     "items": [
       {
         "t": "How is my points score worked out?",
-        "d": "Your Champion Points are calculated based on your trading performance over the competition period. You get 500 and 50 for each points for each deposit and The leaderboard updates in real time so you can track your standing throughout the Championship."
+        "d": "Your Points are calculated based on your trading performance over the Cup period. You get 500 and 50 for each points for each deposit and The Ranking Table updates in real time so you can track your standing throughout the Championship."
       },
       {
         "t": "What account types are eligible to participate?",
-        "d": "All active trading accounts registered on the platform are eligible to enter the Championship - including standard, professional, and any specialist account types available in your region. Your account simply needs to be verified, funded, and in good standing before the competition opens. If you are unsure whether your specific account type qualifies, reach out to our support team before the Championship begins and we will confirm your eligibility."
+        "d": "All active trading accounts registered on the platform are eligible to enter the Cup — including standard, professional, and any specialist account types available in your region. Your account simply needs to be verified, funded, and in good standing before the competition opens. If you are unsure whether your specific account type qualifies, reach out to our support team before the Cup begins and we will confirm your eligibility."
       },
       {
         "t": "Is there a maximum deposit limit?",
-        "d": "There is no upper cap on your deposit. You can fund your account to whatever level suits your trading approach. Bear in mind that Champion Points are calculated as a percentage return on your balance - so the competition rewards skill and consistency, not the size of your deposit alone."
+        "d": "There is no upper cap on your deposit. You can fund your account to whatever level suits your trading approach. Bear in mind that Points are calculated as a percentage return on your balance — so the competition rewards skill and consistency, not the size of your deposit alone."
       },
       {
         "t": "What happens if I make a loss?",
-        "d": "Your deposit funds your own personal trading account and remains yours throughout the competition. If you make a loss on a trade, that loss affects your account balance in the normal way - as it would outside the Championship. The competition does not insure against losses, and trading always carries risk. We strongly recommend trading only with funds you are prepared to risk."
+        "d": "Your deposit funds your own personal trading account and remains yours throughout the competition. If you make a loss on a trade, that loss affects your account balance in the normal way — as it would outside the Cup. The competition does not insure against losses, and trading always carries risk. We strongly recommend trading only with funds you are prepared to risk."
       },
       {
         "t": "How and when will winners be notified?",
-        "d": "Winners will be contacted directly via the email address registered to their trading account within a defined period after the Championship closes. Final standings will be confirmed once all positions are settled and the leaderboard is verified. Full details on the announcement timeline are available in the Terms and Conditions."
+        "d": "Winners will be contacted directly via the email address registered to their trading account within a defined period after the Championship closes. Final standings will be confirmed once all positions are settled and the leaderboard is verified. Full details on the announcement timeline are available in the <a href=\"/terms\">Terms and Conditions</a>."
       }
     ]
   },
@@ -251,5 +251,5 @@
     "website_terms_href": "/terms/wbs-website-terms-en.pdf"
   },
 
-  "compliance": "The Warren Bowie & Smith Traders Championship 2026 is a skill-based trading competition. Your deposit funds your own trading account and remains fully yours. Winners are determined by a transparent Champion Points leaderboard, not by chance. KYC, eligibility, and market-specific rules apply. Trading carries risk of loss. Terms & Conditions apply. © 2026 Warren Bowie & Smith."
+  "compliance": "The Warren Bowie & Smith Traders Cup 2026 is a skill-based trading competition. Your deposit funds your own trading account and remains fully yours. Winners are determined by a transparent Cup Points Ranking Table, not by chance. KYC, eligibility, and market-specific rules apply. Trading carries risk of loss. <a href=\"/terms/wbs-website-terms-en.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">Terms & Conditions</a> apply. © 2026 Warren Bowie & Smith."
 }
