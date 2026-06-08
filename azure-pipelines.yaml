@@ -18,7 +18,7 @@ variables:
   - name: S3_BUCKET_NAME
     value: "websites-static-mkt"
   - name: S3_SUBFOLDER
-    value: "wbandsmith.com/worldcup2026/"
+    value: "wbandsmith.com/wc2026/"
   - name: RESOURCE_URL
     value: "preg.wbandsmith.com"
 
